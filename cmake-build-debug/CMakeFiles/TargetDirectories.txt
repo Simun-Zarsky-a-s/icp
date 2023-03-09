@@ -1,3 +1,0 @@
-/home/samuel/Desktop/BIT/ICP/Projekt/icp/cmake-build-debug/CMakeFiles/icp.dir
-/home/samuel/Desktop/BIT/ICP/Projekt/icp/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/samuel/Desktop/BIT/ICP/Projekt/icp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
