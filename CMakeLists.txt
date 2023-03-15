@@ -3,4 +3,4 @@ project(icp)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(icp main.cpp)
+add_executable(icp main.cpp matrix.cpp matrix.hpp)
