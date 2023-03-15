@@ -9,7 +9,7 @@
 
 using namespace std;
 
-int print_map(char map[]){
+int print_map(string map){
     fstream file;
     file.open(map, ios::in );
 
