@@ -1,5 +1,15 @@
 #include <string>
+#include <vector>
 
 using namespace std;
-int print_map(string map);
-int get_dimensions(string line);
+class Resources {
+
+public:
+    Resources(const string& map);
+
+    int height;
+    int width;
+    int ghost_number;
+    int key_number;
+    vector<vector<char>> matrix;
+};

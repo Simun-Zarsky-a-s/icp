@@ -5,46 +5,139 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include<sstream>
+#include <stdio.h>
+#include <stdbool.h>
 #include "matrix.hpp"
+
+#define SOURCE_ERR 1
 
 using namespace std;
 
-int print_map(string map){
-    fstream file;
-    file.open(map, ios::in );
 
-        string line;
-        getline(file, line);
-        get_dimensions(line);
 
-        while (getline(file, line))
-        {
-            // note that the newline character is not included
-            // in the getline() function
-            cout << line << endl;
+vector<int> check_matrix(vector<vector<char>> matrix){
+    bool target = false;
+    bool start = false;
+    int key =0, ghost =0;
+    vector<int> bn_kn;
+
+    for(int i=0; i<matrix.size(); i++){
+        for(int j=0; j<matrix[i].size(); j++){
+            cout<<matrix[i][j]<<" ";
+            switch(matrix[i][j]){
+                case 'T':
+                    if(target){
+                        perror("more targets in source file");
+                        exit(SOURCE_ERR);
+                    }else{
+                        target = true;
+                    }
+                    break;
+
+                case 'S':
+                    if(start){
+                        perror("more starts in source file");
+                        exit(SOURCE_ERR);
+                    }else{
+                        start = true;
+                    }
+                    break;
+
+                case 'X':
+                case '.':
+                case '\n':
+                case '\0':
+                    continue;
+
+                case'G':
+                    ghost++;
+                    break;
+
+                case'K':
+                    key++;
+                    break;
+                default:
+                    perror("unexpected character in source file");
+                    exit(SOURCE_ERR);
+            }
         }
-    file.close();
-    return 0;
+        cout<<endl;
+    }
+
+
+    if(!target || !start){
+        perror("no target or start in source file");
+        exit(SOURCE_ERR);
+    }
+    bn_kn[0] = ghost;
+    bn_kn[1] = key;
+    for(int i = 0; i < bn_kn.size(); i++)
+        std::cout << bn_kn[i] << ' ';
+
+    return bn_kn;
+
 }
 
-int get_dimensions(string line){
-    string str=line;
-    vector<string> words;
-    char delimeter=' ';
-    int n=str.size();
-    for(int i=0;i<n;i++)
-    {
-        int j=i;
-        while(str[i]!=delimeter && i<n)
-            i++;
-        string temp=str.substr(j,i-j);
-        words.push_back(temp);
+vector<int> dimensions(const string& first_line){
+    istringstream iss(first_line); //split the line
+    vector<int> size; string word;
+    //load the words from first line to size array
+    while(iss >> word){
+        int num = stoi(word);
+        size.push_back(num);
     }
-    for (auto i : words){ //C++11
-        cout <<"Parametr "<< i<< endl;
-    }
-    return 0;
+    return size;
 }
+
+Resources:: Resources(const string& map){
+    fstream new_file;
+    new_file.open(map, ios::in); //opening of the source file with map
+    string sa;
+
+    getline(new_file, sa); // get first line with size
+    vector<int> size;
+    size = dimensions(sa);
+    //transform size array to class attributes
+    height = size[0];
+    width = size[1];
+
+    // Checking whether the file is open.
+    if (new_file.is_open()) {
+
+        int row =0;
+        // filling the matrix
+        while (getline(new_file, sa)) {
+            // check lenght of line
+            if(sa.length() > width){
+                perror("width of line exceeds given dimension");
+                exit(SOURCE_ERR);
+            }
+            //convert line to vector and add it to matrix
+            vector<char> v(sa.begin(), sa.end());
+            matrix.push_back(v); row++;
+
+            //check number of lines
+            if(row > height){
+                perror("height of input exceeds given dimension");
+                exit(SOURCE_ERR);
+            }
+
+        }
+
+        vector<int> gn_kn;
+        gn_kn = check_matrix(matrix);
+        ghost_number = gn_kn[0];
+        key_number = gn_kn[1];
+        // Close the file object.
+        new_file.close();
+    }
+
+
+}
+
+
+
 
 
 
