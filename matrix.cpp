@@ -11,9 +11,9 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include<sstream>
+#include <sstream>
 #include "matrix.hpp"
-
+#include "exception.h"
 using namespace std;
 
 Resources::Resources(string map){
@@ -27,6 +27,9 @@ Resources::Resources(string map){
 void Resources::dimensions(){
     fstream new_file;
     new_file.open(src_file, ios::in); //opening of the source file with map
+    if(new_file.fail()){
+        throw Exception("Error while opening the file");
+    }
     string first_line;
     getline(new_file, first_line); // get first line with size
     istringstream iss(first_line); //split the line
@@ -48,6 +51,9 @@ void Resources::fill_matrix() {
     string line;
 
     new_file.open(src_file, ios::in); //opening of the source file with map
+    if(new_file.fail()){
+        throw Exception("Error while opening the file");
+    }
     if (new_file.is_open()) {
 
         int row = 0;
@@ -56,7 +62,8 @@ void Resources::fill_matrix() {
         while (getline(new_file, line)) {
             // check lenght of line
             if (line.length() > width) {
-
+                string err = "line exceeds the width";
+                throw Exception("Line exceeds the width");
             }
             //convert line to vector and add it to matrix
             vector<char> v(line.begin(), line.end());
@@ -65,7 +72,7 @@ void Resources::fill_matrix() {
 
             //check number of lines
             if (row > height) {
-
+                throw Exception("Row exceeds the height");
             }
         }
     }
@@ -75,6 +82,45 @@ void Resources::fill_matrix() {
     }
     new_file.close();
 
+}
+
+void Resources::check_matrix(){
+    bool target = false;
+    bool start = false;
+    for(int i=0; i<matrix.size(); i++) {
+        for (int j = 0; j <matrix[i].size(); j++) {
+            switch(matrix[i][j]) {
+                case 'T':
+                    if (target) {
+                        throw Exception("Double target in matrix");
+                    } else {
+                        target = true;
+                    }
+                    break;
+
+                case 'S':
+                    if (start) {
+                        throw Exception("Double start in matrix");
+                    } else {
+                        start = true;
+                    }
+                    break;
+
+                case 'X':
+                case '.':
+                case 'G':
+                case 'K':
+                    break;
+                default:
+                    throw Exception("Invalid char in matrix");
+
+            }
+
+        }
+    }
+    if(!target || !start){
+        throw Exception("Missing target or start in matrix");
+    }
 }
 
 void Resources::ghost_key() {
@@ -94,19 +140,6 @@ void Resources::ghost_key() {
     }
 }
 
-void debug_resources(string map){
-    Resources res(std::move(map));
-    res.dimensions();
-    cout << "height :" << res.height << endl;
-    cout << "width :" << res.width << endl;
-    cout << "MAP :"  << endl;
-    res.fill_matrix();
-    res.print_matrix();
-    res.ghost_key();
-    res.print_ghosts();
-    res.print_keys();
-}
-
 void Resources::print_matrix(){
     for(auto & i : matrix) {
         for (char j : i) {
@@ -115,6 +148,7 @@ void Resources::print_matrix(){
         cout << endl;
     }
 }
+
 void Resources::print_ghosts(){
     for(auto & ghost : ghosts) {
         cout << "ghost on :" ;
@@ -124,6 +158,7 @@ void Resources::print_ghosts(){
         cout << endl;
     }
 }
+
 void Resources::print_keys(){
     for(auto & key : keys) {
         cout << "key on :";
@@ -134,7 +169,40 @@ void Resources::print_keys(){
     }
 }
 
+void debug_resources(string map){
 
+    Resources res(std::move(map)); ///init resources
+
+    try {
+        res.dimensions();
+    } catch (Exception mce) {
+        cout << "Encoutered exception in: res.fill_matrix()" << endl;
+        cout << mce.show() << endl;
+    }
+
+    try {
+        res.fill_matrix();
+    } catch (Exception mce) {
+        cout << "Encoutered exception in: res.fill_matrix()" << endl;
+        cout << mce.show() << endl;
+    }
+
+    try {
+        res.check_matrix();
+    } catch (Exception mce) {
+        cout << "Encoutered exception in: res.check_matrix();" << endl;
+        cout << mce.show() << endl;
+    }
+
+
+    cout << "height :" << res.height << endl;
+    cout << "width :" << res.width << endl;
+    cout << "MAP :"  << endl;
+    res.print_matrix();
+    res.ghost_key();
+    res.print_ghosts();
+    res.print_keys();
+}
 
 
 

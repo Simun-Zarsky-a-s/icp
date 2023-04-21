@@ -61,6 +61,13 @@ class Resources {
         void fill_matrix() ;
 
         /**
+        * Checks validity of the content of loaded matrix
+        * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+        * @date 21/4/2023
+        */
+        void check_matrix();
+
+        /**
         * Prints content of the matrix
         * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
         * @date 21/4/2023

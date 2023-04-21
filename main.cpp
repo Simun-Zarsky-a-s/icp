@@ -13,11 +13,12 @@
 //#include "game.cpp"
 
 
+
 int main(int argc, char *argv[]) {
     using namespace std;
     cout << "Hello, World!" << endl;
 
-    debug_resources("map.txt");
+    debug_resources("map.txt"); //at the bottom oc matrix.cpp initializes whole resources
 
     // create_window_p(argc, argv);
     return 0;
