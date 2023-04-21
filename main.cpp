@@ -1,3 +1,12 @@
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Pacman like application
+    * @file main.cpp
+    * @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+    */
+
 #include <iostream>
 #include "matrix.hpp"
 #include <string>
@@ -7,15 +16,8 @@
 int main(int argc, char *argv[]) {
     using namespace std;
     cout << "Hello, World!" << endl;
-    Resources res("map.txt");
 
-    cout << "height :" << res.height << endl; ///debugging data about resources
-    cout << "width :" << res.width << endl;
-    cout << "ghosts :" << res.ghost_number << endl;
-    cout << "keys :" << res.key_number << endl;
-    cout << "MAP :"  << endl;
-    print_matrix(res.matrix);
-
+    debug_resources("map.txt");
 
     // create_window_p(argc, argv);
     return 0;
