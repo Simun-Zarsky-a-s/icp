@@ -5,11 +5,9 @@
 #include <QApplication>
 #include <QKeyEvent>
 
-Game_view::Game_view()
-: QGraphicsView(), game_scene(new Game_scene(this))
+Game_view::Game_view() : QGraphicsView(), game_scene(new Game_scene(this))
 {
-
-
+    setScene(game_scene);
 }
 /// Pokial stlaci uzivatel escape, hra sa konci
 void Game_view::KeyPressEvent(QKeyEvent *event) {

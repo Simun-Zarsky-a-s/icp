@@ -5,9 +5,10 @@
 #ifndef ICP_GAME_SCENE_H
 #define ICP_GAME_SCENE_H
 
-#endif //ICP_GAME_SCENE_H
-
 #include <QGraphicsScene>
+#include "player.h"
+#include "gamemap.h"
+#include "Sources.h"
 
 class Game_scene : public QGraphicsScene
 {
@@ -20,4 +21,10 @@ private:
     void loop();
     void generate_world();
     void restart();
+    void load_player();
+
+    QPixmap pixelMap;
+    Player* player;
 };
+
+#endif //ICP_GAME_SCENE_H
