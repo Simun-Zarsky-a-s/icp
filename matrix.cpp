@@ -49,14 +49,15 @@ void Resources::dimensions(){
 void Resources::fill_matrix() {
     fstream new_file;
     string line;
-
+    vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
     new_file.open(src_file, ios::in); //opening of the source file with map
     if(new_file.fail()){
         throw Exception("Error while opening the file");
     }
     if (new_file.is_open()) {
 
-        int row = 0;
+        int row_num = 0;
+
         getline(new_file, line);
         // filling the matrix
         while (getline(new_file, line)) {
@@ -65,16 +66,19 @@ void Resources::fill_matrix() {
                 string err = "line exceeds the width";
                 throw Exception("Line exceeds the width");
             }
-            //convert line to vector and add it to matrix
-            vector<char> v(line.begin(), line.end());
-            matrix.push_back(v);
-            row++;
+            //convert line to vector and add it by each char to the matrix
+            vector<char> line_of_chars(line.begin(), line.end());
+            for(int i =0; i < line_of_chars.size(); i++){
+                loaded_matrix[row_num][i] = line_of_chars[i];
+            }
+            row_num++;
 
             //check number of lines
-            if (row > height) {
+            if (row_num > height) {
                 throw Exception("Row exceeds the height");
             }
         }
+        matrix = loaded_matrix;
     }
     else{
         new_file.close();
