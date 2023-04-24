@@ -5,7 +5,6 @@
 #ifndef ICP_PLAYER_H
 #define ICP_PLAYER_H
 
-#endif //ICP_PLAYER_H
 
 #include <QGraphicsItem>
 #include <QTimer>
@@ -13,7 +12,7 @@
 
 
 
-class Player: public QObject, public QGraphicsPixmapItem{
+class Player: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 
 public:
@@ -21,6 +20,7 @@ public:
 
 private:
     void update_player();
+    void teleport_player();
     void key_pressed(QKeyEvent *event);
     void takeKey();
     int getKeys();
@@ -30,9 +30,13 @@ private:
     QPixmap pix_map_player_right;
     QPixmap pix_map_player_left;
     QPixmap pix_player;
+
     enum Directions{UP,DOWN,LEFT,RIGHT};
     std::vector<Directions> directions;
     int taken_keys = 0;
+    bool alive;
 
-    QTimer timer;
+    QTimer player_timer;
 };
+
+#endif //ICP_PLAYER_H

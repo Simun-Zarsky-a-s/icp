@@ -6,6 +6,7 @@
 #define PACMAN_GAMEMAP_H
 
 #include <QObject>
+#include "Sources.h"
 
 class Player;
 
@@ -16,8 +17,8 @@ class Gamemap {
 public:
     explicit Gamemap();
 
-    static int MAP_WIDTH;
-    static int MAP_HEIGHT;
+    const static int MAP_WIDTH = 3;
+    const static int MAP_HEIGHT = 3;
 
     QObject target;
     std::vector<QObject> Walls;
