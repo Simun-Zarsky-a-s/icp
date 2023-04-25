@@ -17,9 +17,14 @@ class Player: public QObject, public QGraphicsPixmapItem {
 
 public:
     explicit Player();
+    QPoint next_player_position();
+    QPoint current_position;
+    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
+    Directions direction = NONE;
 
 private:
-    void update_player();
+    void load_player_pixmap();
+    void update_player_pixmap();
     void teleport_player();
     void keyPressEvent(QKeyEvent *event) override;
     void takeKey();
@@ -29,10 +34,7 @@ private:
     QPixmap pix_map_player_down;
     QPixmap pix_map_player_right;
     QPixmap pix_map_player_left;
-    QPixmap pix_player;
 
-    enum Directions{UP,DOWN,LEFT,RIGHT};
-    std::vector<Directions> directions;
     int taken_keys = 0;
     bool alive;
 

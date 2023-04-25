@@ -11,28 +11,61 @@
 Player::Player():
         QGraphicsPixmapItem(), alive(true), taken_keys(0)
 {
-    pix_player = QPixmap("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/pacman.png");
-
+    current_position = QPoint(0,0);
+    load_player_pixmap();
     /// Default direction of player
-    setPixmap(pix_player.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+    setPixmap(pix_map_player_right);
     setTransformOriginPoint(Sources::size, Sources::size);
-    connect(&player_timer, &QTimer::timeout, this, &Player::update_player);
-    player_timer.start(30);
+    setFlag(ItemIsFocusable); // Neviem preco ale musi to tu byt
+    connect(&player_timer, &QTimer::timeout, this, &Player::update_player_pixmap);
+    player_timer.start(Sources::FPS);
 }
 
-void Player::update_player(){
-    if (directions.empty())
-        return;
+void Player::load_player_pixmap() {
+    pix_map_player_right = QPixmap("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/pacman.png");
+    pix_map_player_right = pix_map_player_right.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio);
 
-    switch (directions.front()) {
+    qreal rRadius = pix_map_player_right.width() / 2;
+
+    pix_map_player_up = pix_map_player_right.transformed(
+            QTransform().translate(-rRadius, -rRadius).rotate(-90).translate(rRadius, rRadius));
+    pix_map_player_down = pix_map_player_right.transformed(
+            QTransform().translate(-rRadius, -rRadius).rotate(90).translate(rRadius, rRadius));
+    pix_map_player_left = pix_map_player_right.transformed(
+            QTransform().scale(-1,1));
+}
+
+void Player::update_player_pixmap() {
+    switch (direction) {
         case UP:
-            setPixmap(pix_player.copy(Sources::RT_PACMAN_UP.x(), Sources::RT_PACMAN_UP.y(), Sources::size, Sources::size));
+            setPixmap(pix_map_player_up);
+            break;
         case DOWN:
-            setPixmap(pix_player.copy(Sources::RT_PACMAN_DOWN.x(), Sources::RT_PACMAN_DOWN.y(), Sources::size, Sources::size));
+            setPixmap(pix_map_player_down);
+            break;
         case RIGHT:
-            setPixmap(pix_player.copy(Sources::RT_PACMAN_RIGHT.x(), Sources::RT_PACMAN_RIGHT.y(), Sources::size, Sources::size));
+            setPixmap(pix_map_player_right);
+            break;
         case LEFT:
-            setPixmap(pix_player.copy(Sources::RT_PACMAN_LEFT.x(), Sources::RT_PACMAN_LEFT.y(), Sources::size, Sources::size));
+            setPixmap(pix_map_player_left);
+            break;
+        case NONE:
+            break;
+    }
+}
+
+QPoint Player::next_player_position() {
+    switch (direction) {
+        case UP:
+            return {current_position.x(), current_position.y() - Sources::size/4};
+        case DOWN:
+            return  {current_position.x(), current_position.y() + Sources::size/4};
+        case RIGHT:
+            return {current_position.x() + Sources::size/4, current_position.y()};
+        case LEFT:
+            return {current_position.x() - Sources::size/4, current_position.y()};
+        case NONE:
+            return {current_position.x(), current_position.y()};
     }
 }
 
@@ -42,15 +75,22 @@ void Player::teleport_player() {
 
 
 void Player::keyPressEvent(QKeyEvent *event) {
+    if (event->isAutoRepeat())
+        return;
+
     switch (event->key()) {
         case Qt::Key_Up:
-            directions.insert(directions.begin(), UP);
+            direction = UP;
+            break;
         case Qt::Key_Down:
-            directions.insert(directions.begin(), DOWN);
+            direction = DOWN;
+            break;
         case Qt::Key_Right:
-            directions.insert(directions.begin(), RIGHT);
+            direction = RIGHT;
+            break;
         case Qt::Key_Left:
-            directions.insert(directions.begin(), LEFT);
+            direction = LEFT;
+            break;
         default:
             break;
     }

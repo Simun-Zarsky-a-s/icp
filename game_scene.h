@@ -20,11 +20,15 @@ private:
     void loop();
     void generate_world();
     void load_player();
+    void move_player();
 
     QPixmap pixelMap;
     Player* player{};
+    QTimer scene_timer;
 
-    QGraphicsPixmapItem* map[Gamemap::MAP_WIDTH][Gamemap::MAP_HEIGHT]{};
+    QGraphicsPixmapItem* map[Sources::MAP_WIDTH][Sources::MAP_HEIGHT]{};
+    std::vector<QPoint> walls;
+    QPoint player_start;
 };
 
 #endif //ICP_GAME_SCENE_H

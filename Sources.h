@@ -6,18 +6,23 @@
 #define PACMAN_SOURCES_H
 #include <QPoint>
 #include <vector>
+#include <QObject>
 
 
 class Sources {
 public:
     Sources();
 
-    constexpr static QPoint RT_PACMAN_UP = QPoint(90, 0);
-    constexpr const static QPoint RT_PACMAN_DOWN = QPoint(-90,0);
-    constexpr const static QPoint RT_PACMAN_LEFT = QPoint(0,90);
-    constexpr const static QPoint RT_PACMAN_RIGHT = QPoint(0,0);
+    const static int size = 60;
+    const static int FPS = 300;
 
-    const static int size = 40;
+    const static int MAP_WIDTH = 6;
+    const static int MAP_HEIGHT = 6;
+
+    QObject target;
+    std::vector<QObject> Walls;
+    std::vector<QObject> Grass;
+    std::vector<QObject> Keys;
 
     const static std::vector<std::vector <char>> Map;
 };
