@@ -31,7 +31,7 @@ void Game_scene::generate_world() {
             {'.', '.', 'S','.'}
     };
 
-    QPixmap wall("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/wall.jpg");
+    QPixmap wall(":content/wall.jpg");
     QPixmap grass("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/grass.png");
 
     for (int i=0; i < Sources::MAP_HEIGHT; i++){

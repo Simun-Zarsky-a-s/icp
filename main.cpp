@@ -10,7 +10,7 @@
 #include <iostream>
 #include "matrix.hpp"
 #include <string>
-//#include "game.cpp"
+#include "game.cpp"
 
 
 
@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     debug_resources("map.txt"); //at the bottom oc matrix.cpp initializes whole resources
 
-    // create_window_p(argc, argv);
+    create_window_p(argc, argv);
     return 0;
 
 }
