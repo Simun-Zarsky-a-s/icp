@@ -21,6 +21,9 @@ Player::Player():
 }
 
 void Player::update_player(){
+    if (directions.empty())
+        return;
+
     switch (directions.front()) {
         case UP:
             setPixmap(pix_player.copy(Sources::RT_PACMAN_UP.x(), Sources::RT_PACMAN_UP.y(), Sources::size, Sources::size));
@@ -38,7 +41,7 @@ void Player::teleport_player() {
 }
 
 
-void Player::key_pressed(QKeyEvent *event) {
+void Player::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Up:
             directions.insert(directions.begin(), UP);
@@ -51,6 +54,7 @@ void Player::key_pressed(QKeyEvent *event) {
         default:
             break;
     }
+    QGraphicsPixmapItem::keyPressEvent(event);
 }
 
 void Player::takeKey() {

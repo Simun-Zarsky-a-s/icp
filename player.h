@@ -21,7 +21,7 @@ public:
 private:
     void update_player();
     void teleport_player();
-    void key_pressed(QKeyEvent *event);
+    void keyPressEvent(QKeyEvent *event) override;
     void takeKey();
     int getKeys();
 

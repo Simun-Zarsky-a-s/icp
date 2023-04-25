@@ -17,8 +17,8 @@ class Gamemap {
 public:
     explicit Gamemap();
 
-    const static int MAP_WIDTH = 3;
-    const static int MAP_HEIGHT = 3;
+    const static int MAP_WIDTH = 4;
+    const static int MAP_HEIGHT = 4;
 
     QObject target;
     std::vector<QObject> Walls;

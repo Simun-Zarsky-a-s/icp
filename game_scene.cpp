@@ -23,16 +23,17 @@ void Game_scene::loop() {
 
 void Game_scene::generate_world() {
     std::vector<std::vector <char>> Map_i = {
-            {'X', '.', 'X'},
-            {'.', '.', 'X'},
-            {'X', '.', 'X'}
+            {'X', '.', 'X','X'},
+            {'.', '.', 'X', 'X'},
+            {'X', '.', 'X', 'X'},
+            {'.', '.', '.','.'}
     };
 
     QPixmap wall("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/wall.jpg");
     QPixmap grass("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/grass.png");
 
-    for (int i=0; i < Gamemap::MAP_WIDTH; i++){
-        for (int k=0; k < Gamemap::MAP_HEIGHT; k++){
+    for (int i=0; i < Gamemap::MAP_HEIGHT; i++){
+        for (int k=0; k < Gamemap::MAP_WIDTH; k++){
             map[i][k] = new QGraphicsPixmapItem();
             switch (Map_i[i][k]) {
                 case 'X':
@@ -50,7 +51,7 @@ void Game_scene::generate_world() {
                 default:
                     qDebug() <<"No match :" << Map_i[i][k];
             }
-            map[i][k]->setPos(i*Sources::size, k*Sources::size);
+            map[i][k]->setPos(k*Sources::size, i*Sources::size);
             addItem(map[i][k]);
         }
     }
@@ -60,6 +61,6 @@ void Game_scene::generate_world() {
 void Game_scene::load_player(){
     player = new Player;
     player->setFocus();
-    player->setPos(0,0);
+    player->setPos(40,1);
     addItem(player);
 }
