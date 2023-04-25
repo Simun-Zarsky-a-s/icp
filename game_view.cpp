@@ -8,5 +8,5 @@
 Game_view::Game_view() : QGraphicsView(), game_scene(new Game_scene(this))
 {
     setScene(game_scene);
-    resize(600,600);
+    resize(800,800);
 }

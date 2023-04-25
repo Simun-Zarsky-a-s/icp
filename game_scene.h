@@ -17,18 +17,27 @@ public:
 
 private:
     ///TODO: TU BUDU funkcie na scenu
+    void load_pixmaps();
     void loop();
     void generate_world();
     void load_player();
     void move_player();
 
-    QPixmap pixelMap;
     Player* player{};
     QTimer scene_timer;
 
+    QPixmap wall_pixmap;
+    QPixmap grass_pixmap;
+    QPixmap door_closed_pixmap;
+    QPixmap door_open_pixmap;
+    QPixmap key_pixmap;
+
     QGraphicsPixmapItem* map[Sources::MAP_WIDTH][Sources::MAP_HEIGHT]{};
     std::vector<QPoint> walls;
+    std::vector<QPoint> keys;
+    int number_of_keys;
     QPoint player_start;
+    QPoint target;
 };
 
 #endif //ICP_GAME_SCENE_H

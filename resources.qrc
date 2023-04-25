@@ -4,5 +4,7 @@
         <file>content/grass.png</file>
         <file>content/pacman.png</file>
         <file>content/dvierka_closed.jpg</file>
+        <file>content/dvierka_open.jpg</file>
+        <file>content/key.webp</file>
     </qresource>
 </RCC>

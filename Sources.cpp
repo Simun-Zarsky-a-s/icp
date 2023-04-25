@@ -3,7 +3,14 @@
 //
 #include <iostream>
 #include "Sources.h"
+#include <QString>
 
 Sources::Sources() {
     std::cout << "masd";
 }
+
+QString Sources::Wall_file_destination = ":/content/wall.jpg";
+QString Sources::Grass_file_destination = ":/content/grass.png";
+QString Sources::Door_closed_file_destination = ":/content/dvierka_closed.jpg";
+QString Sources::Door_open_file_destination = ":/content/dvierka_open.jpg";
+QString Sources::Key_file_destination = ":/content/key.webp";
