@@ -12,13 +12,12 @@
 #include <string>
 #include "game.cpp"
 
-
-
 int main(int argc, char *argv[]) {
     using namespace std;
     cout << "Hello, World!" << endl;
 
-    debug_resources("map.txt"); //at the bottom oc matrix.cpp initializes whole resources
+    //vector<vector<char>> mapa = Resources::get_matrix();
+    //print_2D_vector(mapa);
 
     create_window_p(argc, argv);
     return 0;

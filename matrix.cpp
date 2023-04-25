@@ -16,7 +16,7 @@
 #include "exception.h"
 using namespace std;
 
-Resources::Resources(string map){
+Resources::Resources(string map){ ///todo
 
     src_file = std::move(map);
     height = -1;
@@ -42,15 +42,15 @@ void Resources::dimensions(){
         size.push_back(num);
     }
     new_file.close();
-    height = size[0];
-    width = size[1];
+    height = size[0]+2; ///todo document this
+    width = size[1]+2;
 }
 
 void Resources::fill_matrix() {
     fstream new_file;
     string line;
     vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open("map.txt", ios::in); //opening of the source file with map
     if(new_file.fail()){
         throw Exception("Error while opening the file");
     }
@@ -70,7 +70,9 @@ void Resources::fill_matrix() {
             vector<char> line_of_chars(line.begin(), line.end());
             for(int i =0; i < line_of_chars.size(); i++){
                 loaded_matrix[row_num][i] = line_of_chars[i];
+
             }
+
             row_num++;
 
             //check number of lines
@@ -91,8 +93,8 @@ void Resources::fill_matrix() {
 void Resources::check_matrix(){
     bool target = false;
     bool start = false;
-    for(int i=0; i<matrix.size(); i++) {
-        for (int j = 0; j <matrix[i].size(); j++) {
+    for(int i=0; i<matrix.size()-2; i++) {
+        for (int j = 0; j <matrix[i].size()-2; j++) {
             switch(matrix[i][j]) {
                 case 'T':
                     if (target) {
@@ -116,6 +118,7 @@ void Resources::check_matrix(){
                 case 'K':
                     break;
                 default:
+
                     throw Exception("Invalid char in matrix");
 
             }
@@ -144,7 +147,7 @@ void Resources::ghost_key() {
     }
 }
 
-void Resources::print_matrix(){
+void print_2D_vector(vector<vector<char>> matrix){
     for(auto & i : matrix) {
         for (char j : i) {
             cout << j << " ";
@@ -153,30 +156,10 @@ void Resources::print_matrix(){
     }
 }
 
-void Resources::print_ghosts(){
-    for(auto & ghost : ghosts) {
-        cout << "ghost on :" ;
-        for (int j : ghost) {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-}
 
-void Resources::print_keys(){
-    for(auto & key : keys) {
-        cout << "key on :";
-        for (int j : key) {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-}
+vector<vector <char>> Resources::get_matrix() {
 
-void debug_resources(string map){
-
-    Resources res(std::move(map)); ///init resources
-
+     Resources res(std::move("map.txt")); ///init resources
     try {
         res.dimensions();
     } catch (Exception mce) {
@@ -198,15 +181,10 @@ void debug_resources(string map){
         cout << mce.show() << endl;
     }
 
+    return res.matrix;
 
-    cout << "height :" << res.height << endl;
-    cout << "width :" << res.width << endl;
-    cout << "MAP :"  << endl;
-    res.print_matrix();
-    res.ghost_key();
-    res.print_ghosts();
-    res.print_keys();
 }
+
 
 
 

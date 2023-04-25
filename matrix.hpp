@@ -37,6 +37,14 @@ class Resources {
         vector<vector<char>> matrix; ///2D vector representing loaded map
 
         /**
+      * Initializes resesources and returns matrix
+      * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+      * @date 25/4/2023
+      */
+        static vector<vector <char>> get_matrix();
+
+
+        /**
        * Extracts given dimensions from the first line of source file
        * Initializes height and width
        * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
@@ -67,36 +75,15 @@ class Resources {
         */
         void check_matrix();
 
-        /**
-        * Prints content of the matrix
-        * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
-        * @date 21/4/2023
-        */
-        void print_matrix();
-        /**
-        * Prints all positions of ghosts
-        * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
-        * @date 21/4/2023
-        */
-        void print_ghosts();
 
-        /**
-        * Prints all positions of keys
-        * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
-        * @date 21/4/2023
-        */
-        void print_keys();
 
 };
 
 /**
- * Prints all attributes of resources for debugging purposes
- * Uses: Resources::print_keys(), Resources::print_ghosts() and Resources::print_matrix()
- * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
- * @param map file containing the map
- * @date 21/4/2023
- */
-void debug_resources(string map);
-
+       * Prints content od 2D vector
+       * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+       * @date 25/4/2023
+       */
+void print_2D_vector(vector<vector<char>> mapa);
 
 #endif
