@@ -9,6 +9,7 @@
 #include "player.h"
 #include "gamemap.h"
 #include "Sources.h"
+#include "ghost.h"
 
 class Game_scene : public QGraphicsScene {
     Q_OBJECT
@@ -22,6 +23,7 @@ private:
     void generate_world();
     void load_player();
     void move_player();
+    void load_ghost(QPoint position);
 
     Player* player{};
     QTimer scene_timer;
@@ -35,7 +37,7 @@ private:
     QGraphicsPixmapItem* map[Sources::MAP_WIDTH][Sources::MAP_HEIGHT]{};
     std::vector<QPoint> walls;
     std::vector<QPoint> keys;
-    int number_of_keys;
+    std::vector<Ghost*> ghosts;
     QPoint player_start;
     QPoint target;
 };

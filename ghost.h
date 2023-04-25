@@ -12,10 +12,15 @@ class Ghost: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT;
 
 public:
-    explicit Ghost(std::vector<std::vector <QPoint>> Walls_cur);
+    explicit Ghost();
     QPoint current_position;
 
 private:
+    void loadpixmap();
+
+    QPixmap ghost_right_pixmap;
+    QPixmap ghost_left_pixmap;
+
     std::vector<std::vector <QPoint>> Walls;
 
 

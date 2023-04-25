@@ -20,7 +20,7 @@ add_executable(icp
         Sources.cpp
         game_scene.cpp
         resources.qrc
-        )
+        ghost.cpp)
 
 target_link_libraries(icp Qt5::Widgets)
 

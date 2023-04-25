@@ -3,8 +3,18 @@
 //
 
 #include "ghost.h"
+#include "Sources.h"
+#include <QGraphicsPixmapItem>
+#include <QDebug>
 
-Ghost::Ghost(std::vector<std::vector <QPoint>> Walls_cur) : QGraphicsPixmapItem() {
-    Walls = Walls_cur;
+Ghost::Ghost() : QGraphicsPixmapItem() {
+    loadpixmap();
+    setPixmap(ghost_right_pixmap);
+    setTransformOriginPoint(Sources::size, Sources::size);
+    qDebug() << "HEREE";
+}
 
+void Ghost::loadpixmap() {
+    ghost_right_pixmap = QPixmap(Sources::Ghost_file_destination).scaled(Sources::size, Sources::size, Qt::KeepAspectRatio);
+    ghost_left_pixmap = ghost_right_pixmap.transformed(QTransform().scale(-1,1));
 }

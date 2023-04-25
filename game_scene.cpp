@@ -2,11 +2,11 @@
 // Created by samuel on 19.4.2023.
 //
 #include <QGraphicsPixmapItem>
-#include <QGraphicsLineItem>
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
 #include "matrix.hpp"
+#include "ghost.h"
 
 
 Game_scene::Game_scene(QObject *parent)
@@ -80,11 +80,11 @@ void Game_scene::generate_world() {
                     map[i][k]->setPixmap(door_closed_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
                 case 'G':
-                    /// TODO CREATE GHOST OBJECT
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
-                    break;
-                default:
-                    qDebug() <<"No match :" << Map_i[i][k];
+                    map[i][k]->setPos(k*Sources::size, i*Sources::size);
+                    addItem(map[i][k]);
+                    Game_scene::load_ghost(QPoint(k*Sources::size,i*Sources::size));
+                    continue;
             }
             map[i][k]->setPos(k*Sources::size, i*Sources::size);
             addItem(map[i][k]);
@@ -141,5 +141,14 @@ void Game_scene::move_player(){
 
     player->setPos(next_position);
     player->current_position = next_position;
+}
+
+void Game_scene::load_ghost(QPoint position) {
+    qDebug() << "ASDASD";
+    Ghost *new_ghost = new Ghost;
+    ghosts.push_back(new_ghost);
+    new_ghost->current_position = QPoint(position.x(),position.y());
+    new_ghost->setPos(position.x(),position.y());
+    addItem(new_ghost);
 }
 

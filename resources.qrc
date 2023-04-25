@@ -6,5 +6,6 @@
         <file>content/dvierka_closed.jpg</file>
         <file>content/dvierka_open.jpg</file>
         <file>content/key.webp</file>
+        <file>content/ghost.png</file>
     </qresource>
 </RCC>
