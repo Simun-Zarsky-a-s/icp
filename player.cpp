@@ -22,7 +22,7 @@ Player::Player():
 }
 
 void Player::load_player_pixmap() {
-    pix_map_player_right = QPixmap("/home/samuel/Desktop/BIT/ICP/Projekt/icp/content/pacman.png");
+    pix_map_player_right = QPixmap(":/content/pacman.png");
     pix_map_player_right = pix_map_player_right.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio);
 
     qreal rRadius = pix_map_player_right.width() / 2;

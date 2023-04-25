@@ -18,11 +18,9 @@ add_executable(icp
         welcomeWin.cpp
         game_view.h
         Sources.cpp
-        game_scene.cpp)
+        game_scene.cpp
+        resources.qrc
+        )
 
 target_link_libraries(icp Qt5::Widgets)
 
-qt_add_resources(icp imageresources
-        PREFIX "/content"
-        FILES pacman.png doors.jpg wall.jpg
-        )
