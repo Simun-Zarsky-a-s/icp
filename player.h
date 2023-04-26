@@ -21,6 +21,7 @@ public:
     QPoint current_position;
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
     Directions direction = NONE;
+    QTimer player_timer;
 
 private:
     void load_player_pixmap();
@@ -37,8 +38,6 @@ private:
 
     int taken_keys = 0;
     bool alive;
-
-    QTimer player_timer;
 };
 
 #endif //ICP_PLAYER_H

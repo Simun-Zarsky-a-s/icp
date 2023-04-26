@@ -24,6 +24,8 @@ private:
     void load_player();
     void move_player();
     void load_ghost(QPoint position);
+    static bool check_intersection(QPoint first, QPoint second);
+    void check_for_keys();
 
     Player* player{};
     QTimer scene_timer;
@@ -40,6 +42,9 @@ private:
     std::vector<Ghost*> ghosts;
     QPoint player_start;
     QPoint target;
+    bool door_open;
+
+
 };
 
 #endif //ICP_GAME_SCENE_H

@@ -11,7 +11,6 @@ Ghost::Ghost() : QGraphicsPixmapItem() {
     loadpixmap();
     setPixmap(ghost_right_pixmap);
     setTransformOriginPoint(Sources::size, Sources::size);
-    qDebug() << "HEREE";
 }
 
 void Ghost::loadpixmap() {

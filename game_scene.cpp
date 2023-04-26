@@ -12,6 +12,7 @@
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
+    door_open = false;
     load_pixmaps();
     generate_world();
     load_player();
@@ -22,6 +23,7 @@ Game_scene::Game_scene(QObject *parent)
 
 void Game_scene::loop() {
     move_player();
+    check_for_keys();
 }
 
 void Game_scene::load_pixmaps(){
@@ -66,7 +68,7 @@ void Game_scene::generate_world() {
                     break;
                 case 'K':
                     map[i][k]->setPixmap(key_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
-                    keys.emplace_back(k*Sources::size,i*Sources::size);
+                    keys.emplace_back(k,i);
                     break;
                 case '.':
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
@@ -76,7 +78,7 @@ void Game_scene::generate_world() {
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
                 case 'T':
-                    target = QPoint(k*Sources::size, i*Sources::size);
+                    target = QPoint(k, i);
                     map[i][k]->setPixmap(door_closed_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
                 case 'G':
@@ -101,50 +103,78 @@ void Game_scene::load_player(){
     addItem(player);
 }
 
+bool Game_scene::check_intersection(QPoint first, QPoint second){
+    if (first.x() < second.x()){
+        if (first.x() + Sources::size > second.x()){
+            if (first.y() < second.y()){
+                if (first.y() + Sources::size > second.y()){
+                    return true;
+                }
+            }
+            else {
+                if (first.y() - Sources::size < second.y()){
+                    return true;
+                }
+            }
+        }
+    }
+    else {
+        if (first.x() - Sources::size < second.x()){
+            if (first.y() < second.y()){
+                if (first.y() + Sources::size > second.y()){
+                    return true;
+                }
+            }
+            else {
+                if (first.y() - Sources::size < second.y()){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
 void Game_scene::move_player(){
     QPoint next_position = player->next_player_position();
     qDebug() <<"Curent : " << next_position;
     for (auto & wall : walls){
-        if (next_position.x() < wall.x()){
-            if (next_position.x() + Sources::size > wall.x()){
-                if (next_position.y() < wall.y()){
-                    if (next_position.y() + Sources::size > wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-                else {
-                    if (next_position.y() - Sources::size < wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-            }
+        if (check_intersection(next_position,wall)){
+            player->direction = Player::NONE;
+            return;
         }
-        else {
-            if (next_position.x() - Sources::size < wall.x()){
-                if (next_position.y() < wall.y()){
-                    if (next_position.y() + Sources::size > wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-                else {
-                    if (next_position.y() - Sources::size < wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-            }
-        }
+    }
+
+    if (door_open && check_intersection(next_position, QPoint(target.x()*Sources::size, target.y()*Sources::size))){
+        player->direction = Player::NONE;
+        player->player_timer.stop();
+        scene_timer.stop();
+        qDebug() << "WIN";
     }
 
     player->setPos(next_position);
     player->current_position = next_position;
 }
 
+void Game_scene::check_for_keys() {
+    for (auto & key : keys){
+        if (check_intersection(player->current_position, QPoint(key.x()*Sources::size, key.y()*Sources::size))){
+            map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+            keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
+            return;
+        }
+    }
+
+    if (keys.empty()) {
+        map[target.y()][target.x()]->setPixmap(
+                door_open_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+        door_open = true;
+    }
+
+
+}
+
 void Game_scene::load_ghost(QPoint position) {
-    qDebug() << "ASDASD";
     Ghost *new_ghost = new Ghost;
     ghosts.push_back(new_ghost);
     new_ghost->current_position = QPoint(position.x(),position.y());
