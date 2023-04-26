@@ -13,10 +13,8 @@
 
 class Sources {
 public:
-    Sources();
-
     const static int size = 60;
-    const static int FPS = 300;
+    const static int FPS = 200;
 
     const static int MAP_WIDTH = 12;
     const static int MAP_HEIGHT = 12;

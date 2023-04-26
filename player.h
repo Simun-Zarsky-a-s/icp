@@ -15,12 +15,13 @@ class Player: public QObject, public QGraphicsPixmapItem {
 
 public:
     explicit Player();
-    QPoint next_player_position();
+    QPoint next_player_position() const;
     void teleport_player(QPoint);
     QPoint current_position;
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
     Directions direction = NONE;
     QTimer player_timer;
+    bool alive;
 
 private:
     void load_player_pixmap();
@@ -32,7 +33,6 @@ private:
     QPixmap pix_map_player_right;
     QPixmap pix_map_player_left;
 
-    bool alive;
 };
 
 #endif //ICP_PLAYER_H

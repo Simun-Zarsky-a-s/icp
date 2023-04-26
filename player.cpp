@@ -11,7 +11,7 @@
 
 
 Player::Player():
-        QGraphicsPixmapItem(), alive(true), taken_keys(0)
+        QGraphicsPixmapItem(), alive(true)
 {
     load_player_pixmap();
     /// Default direction of player
@@ -55,7 +55,7 @@ void Player::update_player_pixmap() {
     }
 }
 
-QPoint Player::next_player_position() {
+QPoint Player::next_player_position() const {
     switch (direction) {
         case UP:
             return {current_position.x(), current_position.y() - Sources::size/4};

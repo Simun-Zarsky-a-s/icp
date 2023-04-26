@@ -5,9 +5,6 @@
 #include "Sources.h"
 #include <QString>
 
-Sources::Sources() {
-    std::cout << "masd";
-}
 
 QString Sources::Wall_file_destination = ":/content/wall.jpg";
 QString Sources::Grass_file_destination = ":/content/grass.png";
