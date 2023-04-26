@@ -2,16 +2,18 @@
 // Created by samuel on 19.4.2023.
 //
 #include <QGraphicsPixmapItem>
-#include <QGraphicsLineItem>
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
+#include "matrix.hpp"
+#include "ghost.h"
 
 
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
-    //setSceneRect(0,0, Gamemap::MAP_WIDTH, Gamemap::MAP_HEIGHT);
+    door_open = false;
+    load_pixmaps();
     generate_world();
     load_player();
     loop();
@@ -21,24 +23,25 @@ Game_scene::Game_scene(QObject *parent)
 
 void Game_scene::loop() {
     move_player();
+    check_for_keys();
+}
+
+void Game_scene::load_pixmaps(){
+    wall_pixmap = QPixmap(Sources::Wall_file_destination);
+    grass_pixmap = QPixmap(Sources::Grass_file_destination);
+    door_closed_pixmap = QPixmap(Sources::Door_closed_file_destination);
+    door_open_pixmap = QPixmap(Sources::Door_open_file_destination);
+    key_pixmap = QPixmap(Sources::Key_file_destination);
 }
 
 void Game_scene::generate_world() {
-    std::vector<std::vector <char>> Map_i = {
-            {'.', '.', 'X','X'},
-            {'.', '.', 'X', 'X'},
-            {'X', '.', 'X', 'X'},
-            {'.', '.', 'S','.'}
-    };
-
-    QPixmap wall(":/content/wall.jpg");
-    QPixmap grass(":/content/grass.png");
+    std::vector<std::vector <char>> Map_i = Resources::get_matrix();
 
     for (int i=0; i < Sources::MAP_HEIGHT; i++){
         if (i == 0 || i == Sources::MAP_HEIGHT - 1){
             for (int k=0; k< Sources::MAP_WIDTH;k++){
                 map[i][k] = new QGraphicsPixmapItem();
-                map[i][k]->setPixmap(wall.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                map[i][k]->setPixmap(wall_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                 walls.emplace_back(k*Sources::size,i*Sources::size);
                 map[i][k]->setPos(k*Sources::size, i*Sources::size);
                 addItem(map[i][k]);
@@ -49,7 +52,7 @@ void Game_scene::generate_world() {
         for (int k=0; k < Sources::MAP_WIDTH; k++){
             if (k == 0 || k == Sources::MAP_WIDTH - 1){
                 map[i][k] = new QGraphicsPixmapItem();
-                map[i][k]->setPixmap(wall.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                map[i][k]->setPixmap(wall_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                 walls.emplace_back(k*Sources::size,i*Sources::size);
                 map[i][k]->setPos(k*Sources::size, i*Sources::size);
                 addItem(map[i][k]);
@@ -60,24 +63,30 @@ void Game_scene::generate_world() {
             switch (Map_i[i-1][k-1]) {
                 case 'X':
                     qDebug() << i*Sources::size << " " << k*Sources::size ;
-                    map[i][k]->setPixmap(wall.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    map[i][k]->setPixmap(wall_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     walls.emplace_back(k*Sources::size,i*Sources::size);
                     break;
                 case 'K':
-                    // TODO jebni kluc
-                    continue;
+                    map[i][k]->setPixmap(key_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    keys.emplace_back(k,i);
+                    break;
                 case '.':
-                    map[i][k]->setPixmap(grass.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
                 case 'S':
                     player_start = QPoint(k*Sources::size,i*Sources::size);
-                    map[i][k]->setPixmap(grass.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
                 case 'T':
-                    // TODO jebni dvierka
+                    target = QPoint(k, i);
+                    map[i][k]->setPixmap(door_closed_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     break;
-                default:
-                    qDebug() <<"No match :" << Map_i[i][k];
+                case 'G':
+                    map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    map[i][k]->setPos(k*Sources::size, i*Sources::size);
+                    addItem(map[i][k]);
+                    Game_scene::load_ghost(QPoint(k*Sources::size,i*Sources::size));
+                    continue;
             }
             map[i][k]->setPos(k*Sources::size, i*Sources::size);
             addItem(map[i][k]);
@@ -94,45 +103,82 @@ void Game_scene::load_player(){
     addItem(player);
 }
 
-void Game_scene::move_player(){
-    QPoint next_position = player->next_player_position();
-    qDebug() <<"Curent : " << next_position;
-    for (auto & wall : walls){
-        if (next_position.x() < wall.x()){
-            if (next_position.x() + Sources::size > wall.x()){
-                if (next_position.y() < wall.y()){
-                    if (next_position.y() + Sources::size > wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-                else {
-                    if (next_position.y() - Sources::size < wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
+bool Game_scene::check_intersection(QPoint first, QPoint second){
+    if (first.x() < second.x()){
+        if (first.x() + Sources::size > second.x()){
+            if (first.y() < second.y()){
+                if (first.y() + Sources::size > second.y()){
+                    return true;
                 }
             }
-        }
-        else {
-            if (next_position.x() - Sources::size < wall.x()){
-                if (next_position.y() < wall.y()){
-                    if (next_position.y() + Sources::size > wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
-                }
-                else {
-                    if (next_position.y() - Sources::size < wall.y()){
-                        player->direction = Player::NONE;
-                        return;
-                    }
+            else {
+                if (first.y() - Sources::size < second.y()){
+                    return true;
                 }
             }
         }
     }
+    else {
+        if (first.x() - Sources::size < second.x()){
+            if (first.y() < second.y()){
+                if (first.y() + Sources::size > second.y()){
+                    return true;
+                }
+            }
+            else {
+                if (first.y() - Sources::size < second.y()){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+void Game_scene::move_player(){
+    QPoint next_position = player->next_player_position();
+    qDebug() <<"Curent : " << next_position;
+    for (auto & wall : walls){
+        if (check_intersection(next_position,wall)){
+            player->direction = Player::NONE;
+            return;
+        }
+    }
+
+    if (door_open && check_intersection(next_position, QPoint(target.x()*Sources::size, target.y()*Sources::size))){
+        player->direction = Player::NONE;
+        player->player_timer.stop();
+        scene_timer.stop();
+        qDebug() << "WIN";
+    }
 
     player->setPos(next_position);
     player->current_position = next_position;
+}
+
+void Game_scene::check_for_keys() {
+    for (auto & key : keys){
+        if (check_intersection(player->current_position, QPoint(key.x()*Sources::size, key.y()*Sources::size))){
+            map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+            keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
+            return;
+        }
+    }
+
+    if (keys.empty()) {
+        map[target.y()][target.x()]->setPixmap(
+                door_open_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+        door_open = true;
+    }
+
+
+}
+
+void Game_scene::load_ghost(QPoint position) {
+    Ghost *new_ghost = new Ghost;
+    ghosts.push_back(new_ghost);
+    new_ghost->current_position = QPoint(position.x(),position.y());
+    new_ghost->setPos(position.x(),position.y());
+    addItem(new_ghost);
 }
 

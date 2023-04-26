@@ -11,7 +11,6 @@
 Player::Player():
         QGraphicsPixmapItem(), alive(true), taken_keys(0)
 {
-    current_position = QPoint(0,0);
     load_player_pixmap();
     /// Default direction of player
     setPixmap(pix_map_player_right);
