@@ -8,6 +8,8 @@
 #include <QGraphicsPixmapItem>
 #include "Sources.h"
 
+
+
 Player::Player():
         QGraphicsPixmapItem(), alive(true), taken_keys(0)
 {
@@ -66,10 +68,12 @@ QPoint Player::next_player_position() {
         case NONE:
             return {current_position.x(), current_position.y()};
     }
+    return {0,0};
 }
 
-void Player::teleport_player() {
-
+void Player::teleport_player(QPoint location) {
+    setPos(location);
+    current_position = location;
 }
 
 
@@ -95,12 +99,3 @@ void Player::keyPressEvent(QKeyEvent *event) {
     }
     QGraphicsPixmapItem::keyPressEvent(event);
 }
-
-void Player::takeKey() {
-    taken_keys++;
-}
-
-int Player::getKeys() {
-    return taken_keys;
-}
-

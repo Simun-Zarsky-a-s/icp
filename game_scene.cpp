@@ -62,7 +62,6 @@ void Game_scene::generate_world() {
             map[i][k] = new QGraphicsPixmapItem();
             switch (Map_i[i-1][k-1]) {
                 case 'X':
-                    qDebug() << i*Sources::size << " " << k*Sources::size ;
                     map[i][k]->setPixmap(wall_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     walls.emplace_back(k*Sources::size,i*Sources::size);
                     break;
@@ -98,8 +97,7 @@ void Game_scene::generate_world() {
 void Game_scene::load_player(){
     player = new Player;
     player->setFocus();
-    player->current_position = player_start;
-    player->setPos(player_start);
+    player->teleport_player(player_start);
     addItem(player);
 }
 
