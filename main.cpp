@@ -18,8 +18,10 @@ int main(int argc, char *argv[]) {
 
     //vector<vector<char>> mapa = Resources::get_matrix();
     //print_2D_vector(mapa);
-
-    create_window_p(argc, argv);
+    int res = create_window_p(argc, argv);
+    if(!res){
+        create_window_g(argc, argv);
+    }
     return 0;
 
 }

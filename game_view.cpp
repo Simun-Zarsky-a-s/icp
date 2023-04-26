@@ -1,6 +1,8 @@
 //
 // Created by samuel on 19.4.2023.
 //
+
+
 #include "game_view.h"
 #include <QApplication>
 #include <QKeyEvent>

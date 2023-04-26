@@ -10,8 +10,6 @@
 #include <QTimer>
 #include "Sources.h"
 
-
-
 class Player: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 
