@@ -4,6 +4,7 @@
 
 #ifndef PACMAN_SOURCES_H
 #define PACMAN_SOURCES_H
+
 #include <QPoint>
 #include <vector>
 #include <QObject>
@@ -26,6 +27,7 @@ public:
     static QString Door_open_file_destination;
     static QString Key_file_destination;
     static QString Ghost_file_destination;
+    static QString Map_file_destination;
 
     QObject target;
     std::vector<QObject> Walls;

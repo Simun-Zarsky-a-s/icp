@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <string>
+#include <QString>
 
 using namespace std;
 
@@ -26,7 +27,7 @@ class Resources {
          * Constructor of class Resources
          * @param src_file file with map for the game
          */
-        explicit Resources(string src_file);
+        explicit Resources(string map);
 
         string src_file; ///file with map
         ///loaded dimensions

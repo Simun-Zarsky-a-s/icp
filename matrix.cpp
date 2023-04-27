@@ -15,7 +15,7 @@
 #include "matrix.hpp"
 #include <QApplication>
 #include <QErrorMessage>
-
+#include "Sources.h"
 using namespace std;
 
 Resources::Resources(string map){ ///todo
@@ -28,6 +28,7 @@ Resources::Resources(string map){ ///todo
 
 void Resources::dimensions(){
     fstream new_file;
+    cout << src_file << endl;
     new_file.open(src_file, ios::in); //opening of the source file with map
 
         if(new_file.fail()){
@@ -226,7 +227,7 @@ void print_2D_vector(vector<vector<char>> matrix){
 
 vector<vector <char>> Resources::get_matrix() {
 
-     Resources res("map.txt"); ///init resources
+     Resources res(Sources::Map_file_destination.toStdString()); ///init resources
 
         res.dimensions();
 
