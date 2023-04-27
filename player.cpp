@@ -18,8 +18,6 @@ Player::Player():
     setPixmap(pix_map_player_right);
     setTransformOriginPoint(Sources::size, Sources::size);
     setFlag(ItemIsFocusable); // Neviem preco ale musi to tu byt
-    connect(&player_timer, &QTimer::timeout, this, &Player::update_player_pixmap);
-    player_timer.start(Sources::FPS);
 }
 
 void Player::load_player_pixmap() {
@@ -58,13 +56,13 @@ void Player::update_player_pixmap() {
 QPoint Player::next_player_position() const {
     switch (direction) {
         case UP:
-            return {current_position.x(), current_position.y() - Sources::size/4};
+            return {current_position.x(), current_position.y() - Sources::size/Sources::SWIFT};
         case DOWN:
-            return  {current_position.x(), current_position.y() + Sources::size/4};
+            return  {current_position.x(), current_position.y() + Sources::size/Sources::SWIFT};
         case RIGHT:
-            return {current_position.x() + Sources::size/4, current_position.y()};
+            return {current_position.x() + Sources::size/Sources::SWIFT, current_position.y()};
         case LEFT:
-            return {current_position.x() - Sources::size/4, current_position.y()};
+            return {current_position.x() - Sources::size/Sources::SWIFT, current_position.y()};
         case NONE:
             return {current_position.x(), current_position.y()};
     }

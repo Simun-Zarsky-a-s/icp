@@ -10,14 +10,19 @@
 #include "gamemap.h"
 #include "Sources.h"
 #include "ghost.h"
+#include "logger.h"
+
 
 class Game_scene : public QGraphicsScene {
     Q_OBJECT
 public:
     explicit Game_scene(QObject *parent);
 
+
 private:
     ///TODO: TU BUDU funkcie na scenu
+    Logger logger;
+
     void load_pixmaps();
     void loop();
     void generate_world();
@@ -27,6 +32,7 @@ private:
     static bool check_intersection(QPoint first, QPoint second);
     void check_for_keys();
     void check_for_ghosts();
+    void loop_spectate();
 
     Player* player{};
     QTimer scene_timer;
@@ -47,5 +53,6 @@ private:
 
 
 };
+
 
 #endif //ICP_GAME_SCENE_H
