@@ -13,7 +13,9 @@
 #include <vector>
 #include <sstream>
 #include "matrix.hpp"
-#include "exception.h"
+#include <QApplication>
+#include <QErrorMessage>
+
 using namespace std;
 
 Resources::Resources(string map){ ///todo
@@ -27,9 +29,16 @@ Resources::Resources(string map){ ///todo
 void Resources::dimensions(){
     fstream new_file;
     new_file.open(src_file, ios::in); //opening of the source file with map
-    if(new_file.fail()){
-        throw Exception("Error while opening the file");
-    }
+
+        if(new_file.fail()){
+            QErrorMessage errorMessage;
+            errorMessage.showMessage(
+                    "File containing map not found.");
+            errorMessage.exec();
+            QApplication::quit();
+            exit(1);
+        }
+
     string first_line;
     getline(new_file, first_line); // get first line with size
     istringstream iss(first_line); //split the line
@@ -37,12 +46,24 @@ void Resources::dimensions(){
 
     //load the words from first line to size array
     int bad_parameter = 1;
+    int num;
     while(iss >> word){
-        int num = stoi(word);
+        try{
+             num = stoi(word); ///todo possible error here
+        }
+        catch(invalid_argument){
+            QErrorMessage errorMessage;
+            errorMessage.showMessage(
+                    "Strtoi error invalid number.");
+            errorMessage.exec();
+            QApplication::quit();
+            exit(1);
+        }
+
         size.push_back(num);
     }
     new_file.close();
-    height = size[0]+2; ///todo document this
+    height = size[0]+2;
     width = size[1]+2;
 }
 
@@ -50,10 +71,17 @@ void Resources::fill_matrix() {
     fstream new_file;
     string line;
     vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
-    new_file.open("map.txt", ios::in); //opening of the source file with map
-    if(new_file.fail()){
-        throw Exception("Error while opening the file");
-    }
+    new_file.open(src_file, ios::in); //opening of the source file with map
+        if(new_file.fail()){
+            QErrorMessage errorMessage;
+            errorMessage.showMessage(
+                    "File containing map not found.");
+            errorMessage.exec();
+            QApplication::quit();
+            exit(1);
+
+        }
+
     if (new_file.is_open()) {
 
         int row_num = 0;
@@ -62,10 +90,17 @@ void Resources::fill_matrix() {
         // filling the matrix
         while (getline(new_file, line)) {
             // check lenght of line
-            if (line.length() > width) {
-                string err = "line exceeds the width";
-                throw Exception("Line exceeds the width");
+
+            if(line.length() > width-2){
+
+                QErrorMessage errorMessage;
+                errorMessage.showMessage(
+                        "Loaded map exceeds, given width.");
+                errorMessage.exec();
+                QApplication::quit();
+                exit(1);
             }
+
             //convert line to vector and add it by each char to the matrix
             vector<char> line_of_chars(line.begin(), line.end());
             for(int i =0; i < line_of_chars.size(); i++){
@@ -76,9 +111,17 @@ void Resources::fill_matrix() {
             row_num++;
 
             //check number of lines
-            if (row_num > height) {
-                throw Exception("Row exceeds the height");
+
+            if(row_num > height-2){
+
+                QErrorMessage errorMessage;
+                errorMessage.showMessage(
+                        "Loaded map exceeds, given height.");
+                errorMessage.exec();
+                QApplication::quit();
+                exit(1);
             }
+
         }
         matrix = loaded_matrix;
     }
@@ -97,19 +140,33 @@ void Resources::check_matrix(){
         for (int j = 0; j <matrix[i].size()-2; j++) {
             switch(matrix[i][j]) {
                 case 'T':
+
                     if (target) {
-                        throw Exception("Double target in matrix");
+                        QErrorMessage errorMessage;
+                        errorMessage.showMessage(
+                                "Found more than one target in loaded map");
+                        errorMessage.exec();
+                        QApplication::quit();
+                        exit(1);
                     } else {
                         target = true;
                     }
+
                     break;
 
                 case 'S':
+
                     if (start) {
-                        throw Exception("Double start in matrix");
+                        QErrorMessage errorMessage;
+                        errorMessage.showMessage(
+                                "Found more than one start in loaded map");
+                        errorMessage.exec();
+                        QApplication::quit();
+                        exit(1);
                     } else {
                         start = true;
                     }
+
                     break;
 
                 case 'X':
@@ -119,14 +176,24 @@ void Resources::check_matrix(){
                     break;
                 default:
 
-                    throw Exception("Invalid char in matrix");
+                    QErrorMessage errorMessage;
+                    errorMessage.showMessage(
+                            "Found unvalid character in loaded map");
+                    errorMessage.exec();
+                    QApplication::quit();
+                    exit(1);
 
             }
 
         }
     }
     if(!target || !start){
-        throw Exception("Missing target or start in matrix");
+        QErrorMessage errorMessage;
+        errorMessage.showMessage(
+                "Loaded map does not contain start or target.");
+        errorMessage.exec();
+        QApplication::quit();
+        exit(1);
     }
 }
 
@@ -159,27 +226,13 @@ void print_2D_vector(vector<vector<char>> matrix){
 
 vector<vector <char>> Resources::get_matrix() {
 
-     Resources res(std::move("map.txt")); ///init resources
-    try {
+     Resources res("map.txt"); ///init resources
+
         res.dimensions();
-    } catch (Exception mce) {
-        cout << "Encoutered exception in: res.fill_matrix()" << endl;
-        cout << mce.show() << endl;
-    }
 
-    try {
         res.fill_matrix();
-    } catch (Exception mce) {
-        cout << "Encoutered exception in: res.fill_matrix()" << endl;
-        cout << mce.show() << endl;
-    }
 
-    try {
         res.check_matrix();
-    } catch (Exception mce) {
-        cout << "Encoutered exception in: res.check_matrix();" << endl;
-        cout << mce.show() << endl;
-    }
 
     return res.matrix;
 

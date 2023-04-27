@@ -5,15 +5,20 @@
 #include "game_view.h"
 #include <QDebug>
 #include <QLabel>
+#include <QFileDialog>
+#include <string>
 
 WelcomeWin::WelcomeWin(QWidget *parent)
         : QMainWindow(parent)
 {
+
     start_button = new QPushButton("Start Game", this);
 
     start_button->setGeometry(QRect(QPoint(200, 200), QSize(200, 50)));
 
     connect(start_button, &QPushButton::released, this, &WelcomeWin::start_game);
+
+
 }
 
 void WelcomeWin::start_game()
