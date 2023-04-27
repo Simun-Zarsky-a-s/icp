@@ -24,6 +24,7 @@ Game_scene::Game_scene(QObject *parent)
 void Game_scene::loop() {
     move_player();
     check_for_keys();
+    check_for_ghosts();
 }
 
 void Game_scene::load_pixmaps(){
@@ -62,7 +63,6 @@ void Game_scene::generate_world() {
             map[i][k] = new QGraphicsPixmapItem();
             switch (Map_i[i-1][k-1]) {
                 case 'X':
-                    qDebug() << i*Sources::size << " " << k*Sources::size ;
                     map[i][k]->setPixmap(wall_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     walls.emplace_back(k*Sources::size,i*Sources::size);
                     break;
@@ -98,8 +98,7 @@ void Game_scene::generate_world() {
 void Game_scene::load_player(){
     player = new Player;
     player->setFocus();
-    player->current_position = player_start;
-    player->setPos(player_start);
+    player->teleport_player(player_start);
     addItem(player);
 }
 
@@ -174,11 +173,28 @@ void Game_scene::check_for_keys() {
 
 }
 
+void Game_scene::check_for_ghosts() {
+    for (auto & ghost : ghosts){
+        if (check_intersection(ghost->current_position, player->current_position)){
+            player->alive = false;
+            player->player_timer.stop();
+            scene_timer.stop();
+        }
+    }
+
+    if (!player->alive){
+        for (auto & ghost : ghosts){
+            ghost->ghost_timer.stop();
+        }
+    }
+
+}
+
 void Game_scene::load_ghost(QPoint position) {
-    Ghost *new_ghost = new Ghost;
+    Ghost *new_ghost = new Ghost(player);
     ghosts.push_back(new_ghost);
-    new_ghost->current_position = QPoint(position.x(),position.y());
-    new_ghost->setPos(position.x(),position.y());
+    new_ghost->move_ghost(position);
     addItem(new_ghost);
 }
+
 

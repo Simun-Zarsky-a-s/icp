@@ -26,6 +26,7 @@ private:
     void load_ghost(QPoint position);
     static bool check_intersection(QPoint first, QPoint second);
     void check_for_keys();
+    void check_for_ghosts();
 
     Player* player{};
     QTimer scene_timer;

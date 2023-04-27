@@ -14,8 +14,6 @@
 
 int main(int argc, char *argv[]) {
     using namespace std;
-    cout << "Hello, World!" << endl;
-
     //vector<vector<char>> mapa = Resources::get_matrix();
     //print_2D_vector(mapa);
     int res = create_window_p(argc, argv);

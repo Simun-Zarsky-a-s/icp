@@ -8,8 +8,10 @@
 #include <QGraphicsPixmapItem>
 #include "Sources.h"
 
+
+
 Player::Player():
-        QGraphicsPixmapItem(), alive(true), taken_keys(0)
+        QGraphicsPixmapItem(), alive(true)
 {
     load_player_pixmap();
     /// Default direction of player
@@ -53,7 +55,7 @@ void Player::update_player_pixmap() {
     }
 }
 
-QPoint Player::next_player_position() {
+QPoint Player::next_player_position() const {
     switch (direction) {
         case UP:
             return {current_position.x(), current_position.y() - Sources::size/4};
@@ -66,10 +68,12 @@ QPoint Player::next_player_position() {
         case NONE:
             return {current_position.x(), current_position.y()};
     }
+    return {0,0};
 }
 
-void Player::teleport_player() {
-
+void Player::teleport_player(QPoint location) {
+    setPos(location);
+    current_position = location;
 }
 
 
@@ -95,12 +99,3 @@ void Player::keyPressEvent(QKeyEvent *event) {
     }
     QGraphicsPixmapItem::keyPressEvent(event);
 }
-
-void Player::takeKey() {
-    taken_keys++;
-}
-
-int Player::getKeys() {
-    return taken_keys;
-}
-
