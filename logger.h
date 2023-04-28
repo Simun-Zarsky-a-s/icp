@@ -33,6 +33,7 @@ public:
     void add_map_to_file();
     void add_position_ghost(int, QPoint, Player::Directions);
     void add_position_player(QPoint, Player::Directions);
+    void remove_key(QPoint);
     void end_log();
 
 private:

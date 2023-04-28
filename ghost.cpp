@@ -8,7 +8,7 @@
 #include <QDebug>
 
 
-Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem(), direction(NONE), curr_pixmap(RIGHT) {
+Ghost::Ghost(Player* game_player, Logger* logger) : QGraphicsPixmapItem() {
     loadpixmap();
     player = game_player;
     setPixmap(ghost_right_pixmap);

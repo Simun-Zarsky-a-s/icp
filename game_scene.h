@@ -34,6 +34,7 @@ private:
     void check_for_ghosts();
     void loop_spectate();
 
+
     Player* player{};
     QTimer scene_timer;
 
@@ -50,7 +51,7 @@ private:
     QPoint player_start;
     QPoint target;
     bool door_open;
-
+    int order_of_ghosts;
 
 };
 
