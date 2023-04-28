@@ -15,10 +15,13 @@
 class Sources {
 public:
     const static int size = 60;
-    const static int FPS = 200;
+    const static int FPS = 100;
 
     const static int MAP_WIDTH = 12;
     const static int MAP_HEIGHT = 12;
+
+    const static int SWIFT = 4;
+    const static bool play_log_mode = false;
 
     static QString Wall_file_destination;
     static QString Grass_file_destination;

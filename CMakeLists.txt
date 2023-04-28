@@ -12,6 +12,8 @@ add_executable(icp
         main.cpp
         matrix.cpp
         matrix.hpp
+        logger.h
+        logger.cpp
         player.h
         player.cpp
         game_view.cpp
@@ -20,7 +22,8 @@ add_executable(icp
         Sources.cpp
         game_scene.cpp
         resources.qrc
-        ghost.cpp)
+        ghost.cpp
+        )
 
 target_link_libraries(icp Qt5::Widgets)
 

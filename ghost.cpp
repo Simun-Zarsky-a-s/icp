@@ -13,8 +13,10 @@ Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem(), direction(NONE), curr
     player = game_player;
     setPixmap(ghost_right_pixmap);
     setTransformOriginPoint(Sources::size, Sources::size);
-    connect(&ghost_timer, &QTimer::timeout, this, &Ghost::loop);
-    ghost_timer.start(Sources::FPS);
+    if (!Sources::play_log_mode) {
+        connect(&ghost_timer, &QTimer::timeout, this, &Ghost::loop);
+        ghost_timer.start(Sources::FPS);
+    }
 }
 
 void Ghost::loop() {

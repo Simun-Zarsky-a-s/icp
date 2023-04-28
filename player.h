@@ -20,12 +20,12 @@ public:
     QPoint current_position;
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
     Directions direction = NONE;
-    QTimer player_timer;
+    Directions previous_direction = NONE;
     bool alive;
+    void update_player_pixmap();
 
 private:
     void load_player_pixmap();
-    void update_player_pixmap();
     void keyPressEvent(QKeyEvent *event) override;
 
     QPixmap pix_map_player_up ;

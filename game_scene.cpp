@@ -7,24 +7,39 @@
 #include <QDebug>
 #include "matrix.hpp"
 #include "ghost.h"
+#include "logger.h"
+#include <typeinfo>
+#include <iostream>
 
 
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
+    Logger* logger = new Logger;
     door_open = false;
+    cout << typeid(logger).name() << endl;
     load_pixmaps();
     generate_world();
     load_player();
-    loop();
-    connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
-    scene_timer.start(Sources::FPS);
+    if (!Sources::play_log_mode) {
+        loop();
+        connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
+        scene_timer.start(Sources::FPS);
+    }
+    else {
+        loop_spectate();
+    }
 }
 
 void Game_scene::loop() {
     move_player();
     check_for_keys();
     check_for_ghosts();
+    logger.order_counter++;
+}
+
+void Game_scene::loop_spectate() {
+
 }
 
 void Game_scene::load_pixmaps(){
@@ -139,20 +154,24 @@ void Game_scene::move_player(){
     qDebug() <<"Curent : " << next_position;
     for (auto & wall : walls){
         if (check_intersection(next_position,wall)){
-            player->direction = Player::NONE;
+            player->direction = player->previous_direction;
+            logger.add_position_player(next_position, player->direction);
             return;
         }
     }
 
     if (door_open && check_intersection(next_position, QPoint(target.x()*Sources::size, target.y()*Sources::size))){
         player->direction = Player::NONE;
-        player->player_timer.stop();
         scene_timer.stop();
+        logger.end_log();
         qDebug() << "WIN";
     }
 
+    player->update_player_pixmap();
     player->setPos(next_position);
     player->current_position = next_position;
+    player->previous_direction = player->direction;
+    logger.add_position_player(next_position, player->direction);
 }
 
 void Game_scene::check_for_keys() {
@@ -177,7 +196,6 @@ void Game_scene::check_for_ghosts() {
     for (auto & ghost : ghosts){
         if (check_intersection(ghost->current_position, player->current_position)){
             player->alive = false;
-            player->player_timer.stop();
             scene_timer.stop();
         }
     }
