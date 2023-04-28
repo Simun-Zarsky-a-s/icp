@@ -33,6 +33,7 @@ Game_scene::Game_scene(QObject *parent)
 
 void Game_scene::loop() {
     move_player();
+    move_ghost();
     check_for_keys();
     check_for_ghosts();
     logger.order_counter++;
@@ -216,4 +217,34 @@ void Game_scene::load_ghost(QPoint position) {
     addItem(new_ghost);
 }
 
+///primitive moving through the walls
+void Game_scene::move_ghost(){
 
+    QPoint target_position = player->next_player_position();
+    for (int i =0; i < ghosts.size();i++){
+
+        if(target_position.y() > ghosts[i]->current_position.y()){
+
+
+            if (target_position.x() > ghosts[i]->current_position.x()){
+
+            }
+            else{
+
+            }
+
+        }
+        else {
+
+            if (target_position.x() > ghosts[i]->current_position.x()){
+
+            }
+            else{
+
+            }
+
+        }
+        //logger.add_position_ghost(i, ghosts[i]->current_position,dir);
+    }
+
+}

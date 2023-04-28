@@ -29,6 +29,7 @@ private:
     void load_player();
     void move_player();
     void load_ghost(QPoint position);
+    void move_ghost();
     static bool check_intersection(QPoint first, QPoint second);
     void check_for_keys();
     void check_for_ghosts();
