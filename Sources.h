@@ -37,9 +37,10 @@ public:
     std::vector<QObject> Grass;
     std::vector<QObject> Keys;
 
-    const static std::vector<std::vector <char>> Map;
+    static std::string log_file;
 
-     static std::vector<std::vector <char>> Matrix;
+    const static std::vector<std::vector <char>> Map;
+    static std::vector<std::vector <char>> Matrix;
 };
 
 

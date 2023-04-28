@@ -9,20 +9,20 @@
 
 
 Logger::Logger() {
-    open_file_output();
 
+    open_file_output();
 }
 
 
 void Logger::open_file_output() {
-    file_output.open("log.txt");
+    file_output.open(Sources::log_file);
 
     if (file_output.fail())
         exit (1);
 }
 
 void Logger::open_file_input() {
-    file_input.open("log.txt", std::ios::in);
+    file_input.open(Sources::log_file, std::ios::in);
 
     if (!file_input.is_open())
         exit (1);
@@ -78,3 +78,5 @@ void Logger::read_input(){
 void Logger::remove_key(QPoint position) {
     file_output << order_counter << " "<< "K " << position.x()<< " " << position.y() << std::endl;
 }
+
+

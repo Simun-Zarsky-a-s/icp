@@ -6,6 +6,7 @@
 #include "Sources.h"
 #include <QGraphicsPixmapItem>
 #include <QDebug>
+#include "logger.h"
 
 
 Ghost::Ghost(Player* game_player, Logger* logger) : QGraphicsPixmapItem() {

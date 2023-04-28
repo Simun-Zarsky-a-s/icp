@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
+#include "matrix.hpp"
 #include "ghost.h"
 #include "logger.h"
 #include <typeinfo>
@@ -14,8 +15,9 @@
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
+    Logger* logger = new Logger;
     door_open = false;
-    order_of_ghosts = 0;
+    cout << typeid(logger).name() << endl;
     load_pixmaps();
     generate_world();
     load_player();
@@ -49,7 +51,8 @@ void Game_scene::load_pixmaps(){
 }
 
 void Game_scene::generate_world() {
-    std::vector<std::vector <char>> Map_i = Sources::Matrix;
+    
+    std::vector<std::vector <char>> Map_i =Sources::Matrix;
 
     for (int i=0; i < Sources::MAP_HEIGHT; i++){
         if (i == 0 || i == Sources::MAP_HEIGHT - 1){
@@ -177,7 +180,6 @@ void Game_scene::check_for_keys() {
         if (check_intersection(player->current_position, QPoint(key.x()*Sources::size, key.y()*Sources::size))){
             map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
             keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
-            logger.remove_key(key);
             return;
         }
     }
@@ -211,8 +213,6 @@ void Game_scene::load_ghost(QPoint position) {
     Ghost *new_ghost = new Ghost(player, &logger);
     ghosts.push_back(new_ghost);
     new_ghost->move_ghost(position);
-    new_ghost->ghost_order = order_of_ghosts;
-    order_of_ghosts++;
     addItem(new_ghost);
 }
 

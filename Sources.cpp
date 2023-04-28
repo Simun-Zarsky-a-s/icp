@@ -15,7 +15,12 @@ QString Sources::Ghost_file_destination = ":/content/ghost.png";
 QString Sources::Map_file_destination = "../examples/map.txt";
 
 
-Resources res("../examples/map.txt");
+Resources res(Sources::Map_file_destination.toStdString());
 int Sources::MAP_WIDTH = res.get_width();
 int Sources::MAP_HEIGHT = res.get_height();
 vector<vector<char>> Sources::Matrix = Resources::get_matrix();
+
+std::string Sources::log_file = "log.txt";//default value
+
+
+

@@ -36,6 +36,8 @@ public:
     void remove_key(QPoint);
     void end_log();
 
+
+
 private:
     void read_input();
     std::ifstream file_input;

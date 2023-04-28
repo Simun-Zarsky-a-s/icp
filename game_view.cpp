@@ -6,6 +6,7 @@
 #include "game_view.h"
 #include <QApplication>
 #include <QKeyEvent>
+#include "Sources.h"
 
 Game_view::Game_view() : QGraphicsView(), game_scene(new Game_scene(this))
 {
