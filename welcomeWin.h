@@ -15,9 +15,11 @@ public:
 
 private slots:
     void start_game();
+    void open_map();
     void open_file();
 private:
     QPushButton *start_button;
+    QPushButton *map_button;
     QPushButton *file_button;
 };
 #endif //ICP_WELCOMEWIN_H
