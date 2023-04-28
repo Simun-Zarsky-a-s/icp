@@ -74,3 +74,7 @@ void Logger::read_input(){
     }
 
 }
+
+void Logger::remove_key(QPoint position) {
+    file_output << order_counter << " "<< "K " << position.x()<< " " << position.y() << std::endl;
+}
