@@ -68,6 +68,91 @@ void Resources::dimensions(){
     width = size[1]+2;
 }
 
+int Resources::get_width(){
+    fstream new_file;
+    cout << src_file << endl;
+    new_file.open(src_file, ios::in); //opening of the source file with map
+
+    if(new_file.fail()){
+        QErrorMessage errorMessage;
+        errorMessage.showMessage(
+                "File containing map not found.");
+        errorMessage.exec();
+        QApplication::quit();
+        exit(1);
+    }
+
+    string first_line;
+    getline(new_file, first_line); // get first line with size
+    istringstream iss(first_line); //split the line
+    vector<int> size; string word;
+
+    //load the words from first line to size array
+    int bad_parameter = 1;
+    int num;
+    while(iss >> word){
+        try{
+            num = stoi(word); ///todo possible error here
+        }
+        catch(invalid_argument){
+            QErrorMessage errorMessage;
+            errorMessage.showMessage(
+                    "Strtoi error invalid number.");
+            errorMessage.exec();
+            QApplication::quit();
+            exit(1);
+        }
+
+        size.push_back(num);
+    }
+    new_file.close();
+
+    return size[1]+2;
+}
+
+
+int Resources::get_height(){
+    fstream new_file;
+    cout << src_file << endl;
+    new_file.open(src_file, ios::in); //opening of the source file with map
+
+    if(new_file.fail()){
+        QErrorMessage errorMessage;
+        errorMessage.showMessage(
+                "File containing map not found.");
+        errorMessage.exec();
+        QApplication::quit();
+        exit(1);
+    }
+
+    string first_line;
+    getline(new_file, first_line); // get first line with size
+    istringstream iss(first_line); //split the line
+    vector<int> size; string word;
+
+    //load the words from first line to size array
+    int bad_parameter = 1;
+    int num;
+    while(iss >> word){
+        try{
+            num = stoi(word); ///todo possible error here
+        }
+        catch(invalid_argument){
+            QErrorMessage errorMessage;
+            errorMessage.showMessage(
+                    "Strtoi error invalid number.");
+            errorMessage.exec();
+            QApplication::quit();
+            exit(1);
+        }
+
+        size.push_back(num);
+    }
+    new_file.close();
+
+    return size[0]+2;
+}
+
 void Resources::fill_matrix() {
     fstream new_file;
     string line;
@@ -214,16 +299,6 @@ void Resources::ghost_key() {
 
     }
 }
-
-void print_2D_vector(vector<vector<char>> matrix){
-    for(auto & i : matrix) {
-        for (char j : i) {
-            cout << j << " ";
-        }
-        cout << endl;
-    }
-}
-
 
 vector<vector <char>> Resources::get_matrix() {
 

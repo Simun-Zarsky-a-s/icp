@@ -43,7 +43,7 @@ private:
     QPixmap door_open_pixmap;
     QPixmap key_pixmap;
 
-    QGraphicsPixmapItem* map[Sources::MAP_WIDTH][Sources::MAP_HEIGHT]{};
+    QGraphicsPixmapItem* map[100][100]{};
     std::vector<QPoint> walls;
     std::vector<QPoint> keys;
     std::vector<Ghost*> ghosts;

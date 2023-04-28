@@ -5,7 +5,6 @@
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
-#include "matrix.hpp"
 #include "ghost.h"
 #include "logger.h"
 #include <typeinfo>
@@ -51,7 +50,7 @@ void Game_scene::load_pixmaps(){
 }
 
 void Game_scene::generate_world() {
-    std::vector<std::vector <char>> Map_i = Resources::get_matrix();
+    std::vector<std::vector <char>> Map_i = Sources::Matrix;
 
     for (int i=0; i < Sources::MAP_HEIGHT; i++){
         if (i == 0 || i == Sources::MAP_HEIGHT - 1){

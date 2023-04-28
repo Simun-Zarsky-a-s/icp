@@ -52,6 +52,8 @@ class Resources {
        * @date 21/4/2023
        */
         void dimensions();
+        int get_width();
+        int get_height();
 
         /**
         * Takes positions of ghosts and keys from matrix

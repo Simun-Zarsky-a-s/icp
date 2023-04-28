@@ -4,7 +4,7 @@
 #include <iostream>
 #include "Sources.h"
 #include <QString>
-
+#include "matrix.hpp"
 
 QString Sources::Wall_file_destination = ":/content/wall.jpg";
 QString Sources::Grass_file_destination = ":/content/grass.png";
@@ -13,3 +13,9 @@ QString Sources::Door_open_file_destination = ":/content/dvierka_open.jpg";
 QString Sources::Key_file_destination = ":/content/key.webp";
 QString Sources::Ghost_file_destination = ":/content/ghost.png";
 QString Sources::Map_file_destination = "../examples/map.txt";
+
+
+Resources res("../examples/map.txt");
+int Sources::MAP_WIDTH = res.get_width();
+int Sources::MAP_HEIGHT = res.get_height();
+vector<vector<char>> Sources::Matrix = Resources::get_matrix();
