@@ -25,6 +25,7 @@ Game_scene::Game_scene(QObject *parent)
         loop();
         connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
         scene_timer.start(Sources::FPS);
+        connect(player, &Player::mousePressEvent, player, &Player::mousePressEvent);
     }
     else {
         loop_spectate();

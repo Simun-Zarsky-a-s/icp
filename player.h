@@ -9,6 +9,9 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include "Sources.h"
+#include <QMouseEvent>
+#include <QGraphicsSceneMouseEvent>
+
 
 class Player: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
@@ -23,6 +26,8 @@ public:
     Directions previous_direction = NONE;
     bool alive;
     void update_player_pixmap();
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
 
 private:
     void load_player_pixmap();
