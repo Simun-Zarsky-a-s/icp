@@ -39,6 +39,8 @@ public:
 
     static std::string log_file;
 
+    static int mode;
+
     const static std::vector<std::vector <char>> Map;
     static std::vector<std::vector <char>> Matrix;
 };

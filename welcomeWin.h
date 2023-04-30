@@ -17,9 +17,13 @@ private slots:
     void start_game();
     void open_map();
     void open_file();
+    void mode_game();
+    void mode_log();
 private:
     QPushButton *start_button;
     QPushButton *map_button;
     QPushButton *file_button;
+    QPushButton *game_button;
+    QPushButton *log_button;
 };
 #endif //ICP_WELCOMEWIN_H

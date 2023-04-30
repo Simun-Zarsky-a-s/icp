@@ -34,7 +34,7 @@ Game_scene::Game_scene(QObject *parent)
 
 void Game_scene::loop() {
     move_player();
-    move_ghost();
+   // move_ghost();
     check_for_keys();
     check_for_ghosts();
     logger.order_counter++;

@@ -22,5 +22,7 @@ vector<vector<char>> Sources::Matrix = Resources::get_matrix();
 
 std::string Sources::log_file = "log.txt";//default value
 
+int Sources::mode = 0; //default mode game
+
 
 
