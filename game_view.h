@@ -16,7 +16,6 @@ public:
 
 private:
     Game_scene *game_scene;
-
 };
 
 #endif //ICP_GAME_VIEW_H

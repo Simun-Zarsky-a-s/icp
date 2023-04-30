@@ -80,20 +80,33 @@ void Player::keyPressEvent(QKeyEvent *event) {
         return;
 
     switch (event->key()) {
+        case Qt::Key_W:
         case Qt::Key_Up:
             direction = UP;
             break;
+
+        case Qt::Key_S:
         case Qt::Key_Down:
             direction = DOWN;
             break;
+
+        case Qt::Key_F:
         case Qt::Key_Right:
             direction = RIGHT;
             break;
+
+        case Qt::Key_A:
         case Qt::Key_Left:
             direction = LEFT;
             break;
+
         default:
             break;
     }
     QGraphicsPixmapItem::keyPressEvent(event);
+}
+
+void Player::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    qDebug() << event->type();
+
 }
