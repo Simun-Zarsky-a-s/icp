@@ -44,7 +44,7 @@ void Ghost::change_pixmap(){
 }
 
 void Ghost::get_next_direction(QPoint target){
-    if(current_position.x() < target.x() ){
+    if(current_position.x() < target.x()){
         direction = RIGHT;
 
     }

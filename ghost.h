@@ -27,6 +27,7 @@ public:
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
     Directions direction;
     Directions previous_direction;
+    Directions s_direction;
     Directions curr_pixmap;
 
 private:
@@ -39,11 +40,6 @@ private:
     QPixmap ghost_right_pixmap;
     QPixmap ghost_left_pixmap;
     Player* player;
-
-
-
-
-
     std::vector<std::vector <QPoint>> Walls;
 
 
