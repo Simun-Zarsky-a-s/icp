@@ -225,15 +225,14 @@ void Game_scene::update_ghost(){
     for(int i =0; i < ghosts.size(); i++){
         qDebug() << "ghost" << i;
 
-        ghosts[i]->get_next_direction(player->current_position, change);
+        ghosts[i]->get_next_direction(player->current_position, ghosts[i]->change);
         QPoint next_point = ghosts[i]->get_next_position();
 
         for (auto & wall : walls){
             if (check_intersection(next_point,wall)){
-
                 //logger.add_position_player(next_position, player->direction);
                 qDebug() << "hit";
-                change = true;
+                ghosts[i]->change = !ghosts[i]->change;
                 return;
             }
             //next_point = ghosts[i]->get_next_position();
@@ -243,8 +242,9 @@ void Game_scene::update_ghost(){
         ghosts[i]->previous_direction = ghosts[i]->direction;
         ghosts[i]->move_ghost(next_point);
         ghosts[i]->change_pixmap();
+        //logger.add_position_ghost(i, next_point, ghosts[i]->direction);
 
     }
-    change = false;
+
     qDebug() << "update ghost done";
 }

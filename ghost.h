@@ -23,6 +23,7 @@ public:
     void get_next_direction(QPoint target, bool change);
     QPoint get_next_position();
     void change_pixmap();
+    bool change = false;
 
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
     Directions direction;
