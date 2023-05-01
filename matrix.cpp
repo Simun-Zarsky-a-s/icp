@@ -32,11 +32,7 @@ void Resources::dimensions(){
     new_file.open(src_file, ios::in); //opening of the source file with map
 
         if(new_file.fail()){
-            QErrorMessage errorMessage;
-            errorMessage.showMessage(
-                    "File containing map not found.");
-            errorMessage.exec();
-            QApplication::quit();
+            std::cerr <<  "File containing map not found.";
             exit(1);
         }
 
@@ -53,11 +49,9 @@ void Resources::dimensions(){
              num = stoi(word); ///todo possible error here
         }
         catch(invalid_argument){
-            QErrorMessage errorMessage;
-            errorMessage.showMessage(
-                    "Strtoi error invalid number.");
-            errorMessage.exec();
-            QApplication::quit();
+            std::cerr <<
+                      "Strtoi error invalid number.";
+
             exit(1);
         }
 
@@ -74,11 +68,7 @@ int Resources::get_width(){
     new_file.open(src_file, ios::in); //opening of the source file with map
 
     if(new_file.fail()){
-        QErrorMessage errorMessage;
-        errorMessage.showMessage(
-                "File containing map not found.");
-        errorMessage.exec();
-        QApplication::quit();
+        std::cerr <<  "File containing map not found.";
         exit(1);
     }
 
@@ -95,11 +85,9 @@ int Resources::get_width(){
             num = stoi(word); ///todo possible error here
         }
         catch(invalid_argument){
-            QErrorMessage errorMessage;
-            errorMessage.showMessage(
-                    "Strtoi error invalid number.");
-            errorMessage.exec();
-            QApplication::quit();
+            std::cerr <<
+                    "Strtoi error invalid number.";
+
             exit(1);
         }
 
@@ -117,11 +105,8 @@ int Resources::get_height(){
     new_file.open(src_file, ios::in); //opening of the source file with map
 
     if(new_file.fail()){
-        QErrorMessage errorMessage;
-        errorMessage.showMessage(
-                "File containing map not found.");
-        errorMessage.exec();
-        QApplication::quit();
+        std::cerr <<
+                "File containing map not found.";
         exit(1);
     }
 
@@ -138,11 +123,8 @@ int Resources::get_height(){
             num = stoi(word); ///todo possible error here
         }
         catch(invalid_argument){
-            QErrorMessage errorMessage;
-            errorMessage.showMessage(
-                    "Strtoi error invalid number.");
-            errorMessage.exec();
-            QApplication::quit();
+           std:cerr<< "Strtoi error invalid number.";
+
             exit(1);
         }
 
@@ -159,11 +141,8 @@ void Resources::fill_matrix() {
     vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
     new_file.open(src_file, ios::in); //opening of the source file with map
         if(new_file.fail()){
-            QErrorMessage errorMessage;
-            errorMessage.showMessage(
-                    "File containing map not found.");
-            errorMessage.exec();
-            QApplication::quit();
+            std::cerr <<   "File containing map not found.";
+
             exit(1);
 
         }
@@ -178,13 +157,9 @@ void Resources::fill_matrix() {
             // check lenght of line
 
             if(line.length() > width-2){
-
-                QErrorMessage errorMessage;
-                errorMessage.showMessage(
-                        "Loaded map exceeds, given width.");
-                errorMessage.exec();
-                QApplication::quit();
+                std::cerr <<"Loaded map exceeds, given width." ;
                 exit(1);
+
             }
 
             //convert line to vector and add it by each char to the matrix
@@ -199,12 +174,7 @@ void Resources::fill_matrix() {
             //check number of lines
 
             if(row_num > height-2){
-
-                QErrorMessage errorMessage;
-                errorMessage.showMessage(
-                        "Loaded map exceeds, given height.");
-                errorMessage.exec();
-                QApplication::quit();
+                std::cerr <<"Loaded map exceeds, given height." ;
                 exit(1);
             }
 
@@ -228,11 +198,7 @@ void Resources::check_matrix(){
                 case 'T':
 
                     if (target) {
-                        QErrorMessage errorMessage;
-                        errorMessage.showMessage(
-                                "Found more than one target in loaded map");
-                        errorMessage.exec();
-                        QApplication::quit();
+                        std::cerr <<"Found more than one target in loaded map" ;
                         exit(1);
                     } else {
                         target = true;
@@ -243,11 +209,8 @@ void Resources::check_matrix(){
                 case 'S':
 
                     if (start) {
-                        QErrorMessage errorMessage;
-                        errorMessage.showMessage(
-                                "Found more than one start in loaded map");
-                        errorMessage.exec();
-                        QApplication::quit();
+                        std::cerr <<"Found more than one start in loaded map" ;
+
                         exit(1);
                     } else {
                         start = true;
@@ -262,11 +225,7 @@ void Resources::check_matrix(){
                     break;
                 default:
 
-                    QErrorMessage errorMessage;
-                    errorMessage.showMessage(
-                            "Found unvalid character in loaded map");
-                    errorMessage.exec();
-                    QApplication::quit();
+                    std::cerr << "Found invalid character in loaded map" ;
                     exit(1);
 
             }
@@ -274,31 +233,11 @@ void Resources::check_matrix(){
         }
     }
     if(!target || !start){
-        QErrorMessage errorMessage;
-        errorMessage.showMessage(
-                "Loaded map does not contain start or target.");
-        errorMessage.exec();
-        QApplication::quit();
+        std::cerr <<"Loaded map does not contain start or target." ;
         exit(1);
     }
 }
 
-void Resources::ghost_key() {
-    vector<int> position(2);
-    for(int i=0; i<matrix.size(); i++) {
-            for (int j = 0; j <matrix[i].size(); j++) {
-                position[0] = i;
-                position[1] = j;
-                if (matrix[i][j] == 'G'){
-                    ghosts.push_back(position);
-                }
-                if (matrix[i][j] == 'K'){
-                    keys.push_back(position);
-                }
-            }
-
-    }
-}
 
 vector<vector <char>> Resources::get_matrix() {
 

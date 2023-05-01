@@ -43,29 +43,47 @@ void Ghost::change_pixmap(){
         setPixmap(ghost_right_pixmap);
 }
 
-void Ghost::get_next_direction(QPoint target){
-    if(current_position.x() < target.x()){
-        direction = RIGHT;
-
-    }
-    else if (current_position.x() > target.x()){
-        direction = LEFT;
-
+void Ghost::get_next_direction(QPoint target, bool change){
+    qDebug()<< change;
+    if (!change){
+        if(current_position.x() < target.x()){
+            direction = RIGHT;
+        }
+        else if (current_position.x() > target.x()){
+            direction = LEFT;
+        }
+        else{
+            if(current_position.y() < target.y()){
+                direction = UP;
+            }
+            else if(current_position.y() > target.y()){
+                direction = DOWN;
+            }
+            else{
+                direction = NONE;
+            }
+        }
     }
     else{
         if(current_position.y() < target.y()){
             direction = UP;
-
         }
-        else if(current_position.y() > target.y()){
+        else if (current_position.y() > target.y()){
             direction = DOWN;
-
         }
         else{
-            direction = NONE;
-
+            if(current_position.x() < target.x()){
+                direction = RIGHT;
+            }
+            else if(current_position.x() > target.x()){
+                direction = LEFT;
+            }
+            else{
+                direction = NONE;
+            }
         }
     }
+
 }
 
 QPoint Ghost::get_next_position(){

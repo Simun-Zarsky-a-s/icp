@@ -75,7 +75,6 @@ void WelcomeWin::start_game()
 }
 void WelcomeWin::open_map()
 {
-
     QString path = QFileDialog::getOpenFileName();
     if(!path.isEmpty()) { //empty path means user canceled the dialog
         qDebug() << path;

@@ -20,7 +20,7 @@ public:
     void move_ghost(QPoint);
     QTimer ghost_timer;
     int ghost_order;
-    void get_next_direction(QPoint target);
+    void get_next_direction(QPoint target, bool change);
     QPoint get_next_position();
     void change_pixmap();
 

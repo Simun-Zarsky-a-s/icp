@@ -52,6 +52,7 @@ private:
     QPoint player_start;
     QPoint target;
     bool door_open;
+    bool change;
     int order_of_ghosts;
 
 };
