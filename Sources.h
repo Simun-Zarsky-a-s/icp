@@ -21,6 +21,7 @@ public:
      static int MAP_HEIGHT;
 
     const static int SWIFT = 4;
+    const static int GHOST_SWIFT = 16;
     const static bool play_log_mode = false;
 
     static QString Wall_file_destination;

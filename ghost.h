@@ -20,11 +20,20 @@ public:
     void move_ghost(QPoint);
     QTimer ghost_timer;
     int ghost_order;
+    void get_next_direction(QPoint target);
+    QPoint get_next_position();
+    void change_pixmap();
+
+    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
+    Directions direction;
+    Directions previous_direction;
+    Directions curr_pixmap;
 
 private:
     void loadpixmap();
-    void change_pixmap();
+
     void loop();
+
 
 
     QPixmap ghost_right_pixmap;
@@ -33,9 +42,7 @@ private:
 
 
 
-    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
-    Directions direction;
-    Directions curr_pixmap;
+
 
     std::vector<std::vector <QPoint>> Walls;
 

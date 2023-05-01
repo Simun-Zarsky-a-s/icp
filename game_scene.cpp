@@ -34,7 +34,7 @@ Game_scene::Game_scene(QObject *parent)
 
 void Game_scene::loop() {
     move_player();
-   // move_ghost();
+    update_ghost();
     check_for_keys();
     check_for_ghosts();
     logger.order_counter++;
@@ -103,6 +103,7 @@ void Game_scene::generate_world() {
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     map[i][k]->setPos(k*Sources::size, i*Sources::size);
                     addItem(map[i][k]);
+
                     Game_scene::load_ghost(QPoint(k*Sources::size,i*Sources::size));
                     continue;
             }
@@ -218,34 +219,18 @@ void Game_scene::load_ghost(QPoint position) {
     addItem(new_ghost);
 }
 
-///primitive moving through the walls
-void Game_scene::move_ghost(){
+void Game_scene::update_ghost(){
+    qDebug() << "update ghost";
+    for(int i =0; i < ghosts.size(); i++){
+        qDebug() << "ghost" << i;
 
-    QPoint target_position = player->next_player_position();
-    for (int i =0; i < ghosts.size();i++){
+        ghosts[i]->get_next_direction(player->current_position);
+        QPoint next_point = ghosts[i]->get_next_position();
 
-        if(target_position.y() > ghosts[i]->current_position.y()){
-
-
-            if (target_position.x() > ghosts[i]->current_position.x()){
-
-            }
-            else{
-
-            }
-
-        }
-        else {
-
-            if (target_position.x() > ghosts[i]->current_position.x()){
-
-            }
-            else{
-
-            }
-
-        }
-        //logger.add_position_ghost(i, ghosts[i]->current_position,dir);
+        //next_point = ghosts[i]->get_next_position();
+        ghosts[i]->previous_direction = ghosts[i]->direction;
+        ghosts[i]->move_ghost(next_point);
+        ghosts[i]->change_pixmap();
     }
-
+    qDebug() << "update ghost done";
 }
