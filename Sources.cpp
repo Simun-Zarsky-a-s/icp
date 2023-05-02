@@ -24,8 +24,6 @@ std::string Sources::log_file = "log.txt";//default value
 
 bool Sources::play_log_mode = false; //default mode game
 
-int Sources::argc = 0;
-
-char * Sources::argv[] = {nullptr};
+bool Sources::win = false;
 
 

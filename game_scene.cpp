@@ -234,8 +234,10 @@ void Game_scene::move_player(){
         player->direction = Sources::NONE;
         scene_timer.stop();
         logger.end_log();
-        QApplication::quit();
+        Sources::win = true;
         qDebug() << "WIN";
+        QApplication::quit();
+
     }
 
     player->update_player_pixmap();
@@ -276,8 +278,8 @@ void Game_scene::check_for_ghosts() {
         for (auto & ghost : ghosts){
             ghost->ghost_timer.stop();
         }
+        Sources::win = false;
         qDebug() << "defeat";
-
         QApplication::quit();
     }
 

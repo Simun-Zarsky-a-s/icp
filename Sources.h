@@ -42,8 +42,7 @@ public:
 
     static std::string log_file;
 
-    static int argc;
-    static char *argv[];
+    static bool win;
 
     const static std::vector<std::vector <char>> Map;
     static std::vector<std::vector <char>> Matrix;
