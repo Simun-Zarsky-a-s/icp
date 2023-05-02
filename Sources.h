@@ -20,8 +20,8 @@ public:
      static int MAP_WIDTH;
      static int MAP_HEIGHT;
 
-    const static int SWIFT = 32;
-    const static int GHOST_SWIFT = 32;
+    const static int SWIFT = 4;
+    const static int GHOST_SWIFT = 16;
     static bool play_log_mode;
 
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};

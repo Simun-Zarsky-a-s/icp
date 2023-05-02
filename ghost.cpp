@@ -27,6 +27,7 @@ void Ghost::loop() {
 
 void Ghost::teleport(QPoint position) {
     setPos(position);
+    current_position = position;
 }
 
 void Ghost::loadpixmap() {

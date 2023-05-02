@@ -6,7 +6,7 @@
 #include <sstream>
 #include <string>
 #include <iostream>
-
+#include <QDebug>
 
 Logger::Logger() = default;
 
@@ -31,12 +31,12 @@ void Logger::open_file_input() {
 
 
 void Logger::add_map_to_file() {
-    file_output << Sources::MAP_HEIGHT << " " << Sources::MAP_WIDTH << std::endl;
-    std::vector<std::vector <char>> Map_i = Resources::get_matrix();
+    file_output << Sources::MAP_HEIGHT - 2 << " " << Sources::MAP_WIDTH - 2 << std::endl;
+    std::vector<std::vector <char>> Map_i = Sources::Matrix;
 
-    for (const auto & i : Map_i) {
-        for (char j : i) {
-            file_output << j << " ";
+    for (int i=0; i < Map_i.size() - 2; i++) {
+        for (int j=0; j < Map_i[i].size() - 2;j++) {
+            file_output << Map_i[i][j] << " ";
         }
         file_output << std::endl;
     }
@@ -58,6 +58,7 @@ void Logger::remove_key(QPoint position) {
 }
 
 void Logger::end_log() {
+    file_output << order_counter << " "<< "E" << std::endl;
     file_output.close();
 }
 
@@ -87,7 +88,7 @@ void Logger::read_input(){
 
     while (getline(file_input, line)) {
         if (!skipped_map){
-            if (line != "START")
+            if (line == "START")
                 skipped_map = true;
             continue;
         }
@@ -101,9 +102,10 @@ void Logger::read_input(){
             tik_log.clear();
         }
 
+        ss >> word;
+
         if (word == "P"){
             current_log.entity = 'P';
-
             ss >> word;
             current_log.direction = extract_direction(std::stoi(word));
 
@@ -140,8 +142,12 @@ void Logger::read_input(){
             int y = std::stoi(word);
             current_log.position = QPoint(x,y);
         }
+        else if (word == "E"){
+            current_log.entity = 'E';
+        }
         tik_log.emplace_back(current_log);
     }
+    log_vector.emplace_back(tik_log);
 }
 
 std::vector<Logger::Log> Logger::get_instruction_by_index(int index) {

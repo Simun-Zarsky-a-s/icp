@@ -5,7 +5,6 @@
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
-#include <typeinfo>
 #include <iostream>
 
 
@@ -13,7 +12,7 @@ Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
     door_open = false;
-    cout << typeid(logger).name() << endl;
+    command = Sources::NONE;
     load_pixmaps();
     generate_world();
     load_player();
@@ -42,8 +41,25 @@ void Game_scene::loop() {
 }
 
 void Game_scene::loop_spectate() {
+    bool forward = false;
+
+    if (command == Sources::NONE)
+        return;
+
+    if (command == Sources::RIGHT){
+        forward = true;
+        current_index++;
+    }
+    else if (command == Sources::LEFT && current_index > 1){
+        current_index--;
+    }
+    else {
+        return;
+    }
+
     std::vector<Logger::Log> tik_log = logger.get_instruction_by_index(current_index);
     for (auto log : tik_log){
+        qDebug() << log.entity;
         if (log.entity == 'P'){
             player->teleport_player(log.position);
             player->direction = log.direction;
@@ -54,7 +70,37 @@ void Game_scene::loop_spectate() {
             ghosts[log.order]->direction = log.direction;
             ghosts[log.order]->change_pixmap();
         }
+        else if (log.entity == 'K'){
+            if (forward) {
+                map[log.position.x()][log.position.y()]->setPixmap(
+                        grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                keys.erase(std::remove(keys.begin(), keys.end(), QPoint(log.position.y(), log.position.x())), keys.end());
+
+                qDebug() << keys.empty();
+                if (keys.empty()){
+                    map[target.y()][target.x()]->setPixmap(
+                            door_open_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    door_open = true;
+                }
+            }
+            else{
+                map[log.position.x()][log.position.y()]->setPixmap(key_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                keys.emplace_back(log.position.y(),log.position.x());
+                if (door_open){
+                    map[target.y()][target.x()]->setPixmap(
+                            door_closed_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
+                    door_open = false;
+                }
+            }
+        }
+        else if (log.entity == 'E'){
+            current_index--;
+            qDebug() << current_index;
+        }
     }
+
+    if (!fast_forward)
+        command = Sources::NONE;
 
 }
 
@@ -202,7 +248,7 @@ void Game_scene::check_for_keys() {
         if (check_intersection(player->current_position, QPoint(key.x()*Sources::size, key.y()*Sources::size))){
             map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
             keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
-            logger.remove_key(QPoint(key.x()*Sources::size, key.y()*Sources::size));
+            logger.remove_key(QPoint(key.y(), key.x()));
             return;
         }
     }
@@ -233,7 +279,7 @@ void Game_scene::check_for_ghosts() {
 }
 
 void Game_scene::load_ghosts() {
-    int order = 1;
+    int order = 0;
     for (auto position : ghost_to_be_loaded) {
         auto *new_ghost = new Ghost(player);
         ghosts.push_back(new_ghost);
@@ -281,6 +327,12 @@ void Game_scene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void Game_scene::keyPressEvent(QKeyEvent *event) {
     player->mouse_mode = false;
+
+    if (event->count() == 2)
+        fast_forward = true;
+    else
+        fast_forward = false;
+
     switch (event->key()) {
         case Qt::Key_W:
         case Qt::Key_Up:
@@ -303,6 +355,12 @@ void Game_scene::keyPressEvent(QKeyEvent *event) {
             player->direction = Sources::Directions::LEFT;
             command = Sources::LEFT;
             break;
+
+        case Qt::Key_Space:
+            if (scene_timer.isActive())
+                scene_timer.stop();
+            else
+                scene_timer.start();
 
         default:
             break;
