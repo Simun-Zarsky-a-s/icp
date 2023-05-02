@@ -26,8 +26,6 @@ public:
         Sources::Directions direction;
     };
 
-    std::vector<std::vector<Log>> log_vector;
-
     void open_file_output();
     void open_file_input();
     void add_map_to_file();
@@ -35,11 +33,14 @@ public:
     void add_position_player(QPoint, Sources::Directions);
     void remove_key(QPoint);
     void end_log();
+    static Sources::Directions extract_direction(int);
+    std::vector<Logger::Log> get_instruction_by_index(int);
 
 
 
 private:
     void read_input();
+    std::vector<std::vector<Log>> log_vector;
     std::ifstream file_input;
     std::ofstream file_output;
 };

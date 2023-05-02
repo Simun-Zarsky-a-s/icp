@@ -41,6 +41,7 @@ private:
 
     Player* player{};
     QTimer scene_timer;
+    Sources::Directions command;
 
     QPixmap wall_pixmap;
     QPixmap grass_pixmap;
@@ -56,6 +57,8 @@ private:
     QPoint player_start;
     QPoint target;
     bool door_open;
+    bool fast_forward = false;
+    int current_index = 0;
 
 
 };

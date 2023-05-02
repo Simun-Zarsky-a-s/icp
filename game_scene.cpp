@@ -19,12 +19,17 @@ Game_scene::Game_scene(QObject *parent)
     load_player();
     load_ghosts();
     if (!Sources::play_log_mode) {
+        logger.open_file_output();
         loop();
         connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
         scene_timer.start(Sources::FPS);
     }
     else {
+        logger.open_file_input();
         loop_spectate();
+        connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop_spectate);
+        scene_timer.start(Sources::FPS);
+
     }
 }
 
@@ -37,6 +42,19 @@ void Game_scene::loop() {
 }
 
 void Game_scene::loop_spectate() {
+    std::vector<Logger::Log> tik_log = logger.get_instruction_by_index(current_index);
+    for (auto log : tik_log){
+        if (log.entity == 'P'){
+            player->teleport_player(log.position);
+            player->direction = log.direction;
+            player->update_player_pixmap();
+        }
+        else if (log.entity == 'G'){
+            ghosts[log.order]->teleport(log.position);
+            ghosts[log.order]->direction = log.direction;
+            ghosts[log.order]->change_pixmap();
+        }
+    }
 
 }
 
@@ -154,7 +172,6 @@ void Game_scene::move_player(){
         player->control_player_mouse();
 
     QPoint next_position = player->next_player_position();
-    //qDebug() <<"Curent : " << next_position;
     for (auto & wall : walls){
         if (check_intersection(next_position,wall)){
             player->direction = player->previous_direction;
@@ -185,6 +202,7 @@ void Game_scene::check_for_keys() {
         if (check_intersection(player->current_position, QPoint(key.x()*Sources::size, key.y()*Sources::size))){
             map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
             keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
+            logger.remove_key(QPoint(key.x()*Sources::size, key.y()*Sources::size));
             return;
         }
     }
@@ -262,10 +280,6 @@ void Game_scene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 }
 
 void Game_scene::keyPressEvent(QKeyEvent *event) {
-    if (event->isAutoRepeat())
-        return;
-
-
     player->mouse_mode = false;
     switch (event->key()) {
         case Qt::Key_W:
@@ -281,11 +295,13 @@ void Game_scene::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_F:
         case Qt::Key_Right:
             player->direction = Sources::Directions::RIGHT;
+            command = Sources::RIGHT;
             break;
 
         case Qt::Key_A:
         case Qt::Key_Left:
             player->direction = Sources::Directions::LEFT;
+            command = Sources::LEFT;
             break;
 
         default:

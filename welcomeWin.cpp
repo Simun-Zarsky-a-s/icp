@@ -18,7 +18,7 @@ WelcomeWin::WelcomeWin(QWidget *parent)
         : QMainWindow(parent)
 {
 
-    QLabel *main_label = new QLabel(this);
+    auto *main_label = new QLabel(this);
     main_label->setText("PACMAN");
     main_label->setGeometry(QRect(150,50,500,80));
     main_label->setStyleSheet("QLabel { font-weight: bold; }");
@@ -88,7 +88,6 @@ void WelcomeWin::open_map()
 }
 void WelcomeWin::open_file()
 {
-
     QString path = QFileDialog::getOpenFileName();
     if(!path.isEmpty()) { //empty path means user canceled the dialog
        qDebug() << path;
@@ -102,7 +101,7 @@ void WelcomeWin::mode_game()
 {
     game_button->setStyleSheet("background-color: red");
     log_button->setStyleSheet("background-color: white");
-    Sources::mode = 0;
+    Sources::play_log_mode = false;
 
 }
 
@@ -110,7 +109,7 @@ void WelcomeWin::mode_log()
 {
     log_button->setStyleSheet("background-color: red");
     game_button->setStyleSheet("background-color: white");
-    Sources::mode = 1;
+    Sources::play_log_mode = true;
 
 }
 

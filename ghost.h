@@ -28,6 +28,7 @@ public:
     Sources::Directions previous_direction;
     Sources::Directions s_direction;
     Sources::Directions curr_pixmap;
+    void teleport(QPoint position);
 
 private:
     void loadpixmap();

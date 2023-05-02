@@ -25,6 +25,10 @@ void Ghost::loop() {
 
 }
 
+void Ghost::teleport(QPoint position) {
+    setPos(position);
+}
+
 void Ghost::loadpixmap() {
     ghost_right_pixmap = QPixmap(Sources::Ghost_file_destination).scaled(Sources::size, Sources::size, Qt::KeepAspectRatio);
     ghost_left_pixmap = ghost_right_pixmap.transformed(QTransform().scale(-1,1));

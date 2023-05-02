@@ -16,7 +16,7 @@ public:
 private slots:
     void start_game();
     void open_map();
-    void open_file();
+    static void open_file();
     void mode_game();
     void mode_log();
 private:
