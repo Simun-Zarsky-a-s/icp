@@ -221,7 +221,7 @@ void Game_scene::load_ghost(QPoint position) {
 
 void Game_scene::update_ghost(){
     qDebug() << "update ghost";
-
+    bool valid =true;
     for(int i =0; i < ghosts.size(); i++){
         qDebug() << "ghost" << i;
 
@@ -233,15 +233,19 @@ void Game_scene::update_ghost(){
                 //logger.add_position_player(next_position, player->direction);
                 qDebug() << "hit";
                 ghosts[i]->change = !ghosts[i]->change;
-                return;
+                valid = false;
+                break;
             }
+            valid = true;
             //next_point = ghosts[i]->get_next_position();
 
         }
+        if (valid){
+            ghosts[i]->previous_direction = ghosts[i]->direction;
+            ghosts[i]->move_ghost(next_point);
+            ghosts[i]->change_pixmap();
+        }
 
-        ghosts[i]->previous_direction = ghosts[i]->direction;
-        ghosts[i]->move_ghost(next_point);
-        ghosts[i]->change_pixmap();
         //logger.add_position_ghost(i, next_point, ghosts[i]->direction);
 
     }
