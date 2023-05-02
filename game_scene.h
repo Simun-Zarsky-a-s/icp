@@ -28,12 +28,13 @@ private:
     void generate_world();
     void load_player();
     void move_player();
-    void load_ghost(QPoint position);
+    void load_ghosts();
     static bool check_intersection(QPoint first, QPoint second);
     void check_for_keys();
     void check_for_ghosts();
     void loop_spectate();
     void update_ghost();
+
 
 
     Player* player{};
@@ -49,6 +50,7 @@ private:
     std::vector<QPoint> walls;
     std::vector<QPoint> keys;
     std::vector<Ghost*> ghosts;
+    std::vector<QPoint> ghost_to_be_loaded;
     QPoint player_start;
     QPoint target;
     bool door_open;
