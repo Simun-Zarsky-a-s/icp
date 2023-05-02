@@ -5,9 +5,6 @@
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
-#include "matrix.hpp"
-#include "ghost.h"
-#include "logger.h"
 #include <typeinfo>
 #include <iostream>
 
@@ -15,7 +12,6 @@
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
-    Logger* logger = new Logger;
     door_open = false;
     cout << typeid(logger).name() << endl;
     load_pixmaps();
@@ -26,7 +22,6 @@ Game_scene::Game_scene(QObject *parent)
         loop();
         connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
         scene_timer.start(Sources::FPS);
-        connect(player, &Player::mousePressEvent, player, &Player::mousePressEvent);
     }
     else {
         loop_spectate();
@@ -154,18 +149,25 @@ bool Game_scene::check_intersection(QPoint first, QPoint second){
 }
 
 void Game_scene::move_player(){
+
+    if (player->mouse_mode)
+        player->control_player_mouse();
+
     QPoint next_position = player->next_player_position();
-    qDebug() <<"Curent : " << next_position;
+    //qDebug() <<"Curent : " << next_position;
     for (auto & wall : walls){
         if (check_intersection(next_position,wall)){
             player->direction = player->previous_direction;
+            player->wall_dmg = true;
             logger.add_position_player(next_position, player->direction);
             return;
         }
     }
 
+    player->wall_dmg = false;
+
     if (door_open && check_intersection(next_position, QPoint(target.x()*Sources::size, target.y()*Sources::size))){
-        player->direction = Player::NONE;
+        player->direction = Sources::NONE;
         scene_timer.stop();
         logger.end_log();
         qDebug() << "WIN";
@@ -213,27 +215,27 @@ void Game_scene::check_for_ghosts() {
 }
 
 void Game_scene::load_ghosts() {
+    int order = 1;
     for (auto position : ghost_to_be_loaded) {
-        Ghost *new_ghost = new Ghost(player, &logger);
+        auto *new_ghost = new Ghost(player);
         ghosts.push_back(new_ghost);
         new_ghost->move_ghost(position);
+        new_ghost->ghost_order = order;
+        order++;
         addItem(new_ghost);
     }
 }
 
 void Game_scene::update_ghost(){
-    qDebug() << "update ghost";
     bool valid =true;
     for(int i =0; i < ghosts.size(); i++){
-        qDebug() << "ghost" << i;
 
         ghosts[i]->get_next_direction(player->current_position, ghosts[i]->change);
         QPoint next_point = ghosts[i]->get_next_position();
 
         for (auto & wall : walls){
             if (check_intersection(next_point,wall)){
-                //logger.add_position_player(next_position, player->direction);
-                qDebug() << "hit";
+                logger.add_position_ghost(ghosts[i]->ghost_order, next_point, ghosts[i]->direction);
                 ghosts[i]->change = !ghosts[i]->change;
                 valid = false;
                 break;
@@ -247,9 +249,48 @@ void Game_scene::update_ghost(){
             ghosts[i]->change_pixmap();
         }
 
-        //logger.add_position_ghost(i, next_point, ghosts[i]->direction);
+        logger.add_position_ghost(ghosts[i]->ghost_order, next_point, ghosts[i]->direction);
 
     }
 
-    qDebug() << "update ghost done";
+}
+
+void Game_scene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    player->mouse_mode = true;
+    player->mouse_target = event->scenePos().toPoint();
+    QGraphicsScene::mousePressEvent(event);
+}
+
+void Game_scene::keyPressEvent(QKeyEvent *event) {
+    if (event->isAutoRepeat())
+        return;
+
+
+    player->mouse_mode = false;
+    switch (event->key()) {
+        case Qt::Key_W:
+        case Qt::Key_Up:
+            player->direction = Sources::Directions::UP;
+            break;
+
+        case Qt::Key_S:
+        case Qt::Key_Down:
+            player->direction = Sources::Directions::DOWN;
+            break;
+
+        case Qt::Key_F:
+        case Qt::Key_Right:
+            player->direction = Sources::Directions::RIGHT;
+            break;
+
+        case Qt::Key_A:
+        case Qt::Key_Left:
+            player->direction = Sources::Directions::LEFT;
+            break;
+
+        default:
+            break;
+    }
+
+    QGraphicsScene::keyPressEvent(event);
 }

@@ -23,7 +23,7 @@ public:
         char entity{};
         int number{};
         QPoint position;
-        Player::Directions direction;
+        Sources::Directions direction;
     };
 
     std::vector<std::vector<Log>> log_vector;
@@ -31,8 +31,8 @@ public:
     void open_file_output();
     void open_file_input();
     void add_map_to_file();
-    void add_position_ghost(int, QPoint, Player::Directions);
-    void add_position_player(QPoint, Player::Directions);
+    void add_position_ghost(int, QPoint, Sources::Directions);
+    void add_position_player(QPoint, Sources::Directions);
     void remove_key(QPoint);
     void end_log();
 

@@ -44,11 +44,11 @@ void Logger::add_map_to_file() {
     order_counter = 1;
 }
 
-void Logger::add_position_ghost(int number, QPoint position, Player::Directions direction) {
+void Logger::add_position_ghost(int number, QPoint position, Sources::Directions direction) {
     file_output << order_counter << " "<<  "G " << number << " " << direction << " " << position.x() << " " << position.y() << std::endl;
 }
 
-void Logger::add_position_player(QPoint position, Player::Directions direction) {
+void Logger::add_position_player(QPoint position, Sources::Directions direction) {
     file_output << order_counter << " "<< "P " << direction << " " << position.x()<< " " << position.y() << std::endl;
 }
 

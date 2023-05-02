@@ -8,14 +8,13 @@
 #include <QGraphicsItem>
 #include <QTimer>
 #include "player.h"
-#include "logger.h"
 
 
 class Ghost: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT;
 
 public:
-    explicit Ghost(Player*, Logger*);
+    explicit Ghost(Player*);
     QPoint current_position;
     void move_ghost(QPoint);
     QTimer ghost_timer;
@@ -25,11 +24,10 @@ public:
     void change_pixmap();
     bool change = false;
 
-    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
-    Directions direction;
-    Directions previous_direction;
-    Directions s_direction;
-    Directions curr_pixmap;
+    Sources::Directions direction;
+    Sources::Directions previous_direction;
+    Sources::Directions s_direction;
+    Sources::Directions curr_pixmap;
 
 private:
     void loadpixmap();

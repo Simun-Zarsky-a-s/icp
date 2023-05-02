@@ -24,6 +24,8 @@ public:
     const static int GHOST_SWIFT = 16;
     const static bool play_log_mode = false;
 
+    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
+
     static QString Wall_file_destination;
     static QString Grass_file_destination;
     static QString Player_file_destination;

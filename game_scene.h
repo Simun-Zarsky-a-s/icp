@@ -11,16 +11,17 @@
 #include "Sources.h"
 #include "ghost.h"
 #include "logger.h"
-
+#include "matrix.hpp"
+#include "ghost.h"
 
 class Game_scene : public QGraphicsScene {
     Q_OBJECT
 public:
     explicit Game_scene(QObject *parent);
+    static bool check_intersection(QPoint first, QPoint second);
 
 
 private:
-    ///TODO: TU BUDU funkcie na scenu
     Logger logger;
 
     void load_pixmaps();
@@ -29,11 +30,12 @@ private:
     void load_player();
     void move_player();
     void load_ghosts();
-    static bool check_intersection(QPoint first, QPoint second);
     void check_for_keys();
     void check_for_ghosts();
     void loop_spectate();
     void update_ghost();
+    void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 
 
@@ -55,7 +57,6 @@ private:
     QPoint target;
     bool door_open;
 
-    int order_of_ghosts;
 
 };
 

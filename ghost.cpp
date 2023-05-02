@@ -6,14 +6,13 @@
 #include "Sources.h"
 #include <QGraphicsPixmapItem>
 #include <QDebug>
-#include "logger.h"
 
 
-Ghost::Ghost(Player* game_player, Logger* logger) : QGraphicsPixmapItem() {
+Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem() {
     loadpixmap();
     player = game_player;
     setPixmap(ghost_right_pixmap);
-    previous_direction = NONE;
+    previous_direction = Sources::NONE;
     setTransformOriginPoint(Sources::size, Sources::size);
     if (!Sources::play_log_mode) {
         connect(&ghost_timer, &QTimer::timeout, this, &Ghost::loop);
@@ -37,49 +36,48 @@ void Ghost::move_ghost(QPoint location) {
 }
 
 void Ghost::change_pixmap(){
-    if (curr_pixmap == RIGHT && direction == LEFT)
+    if (curr_pixmap == Sources::RIGHT && direction == Sources::LEFT)
         setPixmap(ghost_left_pixmap);
-    else if (curr_pixmap == LEFT && direction == RIGHT)
+    else if (curr_pixmap == Sources::LEFT && direction == Sources::RIGHT)
         setPixmap(ghost_right_pixmap);
 }
 
 void Ghost::get_next_direction(QPoint target, bool change){
-    qDebug()<< change;
     if (!change){
         if(current_position.x() < target.x()){
-            direction = RIGHT;
+            direction = Sources::RIGHT;
         }
         else if (current_position.x() > target.x()){
-            direction = LEFT;
+            direction = Sources::LEFT;
         }
         else{
             if(current_position.y() < target.y()){
-                direction = UP;
+                direction = Sources::UP;
             }
             else if(current_position.y() > target.y()){
-                direction = DOWN;
+                direction = Sources::DOWN;
             }
             else{
-                direction = NONE;
+                direction = Sources::NONE;
             }
         }
     }
     else{
         if(current_position.y() < target.y()){
-            direction = UP;
+            direction = Sources::UP;
         }
         else if (current_position.y() > target.y()){
-            direction = DOWN;
+            direction = Sources::DOWN;
         }
         else{
             if(current_position.x() < target.x()){
-                direction = RIGHT;
+                direction = Sources::RIGHT;
             }
             else if(current_position.x() > target.x()){
-                direction = LEFT;
+                direction = Sources::LEFT;
             }
             else{
-                direction = NONE;
+                direction = Sources::NONE;
             }
         }
     }
@@ -88,15 +86,15 @@ void Ghost::get_next_direction(QPoint target, bool change){
 
 QPoint Ghost::get_next_position(){
     switch (direction) {
-        case UP:
+        case Sources::UP:
             return {current_position.x(), current_position.y() + Sources::size/Sources::GHOST_SWIFT};
-        case DOWN:
+        case Sources::DOWN:
             return  {current_position.x(), current_position.y() - Sources::size/Sources::GHOST_SWIFT};
-        case RIGHT:
+        case Sources::RIGHT:
             return {current_position.x() + Sources::size/Sources::GHOST_SWIFT, current_position.y()};
-        case LEFT:
+        case Sources::LEFT:
             return {current_position.x() - Sources::size/Sources::GHOST_SWIFT, current_position.y()};
-        case NONE:
+        case Sources::NONE:
             return {current_position.x(), current_position.y()};
     }
     return {0,0};

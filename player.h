@@ -13,25 +13,29 @@
 #include <QGraphicsSceneMouseEvent>
 
 
+
 class Player: public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 
 public:
     explicit Player();
-    QPoint next_player_position() const;
+    [[nodiscard]] QPoint next_player_position() const;
+    QPoint mouse_target;
     void teleport_player(QPoint);
     QPoint current_position;
-    enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
-    Directions direction = NONE;
-    Directions previous_direction = NONE;
+    Sources::Directions direction = Sources::NONE;
+    Sources::Directions previous_direction = Sources::NONE;
     bool alive;
+    bool wall_dmg = false;
+    bool mouse_mode = false;
     void update_player_pixmap();
-    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void control_player_mouse();
+    QGraphicsPixmapItem* scene_map[100][100]{} ;
+
 
 
 private:
     void load_player_pixmap();
-    void keyPressEvent(QKeyEvent *event) override;
 
     QPixmap pix_map_player_up ;
     QPixmap pix_map_player_down;
