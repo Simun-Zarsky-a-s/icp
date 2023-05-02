@@ -20,11 +20,6 @@ int main(int argc, char *argv[]) {
     //vector<vector<char>> mapa = Resources::get_matrix();
     //print_2D_vector(mapa);
 
-    Sources::argc =argc;
-    for(int i =0; i < argc; i++){
-        Sources::argv[i]= argv[i];
-    }
-
     int res, res2, res3;
     while(true){
          res = create_window_p(argc, argv);
