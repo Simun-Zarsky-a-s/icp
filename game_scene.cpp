@@ -6,6 +6,7 @@
 #include "game_scene.h"
 #include <QDebug>
 #include <iostream>
+#include <QApplication>
 
 
 Game_scene::Game_scene(QObject *parent)
@@ -233,6 +234,7 @@ void Game_scene::move_player(){
         player->direction = Sources::NONE;
         scene_timer.stop();
         logger.end_log();
+        QApplication::quit();
         qDebug() << "WIN";
     }
 
@@ -274,6 +276,9 @@ void Game_scene::check_for_ghosts() {
         for (auto & ghost : ghosts){
             ghost->ghost_timer.stop();
         }
+        qDebug() << "defeat";
+
+        QApplication::quit();
     }
 
 }

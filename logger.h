@@ -11,7 +11,7 @@
 #include "matrix.hpp"
 #include "Sources.h"
 #include "player.h"
-
+#include "ghost.h"
 
 class Logger {
 public:

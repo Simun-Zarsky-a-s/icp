@@ -21,7 +21,7 @@ public:
      static int MAP_HEIGHT;
 
     const static int SWIFT = 4;
-    const static int GHOST_SWIFT = 16;
+    const static int GHOST_SWIFT = 8;
     static bool play_log_mode;
 
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
@@ -41,6 +41,9 @@ public:
     std::vector<QObject> Keys;
 
     static std::string log_file;
+
+    static int argc;
+    static char *argv[];
 
     const static std::vector<std::vector <char>> Map;
     static std::vector<std::vector <char>> Matrix;

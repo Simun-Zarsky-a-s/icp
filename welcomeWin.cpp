@@ -14,6 +14,7 @@
 #include <QComboBox>
 #include <QVBoxLayout>
 
+
 WelcomeWin::WelcomeWin(QWidget *parent)
         : QMainWindow(parent)
 {
@@ -71,6 +72,7 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 void WelcomeWin::start_game()
 {
     QApplication::quit();
+    //create_window_g(Sources::argc, Sources::argv);
 
 }
 void WelcomeWin::open_map()
@@ -113,3 +115,35 @@ void WelcomeWin::mode_log()
 
 }
 
+
+EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
+{
+    auto *main_label = new QLabel(this);
+    main_label->setText("PACMAN");
+    main_label->setGeometry(QRect(150,50,500,80));
+    main_label->setStyleSheet("QLabel { font-weight: bold; }");
+    QFont f("Helvetica",50);        //Setting the default font size to 50
+    QFontMetrics fm(f);
+    main_label->setFont(f);
+    new_button = new QPushButton("New game!", this);
+
+    new_button->setGeometry(QRect(QPoint(300, 300), QSize(100, 50)));
+
+    connect(new_button, &QPushButton::released, this, &EndWin::new_game);
+
+    end_button = new QPushButton("Quit Pacman", this);
+
+    end_button->setGeometry(QRect(QPoint(300, 200), QSize(100, 50)));
+
+    connect(end_button, &QPushButton::released, this, &EndWin::end_game);
+}
+
+void EndWin::end_game() {
+    EndWin::result = 0;
+    QApplication::quit();
+}
+
+void EndWin::new_game() {
+    EndWin::result = 1;
+    QApplication::quit();
+}
