@@ -21,6 +21,7 @@ Game_scene::Game_scene(QObject *parent)
     load_pixmaps();
     generate_world();
     load_player();
+    load_ghosts();
     if (!Sources::play_log_mode) {
         loop();
         connect(&scene_timer, &QTimer::timeout, this, &Game_scene::loop);
@@ -102,10 +103,8 @@ void Game_scene::generate_world() {
                 case 'G':
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     map[i][k]->setPos(k*Sources::size, i*Sources::size);
-                    addItem(map[i][k]);
-
-                    Game_scene::load_ghost(QPoint(k*Sources::size,i*Sources::size));
-                    continue;
+                    ghost_to_be_loaded.emplace_back(k*Sources::size,i*Sources::size);
+                    break;
             }
             map[i][k]->setPos(k*Sources::size, i*Sources::size);
             addItem(map[i][k]);
@@ -120,6 +119,7 @@ void Game_scene::load_player(){
     player->teleport_player(player_start);
     addItem(player);
 }
+
 
 bool Game_scene::check_intersection(QPoint first, QPoint second){
     if (first.x() < second.x()){
@@ -212,11 +212,13 @@ void Game_scene::check_for_ghosts() {
 
 }
 
-void Game_scene::load_ghost(QPoint position) {
-    Ghost *new_ghost = new Ghost(player, &logger);
-    ghosts.push_back(new_ghost);
-    new_ghost->move_ghost(position);
-    addItem(new_ghost);
+void Game_scene::load_ghosts() {
+    for (auto position : ghost_to_be_loaded) {
+        Ghost *new_ghost = new Ghost(player, &logger);
+        ghosts.push_back(new_ghost);
+        new_ghost->move_ghost(position);
+        addItem(new_ghost);
+    }
 }
 
 void Game_scene::update_ghost(){
@@ -239,7 +241,6 @@ void Game_scene::update_ghost(){
 
         }
 
-        ghosts[i]->previous_direction = ghosts[i]->direction;
         ghosts[i]->move_ghost(next_point);
         ghosts[i]->change_pixmap();
         //logger.add_position_ghost(i, next_point, ghosts[i]->direction);
