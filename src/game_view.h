@@ -5,7 +5,7 @@
 #ifndef ICP_GAME_VIEW_H
 #define ICP_GAME_VIEW_H
 
-#include "../../../../../../../../usr/include/qt/QtWidgets/QGraphicsView"
+#include <QGraphicsView>
 #include "game_scene.h"
 
 class Game_view : public QGraphicsView
@@ -16,7 +16,7 @@ public:
 
 private:
     Game_scene *game_scene;
-    
+
 };
 
 #endif //ICP_GAME_VIEW_H

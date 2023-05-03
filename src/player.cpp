@@ -77,7 +77,6 @@ void Player::teleport_player(QPoint location) {
 }
 
 void Player::control_player_mouse() {
-    qDebug() << current_position << " " << mouse_target;
     std::random_device rd;
     std::mt19937 eng(rd());
     std::uniform_int_distribution<> distr(0, 1);
