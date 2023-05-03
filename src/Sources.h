@@ -43,6 +43,7 @@ public:
     static std::string log_file;
 
     static bool win;
+    static bool game;
 
     const static std::vector<std::vector <char>> Map;
     static std::vector<std::vector <char>> Matrix;

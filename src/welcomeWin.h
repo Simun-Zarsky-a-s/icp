@@ -15,8 +15,8 @@ public:
     explicit WelcomeWin(QWidget *parent = nullptr);
 
 private slots:
-    void start_game();
-    void open_map();
+    static void start_game();
+    static void open_map();
     static void open_file();
     void mode_game();
     void mode_log();

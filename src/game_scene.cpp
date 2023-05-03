@@ -235,6 +235,7 @@ void Game_scene::move_player(){
         scene_timer.stop();
         logger.end_log();
         Sources::win = true;
+        Sources::game = true;
         qDebug() << "WIN";
         QApplication::quit();
 
@@ -279,6 +280,7 @@ void Game_scene::check_for_ghosts() {
             ghost->ghost_timer.stop();
         }
         Sources::win = false;
+        Sources::game = true;
         qDebug() << "defeat";
         QApplication::quit();
     }

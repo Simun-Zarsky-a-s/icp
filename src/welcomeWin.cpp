@@ -82,11 +82,11 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 
     connect(log_button, &QPushButton::released, this, &WelcomeWin::mode_log);
 
-    QLabel *label1 = new QLabel(this);
+    auto *label1 = new QLabel(this);
     label1->setText("Default settings: \n Map:  ../examples/map.txt \n Logs:  log.txt \n Mode:  game ");
     label1->setGeometry(QRect(200,450,200,80));
 
-    QLabel *info = new QLabel(this);
+    auto *info = new QLabel(this);
     info->setText("ICP Project 2023. Authors: xsimun04, xzarsk04");
     info->setGeometry(QRect(150,560,400,40));
 
@@ -94,6 +94,7 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 
 void WelcomeWin::start_game()
 {
+    Sources::game = true;
     QApplication::quit();
     //create_window_g(Sources::argc, Sources::argv);
 
@@ -171,7 +172,7 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
     QFont f("Helvetica",50);        //Setting the default font size to 50
     main_label->setFont(f);
     auto *win_label = new QLabel(this);
-    if(Sources::win == true){
+    if(Sources::win){
         win_label->setText("Congratulations, you won!");
     }else{
         win_label->setText("Maybe next time. Try again!");
@@ -198,10 +199,12 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
 
 void EndWin::end_game() {
     EndWin::result = 0;
+    Sources::game = false;
     QApplication::quit();
 }
 
 void EndWin::new_game() {
     EndWin::result = 1;
+    Sources::game = true;
     QApplication::quit();
 }

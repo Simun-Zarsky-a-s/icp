@@ -26,5 +26,6 @@ std::string Sources::log_file = "log.txt";//default value
 bool Sources::play_log_mode = false; //default mode game
 
 bool Sources::win = false;
+bool Sources::game = false;
 
 

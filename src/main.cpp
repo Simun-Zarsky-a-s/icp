@@ -20,14 +20,17 @@ int main(int argc, char *argv[]) {
     //vector<vector<char>> mapa = Resources::get_matrix();
     //print_2D_vector(mapa);
 
-    int res, res2, res3;
-    while(true){
-         res = create_window_p(argc, argv);
-        if(!res){
-             res2 = create_window_g(argc, argv);
-            if(!res2){
-                res3 = create_window_end(argc, argv);
-                if(res3){
+    Sources::game =true;
+    while(Sources::game){
+        Sources::game =false;
+        create_window_p(argc, argv);
+        if(Sources::game){
+            Sources::game =false;
+            create_window_g(argc, argv);
+            if(Sources::game){
+                Sources::game =false;
+                create_window_end(argc, argv);
+                if(Sources::game){
                     continue;
                 }else{
                     break;
