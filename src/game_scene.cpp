@@ -402,12 +402,9 @@ void Game_scene::update_stats() {
 
     text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS:   ")+ keys +QString("   </div>") );
     QString lives;
-    if(Sources::number_of_lives < 10){
-       lives = QString::fromStdString(to_string((Sources::number_of_lives / 10)+1));
-    }
-    else{
-       lives = QString::fromStdString(to_string((Sources::number_of_lives / 10)));
-    }
+
+       lives = QString::fromStdString(to_string((Sources::number_of_lives)));
+
 
     QGraphicsTextItem *lives_text = this->addText(keys);
     text->setPos(0, 20);

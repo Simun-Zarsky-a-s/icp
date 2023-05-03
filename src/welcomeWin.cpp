@@ -187,7 +187,7 @@ void WelcomeWin::set_lives() {
     int i = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
                                  tr("How many times can you touch the ghost:"), 3, 0, 1000, 1, nullptr);
     pic_label->show();
-    Sources::number_of_lives = 10 * stoi(tr("%1%").arg(i).toStdString());
+    Sources::number_of_lives = stoi(tr("%1%").arg(i).toStdString());
     qDebug() << "lives" << Sources::number_of_lives;
 }
 
