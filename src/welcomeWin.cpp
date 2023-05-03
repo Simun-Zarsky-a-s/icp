@@ -16,7 +16,10 @@
 #include <QGraphicsDropShadowEffect>
 #include <QMovie>
 #include <QPixmap>
-
+#include <QLineEdit>
+#include <iostream>
+#include <QTextEdit>
+#include <QInputDialog>
 
 WelcomeWin::WelcomeWin(QWidget *parent)
         : QMainWindow(parent)
@@ -82,8 +85,20 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 
     connect(log_button, &QPushButton::released, this, &WelcomeWin::mode_log);
 
+    fps_button = new QPushButton("Set FPS", this);
+
+    fps_button->setGeometry(QRect(QPoint(203, 355), QSize(100, 48)));
+
+    connect(fps_button, &QPushButton::released, this, &WelcomeWin::set_fps);
+
+    speed_button = new QPushButton("Ghost speed", this);
+
+    speed_button->setGeometry(QRect(QPoint(303, 355), QSize(100, 48)));
+
+    connect(speed_button, &QPushButton::released, this, &WelcomeWin::set_speed);
+
     auto *label1 = new QLabel(this);
-    label1->setText("Default settings: \n Map:  ../examples/map.txt \n Logs:  log.txt \n Mode:  game ");
+    label1->setText("Default settings: \n Map:  ../examples/map.txt \n Logs:  log.txt \n Mode:  game \n FPS:  100 ");
     label1->setGeometry(QRect(200,450,200,80));
 
     auto *info = new QLabel(this);
@@ -139,6 +154,21 @@ void WelcomeWin::mode_log()
 
 }
 
+void WelcomeWin::set_speed() {
+
+    auto *pic_label = new QLabel(this);
+    int i = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
+                                 tr("The bigger the number the slower the ghosts:"), 16, 0, 100, 1, nullptr);
+
+    pic_label->show();
+    Sources::GHOST_SWIFT = stoi(tr("%1%").arg(i).toStdString());
+    qDebug() << Sources::GHOST_SWIFT;
+}
+
+void WelcomeWin::set_fps() {
+    Sources::FPS = 100;
+}
+
 
 EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
 {
@@ -185,16 +215,14 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
 
 
     new_button = new QPushButton("New game!", this);
-    new_button->setStyleSheet(":hover{background:#}");
     new_button->setGeometry(QRect(QPoint(200, 200), QSize(200, 50)));
-
     connect(new_button, &QPushButton::released, this, &EndWin::new_game);
 
     end_button = new QPushButton("Quit Pacman", this);
-
     end_button->setGeometry(QRect(QPoint(200, 300), QSize(200, 50)));
-
     connect(end_button, &QPushButton::released, this, &EndWin::end_game);
+
+
 }
 
 void EndWin::end_game() {

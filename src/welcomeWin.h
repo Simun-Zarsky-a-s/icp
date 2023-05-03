@@ -5,7 +5,9 @@
 
 #include <QMainWindow>
 #include <QPushButton>
+#include <QSlider>
 #include "Sources.h"
+#include <QLineEdit>
 
 
 class WelcomeWin : public QMainWindow
@@ -20,6 +22,8 @@ private slots:
     static void open_file();
     void mode_game();
     void mode_log();
+    void set_speed();
+    void set_fps();
 
 private:
     QPushButton *start_button;
@@ -27,6 +31,9 @@ private:
     QPushButton *file_button;
     QPushButton *game_button;
     QPushButton *log_button;
+    QPushButton *fps_button;
+    QPushButton *speed_button;
+
 };
 
 class EndWin : public QMainWindow

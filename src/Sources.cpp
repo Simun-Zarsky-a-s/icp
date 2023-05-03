@@ -28,4 +28,9 @@ bool Sources::play_log_mode = false; //default mode game
 bool Sources::win = false;
 bool Sources::game = false;
 
+int Sources::FPS = 100;
+int Sources::SWIFT = 8;
+int Sources::GHOST_SWIFT= 16;
+
+
 

@@ -15,13 +15,13 @@
 class Sources {
 public:
     const static int size = 60;
-    const static int FPS = 100;
+    static int FPS;
 
      static int MAP_WIDTH;
      static int MAP_HEIGHT;
 
-    const static int SWIFT = 4;
-    const static int GHOST_SWIFT = 8;
+    static int SWIFT;
+    static int GHOST_SWIFT;
     static bool play_log_mode;
 
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
