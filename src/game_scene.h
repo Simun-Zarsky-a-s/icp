@@ -1,5 +1,6 @@
 /**
  * @file game_scene.h
+ * @brief Library for Game_scene
  * @section Game_scene
  * @name Game_scene
  * @date 19.4.2023
@@ -10,7 +11,6 @@
 
 #include <QGraphicsScene>
 #include "player.h"
-#include "gamemap.h"
 #include "Sources.h"
 #include "ghost.h"
 #include "logger.h"

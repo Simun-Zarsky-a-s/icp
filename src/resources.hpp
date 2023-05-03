@@ -2,7 +2,7 @@
     * Project: ICP 2022/23
     *
     * @brief Library for resource handling
-    * @file resources.hpp
+    * @file matrix.hpp
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     * @date 21/4/2023
     */
@@ -27,10 +27,10 @@ class Resources {
          * Constructor of class Resources
          * @param src_file file with map for the game
          */
-        explicit Resources(string map);
+        explicit Resources(QString map);
 
-        string src_file; //!file with map
-        //!loaded dimensions
+        QString src_file; ///file with map
+        ///loaded dimensions
         int height;
         int width;
         vector<vector<int>> ghosts; //!vector of positions [height, width] of ghosts
@@ -43,6 +43,7 @@ class Resources {
       * @date 25/4/2023
       */
         static vector<vector <char>> get_matrix();
+
 
         /**
        * Extracts given dimensions from the first line of source file
@@ -92,5 +93,6 @@ class Resources {
         void check_matrix();
 
 };
+
 
 #endif

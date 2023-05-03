@@ -2,7 +2,7 @@
     * Project: ICP 2022/23
     *
     * @brief Implementation of resource handling
-    * @file resources.cpp
+    * @file matrix.cpp
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     */
 
@@ -20,7 +20,8 @@
 
 using namespace std;
 
-Resources::Resources(string map){
+
+Resources::Resources(QString map){ ///todo
 
     src_file = std::move(map);
     height = -1; //default values
@@ -30,11 +31,11 @@ Resources::Resources(string map){
 
 void Resources::dimensions(){
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
         if(new_file.fail()){
-            std::cerr <<  "File containing map not found.";
+            std::cerr <<  "1File containing map not found.";
+            std::cout << src_file.toStdString();
             exit(1);
         }
 
@@ -66,11 +67,11 @@ void Resources::dimensions(){
 
 int Resources::get_width() const{
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
     if(new_file.fail()){
-        std::cerr <<  "File containing map not found.";
+        std::cerr <<  "2File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
     }
 
@@ -103,12 +104,12 @@ int Resources::get_width() const{
 
 int Resources::get_height() const{
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
     if(new_file.fail()){
         std::cerr <<
-                "File containing map not found.";
+                "3File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
     }
 
@@ -139,11 +140,12 @@ int Resources::get_height() const{
 void Resources::fill_matrix() {
     fstream new_file;
     string line;
-    vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));//declaring helper matrix
-    new_file.open(src_file, ios::in); //opening of the source file with map
-        if(new_file.fail()){
-            std::cerr <<   "File containing map not found.";
 
+    vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
+        if(new_file.fail()){
+            std::cerr <<   "4File containing map not found.";
+            std::cout << src_file.toStdString();
             exit(1);
 
         }
@@ -271,8 +273,10 @@ void Resources::fill_log_matrix() {
 
     new_file.open(Sources::Map_file_destination.toStdString(), ios::in); //opening of the source file with map
     if(new_file.fail()){
-        std::cerr <<   "File containing map not found.";
+        std::cerr <<   "5File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
+
     }
 
     if (new_file.is_open()) {
@@ -289,6 +293,7 @@ void Resources::fill_log_matrix() {
                 exit(1);
 
             }
+
             //convert line to vector and add it by each char to the matrix
             vector<char> line_of_chars(line.begin(), line.end());
             for(int i =0; i < line_of_chars.size(); i++){

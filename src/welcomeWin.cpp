@@ -123,6 +123,8 @@ WelcomeWin::WelcomeWin(QWidget *parent)
     info->setText("ICP Project 2023. Authors: xsimun04, xzarsk04");
     info->setGeometry(QRect(150,560,400,40));
 
+
+
 }
 
 void WelcomeWin::start_game()
@@ -138,7 +140,7 @@ void WelcomeWin::open_map()
     if(!path.isEmpty()) { //empty path means user canceled the dialog
         qDebug() << path;
         Sources::Map_file_destination = path;
-        Resources res(Sources::Map_file_destination.toStdString());;
+        Resources res(Sources::Map_file_destination);;
          Sources::MAP_WIDTH = res.get_width();
          Sources::MAP_HEIGHT = res.get_height();
          Sources::Matrix = Resources::get_matrix();
@@ -155,7 +157,7 @@ void WelcomeWin::open_file()
        }else{
            Sources::log_file = path.toStdString();
            Sources::Map_file_destination = path;
-           Resources res(Sources::Map_file_destination.toStdString());;
+           Resources res(Sources::Map_file_destination);;
            Sources::MAP_WIDTH = res.get_width();
            Sources::MAP_HEIGHT = res.get_height();
            Sources::Matrix = Resources::get_matrix();
