@@ -36,7 +36,7 @@ void Logger::add_map_to_file() {
 
     for (int i=0; i < Map_i.size() - 2; i++) {
         for (int j=0; j < Map_i[i].size() - 2;j++) {
-            file_output << Map_i[i][j] << " ";
+            file_output << Map_i[i][j];
         }
         file_output << std::endl;
     }

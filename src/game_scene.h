@@ -166,7 +166,8 @@ private:
     bool paused = false;
 
     //! Command for log mode
-    Sources::Directions command;
+    Sources::Directions command = Sources::NONE;
+    Sources::Directions previous_command = Sources::NONE;
 
     //! Pixmaps of items on map
     QPixmap wall_pixmap;
@@ -189,7 +190,7 @@ private:
     QPoint target;
     std::vector<QPoint> ghost_to_be_loaded;
 
-    bool door_open;
+    bool door_open = false;
     bool fast_forward = false;
     int current_index = 0;
 };

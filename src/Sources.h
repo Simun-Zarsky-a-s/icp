@@ -17,8 +17,8 @@ public:
     const static int size = 60;
     static int FPS;
 
-     static int MAP_WIDTH;
-     static int MAP_HEIGHT;
+    static int MAP_WIDTH;
+    static int MAP_HEIGHT;
 
     static int SWIFT;
     static int GHOST_SWIFT;

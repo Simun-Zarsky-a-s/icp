@@ -14,8 +14,6 @@
 Game_scene::Game_scene(QObject *parent)
 : QGraphicsScene{parent}
 {
-    door_open = false;
-    command = Sources::NONE;
     load_pixmaps();
     generate_world();
     load_player();
@@ -48,6 +46,7 @@ void Game_scene::loop() {
 
 void Game_scene::loop_spectate() {
     bool forward = false;
+    update_stats();
 
     if (command == Sources::NONE)
         return;
@@ -65,7 +64,6 @@ void Game_scene::loop_spectate() {
 
     std::vector<Logger::Log> tik_log = logger.get_instruction_by_index(current_index);
     for (auto log : tik_log){
-        qDebug() << log.entity;
         if (log.entity == 'P'){
             player->teleport_player(log.position);
             player->direction = log.direction;
@@ -82,7 +80,6 @@ void Game_scene::loop_spectate() {
                         grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                 keys.erase(std::remove(keys.begin(), keys.end(), QPoint(log.position.y(), log.position.x())), keys.end());
 
-                qDebug() << keys.empty();
                 if (keys.empty()){
                     map[target.y()][target.x()]->setPixmap(
                             door_open_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
@@ -101,7 +98,6 @@ void Game_scene::loop_spectate() {
         }
         else if (log.entity == 'E'){
             current_index--;
-            qDebug() << current_index;
         }
     }
 
@@ -181,7 +177,6 @@ void Game_scene::generate_world() {
 
 void Game_scene::load_player(){
     player = new Player;
-    player->setFocus();
     player->teleport_player(player_start);
     addItem(player);
 }
@@ -242,7 +237,6 @@ void Game_scene::move_player(){
         logger.end_log();
         Sources::win = true;
         Sources::game = true;
-        qDebug() << "WIN";
         QApplication::quit();
 
     }
@@ -304,7 +298,6 @@ void Game_scene::check_for_ghosts() {
         usleep(delay);
 
         logger.end_log();
-        qDebug() << "defeat";
         QApplication::quit();
     }
 
@@ -371,35 +364,37 @@ void Game_scene::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 void Game_scene::keyPressEvent(QKeyEvent *event) {
     player->mouse_mode = false;
 
-    if (event->count() == 2)
-        fast_forward = true;
-    else
-        fast_forward = false;
-
     switch (event->key()) {
         case Qt::Key_W:
         case Qt::Key_Up:
-            player->direction = Sources::Directions::UP;
+            player->direction = Sources::UP;
+            command = Sources::RIGHT;
+            fast_forward = true;
             break;
 
         case Qt::Key_S:
         case Qt::Key_Down:
-            player->direction = Sources::Directions::DOWN;
+            player->direction = Sources::DOWN;
+            command = Sources::LEFT;
+            fast_forward = true;
             break;
 
-        case Qt::Key_F:
+        case Qt::Key_D:
         case Qt::Key_Right:
-            player->direction = Sources::Directions::RIGHT;
+            player->direction = Sources::RIGHT;
             command = Sources::RIGHT;
+            fast_forward = false;
             break;
 
         case Qt::Key_A:
         case Qt::Key_Left:
-            player->direction = Sources::Directions::LEFT;
+            player->direction = Sources::LEFT;
             command = Sources::LEFT;
+            fast_forward = false;
             break;
 
         case Qt::Key_Space:
+            fast_forward = false;
             if (scene_timer.isActive())
                 scene_timer.stop();
             else
@@ -413,19 +408,16 @@ void Game_scene::keyPressEvent(QKeyEvent *event) {
 }
 
 void Game_scene::update_stats() {
-    QString keys = QString::fromStdString(to_string(Sources::number_of_keys));
-    QGraphicsTextItem *text = this->addText(keys);
+    QString number_of_keys = QString::fromStdString(to_string(Sources::number_of_keys));
+    QGraphicsTextItem *text = this->addText(number_of_keys);
     text->setPos(0, 0);
 
-    text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS:   ")+ keys +QString("   </div>") );
+    text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS:   ") + number_of_keys +QString("   </div>") );
     QString lives;
+    lives = QString::fromStdString(to_string((Sources::number_of_lives)));
 
-       lives = QString::fromStdString(to_string((Sources::number_of_lives)));
-
-
-    QGraphicsTextItem *lives_text = this->addText(keys);
+    QGraphicsTextItem *lives_text = this->addText(lives);
     text->setPos(0, 20);
 
     lives_text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF LIVES: ")+ lives + QString("  </div>") );
-
 }

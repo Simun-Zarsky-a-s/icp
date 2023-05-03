@@ -6,10 +6,10 @@
 #include "game_view.h"
 #include <QApplication>
 #include <QKeyEvent>
-#include "Sources.h"
+#include <cmath>
 
 Game_view::Game_view() : QGraphicsView(), game_scene(new Game_scene(this))
 {
     setScene(game_scene);
-    resize(800,800);
+    resize(ceil(game_scene->width() + 10) ,ceil(game_scene->height() + 10));
 }

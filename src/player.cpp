@@ -19,7 +19,6 @@ Player::Player():
     /// Default direction of player
     setPixmap(pix_map_player_right);
     setTransformOriginPoint(Sources::size, Sources::size);
-    setFlag(ItemIsFocusable);
 }
 
 void Player::load_player_pixmap() {
