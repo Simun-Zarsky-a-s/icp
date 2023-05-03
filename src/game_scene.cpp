@@ -37,6 +37,7 @@ Game_scene::Game_scene(QObject *parent)
 }
 
 void Game_scene::loop() {
+
     move_player();
     update_ghost();
     check_for_keys();
@@ -274,16 +275,20 @@ void Game_scene::check_for_keys() {
 }
 
 void Game_scene::check_for_ghosts() {
+    if (paused)
+        return;
+
     for (auto & ghost : ghosts){
         if (check_intersection(ghost->current_position, player->current_position)){
 
-            if(Sources::number_of_lives == 1){
+            if(Sources::number_of_lives < 2){
                 player->alive = false;
                 scene_timer.stop();
             }
 
             Sources::number_of_lives -=1;
 
+            pause_ghosts();
         }
     }
 
@@ -298,6 +303,7 @@ void Game_scene::check_for_ghosts() {
         const int delay = 1000000;
         usleep(delay);
 
+        logger.end_log();
         qDebug() << "defeat";
         QApplication::quit();
     }
@@ -317,9 +323,11 @@ void Game_scene::load_ghosts() {
 }
 
 void Game_scene::update_ghost(){
+    if (paused)
+        return;
+
     bool valid =true;
     for(int i =0; i < ghosts.size(); i++){
-
         ghosts[i]->get_next_direction(player->current_position, ghosts[i]->change);
         QPoint next_point = ghosts[i]->get_next_position();
 
@@ -343,6 +351,15 @@ void Game_scene::update_ghost(){
 
     }
 
+}
+
+void Game_scene::pause_ghosts(){
+    paused = true;
+    p_timer.setSingleShot(true);
+    p_timer.start(Sources::time_between_dead);
+    connect(&p_timer, &QTimer::timeout, [=](){
+        paused = false;
+    });
 }
 
 void Game_scene::mousePressEvent(QGraphicsSceneMouseEvent *event) {

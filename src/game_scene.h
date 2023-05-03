@@ -132,6 +132,14 @@ private:
 
 
     /**
+     * @brief Method which will pause all ghosts
+     * @author Samuel Šimún
+     * @date 3.5.2023
+     */
+    void pause_ghosts();
+
+
+    /**
      * @brief Method which handle Mouse Click
      * @author Samuel Šimún
      * @param event
@@ -152,6 +160,10 @@ private:
 
     //! Timer which call main loops
     QTimer scene_timer;
+
+    //! Timer for pause when there is intersection between ghost and player
+    QTimer p_timer;
+    bool paused = false;
 
     //! Command for log mode
     Sources::Directions command;

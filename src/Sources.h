@@ -24,6 +24,8 @@ public:
     static int GHOST_SWIFT;
     static bool play_log_mode;
 
+    const static int time_between_dead = 1000;
+
     enum Directions{UP,DOWN,LEFT,RIGHT, NONE};
 
     static QString Wall_file_destination;
