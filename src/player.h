@@ -30,8 +30,6 @@ public:
     bool mouse_mode = false;
     void update_player_pixmap();
     void control_player_mouse();
-    QGraphicsPixmapItem* scene_map[100][100]{} ;
-
 
 
 private:

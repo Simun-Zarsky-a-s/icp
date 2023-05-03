@@ -1,0 +1,12 @@
+<!DOCTYPE RCC><RCC version="1.0">
+    <qresource>
+        <file>../content/wall.jpg</file>
+        <file>../content/grass.png</file>
+        <file>../content/pacman.png</file>
+        <file>../content/dvierka_closed.jpg</file>
+        <file>../content/dvierka_open.jpg</file>
+        <file>../content/key.webp</file>
+        <file>../content/ghost.png</file>
+        <file>../examples/map.txt</file>
+    </qresource>
+</RCC>
