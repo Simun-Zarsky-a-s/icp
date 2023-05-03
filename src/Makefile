@@ -1,10 +1,12 @@
 all: qMakeFile
+	@echo "Making ..."
 	make -f qMakeFile
 
 
 qMakeFile: Pacman.pro
+	@echo "Making qMakeFile"
 	qmake -o qMakeFile Pacman.pro
 
 
 clean:
-	rm -r obj .qmake.stash moc_* qrc_*
+	-rm .qmake.stash moc_* qrc_* qMakeFile

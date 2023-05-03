@@ -1,5 +1,6 @@
 /**
  * @file game_scene.h
+ * @brief Library for Game_scene
  * @section Game_scene
  * @name Game_scene
  * @date 19.4.2023
