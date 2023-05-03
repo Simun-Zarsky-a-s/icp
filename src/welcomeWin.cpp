@@ -166,9 +166,15 @@ void WelcomeWin::set_speed() {
 }
 
 void WelcomeWin::set_fps() {
-    Sources::FPS = 100;
-}
 
+    auto *pic_label = new QLabel(this);
+    int i = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
+                                 tr("The bigger the number the slower the ghosts:"), 100, 0, 1000, 1, nullptr);
+
+    pic_label->show();
+    Sources::FPS = stoi(tr("%1%").arg(i).toStdString());
+    qDebug() << Sources::FPS;
+}
 
 EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
 {
