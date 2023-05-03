@@ -33,6 +33,7 @@ int Sources::SWIFT = 8;
 int Sources::GHOST_SWIFT= 16;
 
 int Sources::number_of_keys = 0;
+int Sources::number_of_lives = 1;
 
 
 

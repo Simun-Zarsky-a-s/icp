@@ -24,6 +24,7 @@ private slots:
     void mode_log();
     void set_speed();
     void set_fps();
+    void set_lives();
 
 private:
     QPushButton *start_button;
@@ -33,6 +34,7 @@ private:
     QPushButton *log_button;
     QPushButton *fps_button;
     QPushButton *speed_button;
+    QPushButton *lives_button;
 
 };
 

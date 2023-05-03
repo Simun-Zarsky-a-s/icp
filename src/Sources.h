@@ -45,6 +45,7 @@ public:
     static bool win;
     static bool game;
     static int number_of_keys;
+    static int number_of_lives;
 
     const static std::vector<std::vector <char>> Map;
     static std::vector<std::vector <char>> Matrix;

@@ -97,6 +97,12 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 
     connect(speed_button, &QPushButton::released, this, &WelcomeWin::set_speed);
 
+    lives_button = new QPushButton("Number of lives", this);
+
+    lives_button->setGeometry(QRect(QPoint(203, 405), QSize(200, 48)));
+
+    connect(lives_button, &QPushButton::released, this, &WelcomeWin::set_lives);
+
     auto *label1 = new QLabel(this);
     label1->setText("Default settings: \n Map:  ../examples/map.txt \n Logs:  log.txt \n Mode:  game \n FPS:  100 ");
     label1->setGeometry(QRect(200,450,200,80));
@@ -174,6 +180,15 @@ void WelcomeWin::set_fps() {
     pic_label->show();
     Sources::FPS = stoi(tr("%1%").arg(i).toStdString());
     qDebug() << Sources::FPS;
+}
+
+void WelcomeWin::set_lives() {
+    auto *pic_label = new QLabel(this);
+    int i = QInputDialog::getInt(this, tr("QInputDialog::getInt()"),
+                                 tr("How many times can you touch the ghost:"), 3, 0, 1000, 1, nullptr);
+    pic_label->show();
+    Sources::number_of_lives = 10 * stoi(tr("%1%").arg(i).toStdString());
+    qDebug() << "lives" << Sources::number_of_lives;
 }
 
 EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)

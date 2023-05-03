@@ -8,6 +8,7 @@
 #include <iostream>
 #include <QApplication>
 #include <QLabel>
+#include <unistd.h>
 
 
 Game_scene::Game_scene(QObject *parent)
@@ -275,8 +276,14 @@ void Game_scene::check_for_keys() {
 void Game_scene::check_for_ghosts() {
     for (auto & ghost : ghosts){
         if (check_intersection(ghost->current_position, player->current_position)){
-            player->alive = false;
-            scene_timer.stop();
+
+            if(Sources::number_of_lives == 1){
+                player->alive = false;
+                scene_timer.stop();
+            }
+
+            Sources::number_of_lives -=1;
+
         }
     }
 
@@ -286,6 +293,11 @@ void Game_scene::check_for_ghosts() {
         }
         Sources::win = false;
         Sources::game = true;
+
+        Sources::number_of_lives -=1;
+        const int delay = 1000000;
+        usleep(delay);
+
         qDebug() << "defeat";
         QApplication::quit();
     }
@@ -388,7 +400,18 @@ void Game_scene::update_stats() {
     QGraphicsTextItem *text = this->addText(keys);
     text->setPos(0, 0);
 
-    text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS: ")+ keys + QString("  </div>") );
+    text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS:   ")+ keys +QString("   </div>") );
+    QString lives;
+    if(Sources::number_of_lives < 10){
+       lives = QString::fromStdString(to_string((Sources::number_of_lives / 10)+1));
+    }
+    else{
+       lives = QString::fromStdString(to_string((Sources::number_of_lives / 10)));
+    }
 
+    QGraphicsTextItem *lives_text = this->addText(keys);
+    text->setPos(0, 20);
+
+    lives_text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF LIVES: ")+ lives + QString("  </div>") );
 
 }
