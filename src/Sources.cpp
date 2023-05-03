@@ -29,7 +29,7 @@ bool Sources::win = false;
 bool Sources::game = false;
 
 int Sources::FPS = 100;
-int Sources::SWIFT = 8;
+int Sources::SWIFT = 9;
 int Sources::GHOST_SWIFT= 16;
 
 int Sources::number_of_keys = 0;

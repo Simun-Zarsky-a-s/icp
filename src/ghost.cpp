@@ -14,15 +14,7 @@ Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem() {
     setPixmap(ghost_right_pixmap);
     previous_direction = Sources::NONE;
     setTransformOriginPoint(Sources::size, Sources::size);
-    if (!Sources::play_log_mode) {
-        connect(&ghost_timer, &QTimer::timeout, this, &Ghost::loop);
-        ghost_timer.start(Sources::FPS);
-    }
     setFlag(ItemIsFocusable);
-}
-
-void Ghost::loop() {
-
 }
 
 void Ghost::teleport(QPoint position) {

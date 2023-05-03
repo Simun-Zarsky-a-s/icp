@@ -33,10 +33,6 @@ public:
 private:
     void loadpixmap();
 
-    void loop();
-
-
-
     QPixmap ghost_right_pixmap;
     QPixmap ghost_left_pixmap;
     Player* player;
