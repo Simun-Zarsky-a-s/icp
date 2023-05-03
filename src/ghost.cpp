@@ -10,7 +10,7 @@
 
 Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem() {
     loadpixmap();
-    player = game_player;
+
     setPixmap(ghost_right_pixmap);
     previous_direction = Sources::NONE;
     setTransformOriginPoint(Sources::size, Sources::size);

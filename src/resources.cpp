@@ -17,6 +17,7 @@
 #include <QErrorMessage>
 #include "Sources.h"
 #include <QDebug>
+#include <QFile>
 
 using namespace std;
 
@@ -68,12 +69,15 @@ void Resources::dimensions(){
 int Resources::get_width() const{
     fstream new_file;
     new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
+    QFile commonFile(Sources::Map_file_destination);
 
-    if(new_file.fail()){
-        std::cerr <<  "2File containing map not found.";
-        std::cout << src_file.toStdString();
-        exit(1);
+    if (!commonFile.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Unable to open file: " << commonFile.fileName() << " besause of error " << commonFile.errorString() << endl;
+
+        return 1;
     }
+
 
     string first_line;
     getline(new_file, first_line); // get first line with size
@@ -243,7 +247,7 @@ vector<vector <char>> Resources::get_matrix() {
 
     if(!Sources::play_log_mode){ //loading in game mode
 
-        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+        Resources res(Sources::Map_file_destination); ///init resources
 
         res.dimensions(); //get dimensions
         res.fill_matrix(); //load matrix
@@ -253,7 +257,7 @@ vector<vector <char>> Resources::get_matrix() {
     }
     else{ //loading in log mode
 
-        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+        Resources res(Sources::Map_file_destination); ///init resources
 
         res.dimensions(); //get dimensions
         res.fill_log_matrix();//load matrix
