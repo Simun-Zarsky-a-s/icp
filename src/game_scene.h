@@ -16,6 +16,7 @@
 #include "logger.h"
 #include "matrix.hpp"
 #include "ghost.h"
+#include <QLabel>
 
 /**
  * @name Game_scene
@@ -122,6 +123,13 @@ private:
      */
     void update_ghost();
 
+    /**
+   * @brief Method which show number of keys left
+   * @author Samuel Šimún
+   * @date 1.5.2023
+   */
+    void update_stats();
+
 
     /**
      * @brief Method which handle Mouse Click
@@ -154,6 +162,8 @@ private:
     QPixmap door_closed_pixmap;
     QPixmap door_open_pixmap;
     QPixmap key_pixmap;
+
+    QLabel stats;
 
     //! Graphical representation of map
     QGraphicsPixmapItem* map[100][100]{};

@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <iostream>
 #include <QApplication>
+#include <QLabel>
 
 
 Game_scene::Game_scene(QObject *parent)
@@ -18,6 +19,7 @@ Game_scene::Game_scene(QObject *parent)
     generate_world();
     load_player();
     load_ghosts();
+
     if (!Sources::play_log_mode) {
         logger.open_file_output();
         loop();
@@ -38,6 +40,7 @@ void Game_scene::loop() {
     update_ghost();
     check_for_keys();
     check_for_ghosts();
+    update_stats();
     logger.order_counter++;
 }
 
@@ -148,6 +151,7 @@ void Game_scene::generate_world() {
                 case 'K':
                     map[i][k]->setPixmap(key_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
                     keys.emplace_back(k,i);
+                    Sources::number_of_keys += 1;
                     break;
                 case '.':
                     map[i][k]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
@@ -254,6 +258,7 @@ void Game_scene::check_for_keys() {
             map[key.y()][key.x()]->setPixmap(grass_pixmap.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio));
             keys.erase(std::remove(keys.begin(), keys.end(), key), keys.end());
             logger.remove_key(QPoint(key.y(), key.x()));
+            Sources::number_of_keys -=1;
             return;
         }
     }
@@ -376,4 +381,14 @@ void Game_scene::keyPressEvent(QKeyEvent *event) {
     }
 
     QGraphicsScene::keyPressEvent(event);
+}
+
+void Game_scene::update_stats() {
+    QString keys = QString::fromStdString(to_string(Sources::number_of_keys));
+    QGraphicsTextItem *text = this->addText(keys);
+    text->setPos(0, 0);
+
+    text->setHtml(QString("<div style='background:rgba(255, 255, 255, 100%);'>") +QString("NUMBER OF KEYS: ")+ keys + QString("  </div>") );
+
+
 }
