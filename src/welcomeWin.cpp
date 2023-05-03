@@ -138,7 +138,18 @@ void WelcomeWin::open_file()
     QString path = QFileDialog::getOpenFileName();
     if(!path.isEmpty()) { //empty path means user canceled the dialog
        qDebug() << path;
-       Sources::log_file = path.toStdString();
+       if(!Sources::play_log_mode){
+           Sources::log_file = path.toStdString();
+       }else{
+           Sources::log_file = path.toStdString();
+           Sources::Map_file_destination = path;
+           Resources res(Sources::Map_file_destination.toStdString());;
+           Sources::MAP_WIDTH = res.get_width();
+           Sources::MAP_HEIGHT = res.get_height();
+           Sources::Matrix = Resources::get_matrix();
+       }
+
+
     }
 
 
@@ -209,7 +220,7 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
     background->setGeometry(QRect(QPoint(0, 0), QSize(1200, 1200)));
 
     auto *pic_label = new QLabel(this);
-    QPixmap pic("pacman.png");
+    QPixmap pic(Sources::Player_file_destination);
 
     pic_label->setPixmap( pic.scaled(100, 100, Qt::KeepAspectRatio));
     pic_label->show();

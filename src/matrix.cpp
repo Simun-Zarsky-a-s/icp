@@ -16,6 +16,7 @@
 #include <QApplication>
 #include <QErrorMessage>
 #include "Sources.h"
+#include <QDebug>
 using namespace std;
 
 Resources::Resources(string map){ ///todo
@@ -241,8 +242,8 @@ void Resources::check_matrix(){
 
 vector<vector <char>> Resources::get_matrix() {
 
-
-        ///game
+    if(!Sources::play_log_mode){
+        qDebug() << "game";
 
         Resources res(Sources::Map_file_destination.toStdString()); ///init resources
 
@@ -253,11 +254,71 @@ vector<vector <char>> Resources::get_matrix() {
         res.check_matrix();
 
         return res.matrix;
+    }
+    else{
+        qDebug() << "log";
 
+        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+
+        res.dimensions();
+
+        res.fill_log_matrix();
+
+        res.check_matrix();
+
+        return res.matrix;
+
+    }
 
 
 }
 
+void Resources::fill_log_matrix() {
+    fstream new_file;
+    string line;
+    vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
+    new_file.open(Sources::Map_file_destination.toStdString(), ios::in); //opening of the source file with map
+    if(new_file.fail()){
+        std::cerr <<   "File containing map not found.";
+
+        exit(1);
+
+    }
+
+    if (new_file.is_open()) {
+
+        int row_num = 0;
+
+        getline(new_file, line);
+        // filling the matrix
+        while (getline(new_file, line) && row_num <  height-2) {
+            // check lenght of line
+
+            qDebug() << QString::fromStdString(line);
+            if(line.length() > width-2){
+                std::cerr <<"Loaded map exceeds, given width." ;
+                exit(1);
+
+            }
+
+            //convert line to vector and add it by each char to the matrix
+            vector<char> line_of_chars(line.begin(), line.end());
+            for(int i =0; i < line_of_chars.size(); i++){
+                loaded_matrix[row_num][i] = line_of_chars[i];
+
+            }
+
+            row_num++;
+        }
+        matrix = loaded_matrix;
+    }
+    else{
+        new_file.close();
+
+    }
+    new_file.close();
+
+}
 
 
 

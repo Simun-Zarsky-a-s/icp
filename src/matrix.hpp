@@ -70,7 +70,7 @@ class Resources {
         * @date 21/4/2023
         */
         void fill_matrix() ;
-
+        void fill_log_matrix() ;
 
         /**
         * Checks validity of the content of loaded matrix
