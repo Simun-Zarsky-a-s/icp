@@ -34,8 +34,11 @@ WelcomeWin::WelcomeWin(QWidget *parent)
                         "}"
     );
 
+    auto *background = new QLabel(this);
+    background->setGeometry(QRect(QPoint(0, 0), QSize(1200, 1200)));
+
     auto *pic_label = new QLabel(this);
-    QPixmap pic("pacman.png");
+    QPixmap pic(Sources::Player_file_destination);
 
     pic_label->setPixmap( pic.scaled(100, 100, Qt::KeepAspectRatio));
     pic_label->show();
@@ -150,6 +153,9 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
                         "}"
 
     );
+    auto *background = new QLabel(this);
+    background->setGeometry(QRect(QPoint(0, 0), QSize(1200, 1200)));
+
     auto *pic_label = new QLabel(this);
     QPixmap pic("pacman.png");
 

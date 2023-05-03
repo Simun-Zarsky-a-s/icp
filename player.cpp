@@ -19,11 +19,11 @@ Player::Player():
     /// Default direction of player
     setPixmap(pix_map_player_right);
     setTransformOriginPoint(Sources::size, Sources::size);
-    setFlag(ItemIsFocusable); // Neviem preco ale musi to tu byt
+    setFlag(ItemIsFocusable);
 }
 
 void Player::load_player_pixmap() {
-    pix_map_player_right = QPixmap(":/content/pacman.png");
+    pix_map_player_right = QPixmap(Sources::Player_file_destination);
     pix_map_player_right = pix_map_player_right.scaled(Sources::size, Sources::size, Qt::KeepAspectRatio);
 
     qreal rRadius = pix_map_player_right.width() / 2;

@@ -11,8 +11,7 @@ int create_window_p(int argc,char  *argv[]){ ///welcome window
     welcome_win .setFixedHeight(600);
     welcome_win .setFixedWidth(600);
     welcome_win .showNormal();
-
-    return a.exec();
+    return QApplication::exec();
 }
 
 int create_window_g(int argc,char  *argv[]){ ///game_window
@@ -21,7 +20,7 @@ int create_window_g(int argc,char  *argv[]){ ///game_window
     Game_view view;
     view.show();
 
-    return a.exec();
+    return QApplication::exec();
 }
 
 int create_window_end(int argc,char  *argv[]){ ///welcome window
