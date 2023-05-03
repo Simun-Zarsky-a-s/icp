@@ -19,7 +19,7 @@
 #include <QDebug>
 using namespace std;
 
-Resources::Resources(string map){ ///todo
+Resources::Resources(QString map){ ///todo
 
     src_file = std::move(map);
     height = -1;
@@ -29,11 +29,11 @@ Resources::Resources(string map){ ///todo
 
 void Resources::dimensions(){
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
         if(new_file.fail()){
-            std::cerr <<  "File containing map not found.";
+            std::cerr <<  "1File containing map not found.";
+            std::cout << src_file.toStdString();
             exit(1);
         }
 
@@ -65,11 +65,11 @@ void Resources::dimensions(){
 
 int Resources::get_width(){
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
     if(new_file.fail()){
-        std::cerr <<  "File containing map not found.";
+        std::cerr <<  "2File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
     }
 
@@ -102,12 +102,12 @@ int Resources::get_width(){
 
 int Resources::get_height(){
     fstream new_file;
-    cout << src_file << endl;
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
 
     if(new_file.fail()){
         std::cerr <<
-                "File containing map not found.";
+                "3File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
     }
 
@@ -140,10 +140,10 @@ void Resources::fill_matrix() {
     fstream new_file;
     string line;
     vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
-    new_file.open(src_file, ios::in); //opening of the source file with map
+    new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
         if(new_file.fail()){
-            std::cerr <<   "File containing map not found.";
-
+            std::cerr <<   "4File containing map not found.";
+            std::cout << src_file.toStdString();
             exit(1);
 
         }
@@ -245,7 +245,7 @@ vector<vector <char>> Resources::get_matrix() {
     if(!Sources::play_log_mode){
         qDebug() << "game";
 
-        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+        Resources res(Sources::Map_file_destination); ///init resources
 
         res.dimensions();
 
@@ -258,7 +258,7 @@ vector<vector <char>> Resources::get_matrix() {
     else{
         qDebug() << "log";
 
-        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+        Resources res(Sources::Map_file_destination); ///init resources
 
         res.dimensions();
 
@@ -279,8 +279,8 @@ void Resources::fill_log_matrix() {
     vector<vector<char>> loaded_matrix(height, vector<char>(width, 0));
     new_file.open(Sources::Map_file_destination.toStdString(), ios::in); //opening of the source file with map
     if(new_file.fail()){
-        std::cerr <<   "File containing map not found.";
-
+        std::cerr <<   "5File containing map not found.";
+        std::cout << src_file.toStdString();
         exit(1);
 
     }

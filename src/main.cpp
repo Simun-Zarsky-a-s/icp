@@ -7,13 +7,9 @@
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     */
 
-#include <iostream>
-#include "matrix.hpp"
-#include <string>
 #include "game.cpp"
 #include "Sources.h"
-#include <algorithm>
-#include <iterator>
+
 
 int main(int argc, char *argv[]) {
     using namespace std;

@@ -10,7 +10,6 @@
 
 #include <QGraphicsScene>
 #include "player.h"
-#include "gamemap.h"
 #include "Sources.h"
 #include "ghost.h"
 #include "logger.h"

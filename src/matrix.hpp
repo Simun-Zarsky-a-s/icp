@@ -27,9 +27,9 @@ class Resources {
          * Constructor of class Resources
          * @param src_file file with map for the game
          */
-        explicit Resources(string map);
+        explicit Resources(QString map);
 
-        string src_file; ///file with map
+        QString src_file; ///file with map
         ///loaded dimensions
         int height;
         int width;
