@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
     Sources::game =true;
     while(Sources::game){
         Sources::game =false;
+        Sources::number_of_lives = 1;
         create_window_p(argc, argv);
         if(Sources::game){
             Sources::game =false;

@@ -76,7 +76,7 @@ WelcomeWin::WelcomeWin(QWidget *parent)
     game_button = new QPushButton("Mode game", this);
 
     game_button->setGeometry(QRect(QPoint(198, 305), QSize(100, 48)));
-
+    game_button->setStyleSheet("background-color: red");
     connect(game_button, &QPushButton::released, this, &WelcomeWin::mode_game);
 
     log_button = new QPushButton("Mode log", this);

@@ -241,7 +241,10 @@ void Resources::check_matrix(){
 
 vector<vector <char>> Resources::get_matrix() {
 
-     Resources res(Sources::Map_file_destination.toStdString()); ///init resources
+
+        ///game
+
+        Resources res(Sources::Map_file_destination.toStdString()); ///init resources
 
         res.dimensions();
 
@@ -249,9 +252,12 @@ vector<vector <char>> Resources::get_matrix() {
 
         res.check_matrix();
 
-    return res.matrix;
+        return res.matrix;
+
+
 
 }
+
 
 
 
