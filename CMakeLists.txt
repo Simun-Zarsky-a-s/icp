@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(icp
         src/main.cpp
-        src/matrix.cpp
-        src/matrix.hpp
+        src/resources.cpp
+        src/resources.hpp
         src/logger.h
         src/logger.cpp
         src/player.h

@@ -12,7 +12,7 @@
 #include <fstream>
 #include <QPoint>
 #include <vector>
-#include "matrix.hpp"
+#include "resources.hpp"
 #include "Sources.h"
 #include "player.h"
 #include "ghost.h"

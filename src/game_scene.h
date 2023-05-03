@@ -14,7 +14,7 @@
 #include "Sources.h"
 #include "ghost.h"
 #include "logger.h"
-#include "matrix.hpp"
+#include "resources.hpp"
 #include "ghost.h"
 #include <QLabel>
 
@@ -102,7 +102,8 @@ private:
     /**
      * @brief Check if there is any intersection with ghost
      * @brief If intersection is detected game will be ended
-     * @author Samuel Šimún
+     *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
      * @date 26.4.2023
      */
     void check_for_ghosts();
@@ -118,14 +119,16 @@ private:
 
     /**
      * @brief Method which set position on scene from ghost object
-     * @author Samuel Šimún
+     * @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
      * @date 1.5.2023
      */
     void update_ghost();
 
     /**
    * @brief Method which show number of keys left
-   * @author Samuel Šimún
+   *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
    * @date 1.5.2023
    */
     void update_stats();

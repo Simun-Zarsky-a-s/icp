@@ -7,39 +7,32 @@
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     */
 
-#include <iostream>
-#include "matrix.hpp"
-#include <string>
 #include "game.cpp"
 #include "Sources.h"
-#include <algorithm>
-#include <iterator>
 
 int main(int argc, char *argv[]) {
     using namespace std;
-    //vector<vector<char>> mapa = Resources::get_matrix();
-    //print_2D_vector(mapa);
 
-    Sources::game =true;
+    Sources::game =true; //start app
     while(Sources::game){
+
         Sources::game =false;
         Sources::number_of_lives = 1;
-        create_window_p(argc, argv);
-        if(Sources::game){
+        create_window_p(argc, argv); //create welcome window
+        if(Sources::game){ //start game
             Sources::game =false;
-            create_window_g(argc, argv);
-            if(Sources::game){
+            create_window_g(argc, argv);//create game window
+            if(Sources::game){ //end of game
                 Sources::game =false;
-                create_window_end(argc, argv);
+                create_window_end(argc, argv);//create end window
                 if(Sources::game){
-                    continue;
+                    continue; //continue game
                 }else{
-                    break;
+                    break; //end app
                 }
             }
         }
     }
-
 
     return 0;
 

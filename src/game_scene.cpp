@@ -1,13 +1,18 @@
-//
-// Created by samuel on 19.4.2023.
-//
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of game scene
+    * @file game_scene.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+    */
+
 #include <QGraphicsPixmapItem>
 #include <QPixmap>
 #include "game_scene.h"
 #include <QDebug>
 #include <iostream>
 #include <QApplication>
-#include <QLabel>
 #include <unistd.h>
 
 
@@ -320,14 +325,15 @@ void Game_scene::update_ghost(){
         return;
 
     bool valid =true;
-    for(int i =0; i < ghosts.size(); i++){
-        ghosts[i]->get_next_direction(player->current_position, ghosts[i]->change);
-        QPoint next_point = ghosts[i]->get_next_position();
+    for(auto & ghost : ghosts){
 
-        for (auto & wall : walls){
+        ghost->get_next_direction(player->current_position, ghost->change);//change strategy
+        QPoint next_point = ghost->get_next_position(); //get next position
+
+        for (auto & wall : walls){ //check intersections
             if (check_intersection(next_point,wall)){
-                logger.add_position_ghost(ghosts[i]->ghost_order, next_point, ghosts[i]->direction);
-                ghosts[i]->change = !ghosts[i]->change;
+                logger.add_position_ghost(ghost->ghost_order, next_point, ghost->direction);
+                ghost->change = !ghost->change;
                 valid = false;
                 break;
             }
@@ -336,11 +342,11 @@ void Game_scene::update_ghost(){
 
         }
         if (valid){
-            ghosts[i]->move_ghost(next_point);
-            ghosts[i]->change_pixmap();
+            ghost->move_ghost(next_point);
+            ghost->change_pixmap();
         }
 
-        logger.add_position_ghost(ghosts[i]->ghost_order, next_point, ghosts[i]->direction);
+        logger.add_position_ghost(ghost->ghost_order, next_point, ghost->direction);//log the position
 
     }
 
@@ -407,7 +413,7 @@ void Game_scene::keyPressEvent(QKeyEvent *event) {
     QGraphicsScene::keyPressEvent(event);
 }
 
-void Game_scene::update_stats() {
+void Game_scene::update_stats() { //print info about lives and keys
     QString number_of_keys = QString::fromStdString(to_string(Sources::number_of_keys));
     QGraphicsTextItem *text = this->addText(number_of_keys);
     text->setPos(0, 0);

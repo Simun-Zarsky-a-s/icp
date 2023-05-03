@@ -1,7 +1,13 @@
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of user interface before and after game
+    * @file matrix.cpp
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+    */
 
 #include "welcomeWin.h"
 #include <QApplication>
-#include <QKeyEvent>
 #include "game_view.h"
 #include <QDebug>
 #include <QLabel>
@@ -9,15 +15,12 @@
 #include <string>
 #include "logger.h"
 #include <QString>
-#include <qfontmetrics.h>
 #include <QFont>
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QMovie>
 #include <QPixmap>
-#include <QLineEdit>
-#include <iostream>
 #include <QTextEdit>
 #include <QInputDialog>
 
@@ -28,6 +31,9 @@ WelcomeWin::WelcomeWin(QWidget *parent)
     this->setStyleSheet("QWidget {\n"
                         "    background-color: #1E90FF;\n"
                         "}"
+                        "QPushButton#log_button:hover {\n"
+                        "    background-color: rgb(224, 255, 0);\n"
+                        "}"
                         "QPushButton\n"
                         "{\n"
                         "  border: 2px solid gray;\n"
@@ -35,6 +41,12 @@ WelcomeWin::WelcomeWin(QWidget *parent)
                         "  padding: 0 8px;\n"
                         "  background: yellow;\n"
                         "}"
+                        "QPushButton:hover:!pressed\n"
+                        "{\n"
+                        "  background-color: rgb(224, 255, 0);\n"
+                        "}"
+
+
     );
 
     auto *background = new QLabel(this);
