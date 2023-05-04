@@ -11,8 +11,12 @@ We proceeded with pair programming to create this project and together we were a
 fully functional application.
 
 ## Map parsing
-// TODO Dan
-
+Map parsing ensures class `Resources` which temporarily stores loaded values and the game map.
+The map is read from the given file. At first, the program reads the first line of the file and based on given values allocates
+the matrix for the map. The values are loaded and checked by a function `std::stoi()`. After that, the matrix is loaded char by char. After reading the map, the map is checked, whether it contains
+expected characters, whether it responds to given dimensions and whether it contains exactly one target, and one start.
+A special case is loading the map from a log file which contains also other information. For this purpose is the loading function adjusted to read only the map.
+To avoid internal errors the map is checked as usual.
 ## Gameplay
 
 After launching the app, the player selects their settings and starts the game. 
@@ -48,8 +52,10 @@ ghosts according to **SWIFT** settings. This means that if SWIFT is set to 9 the
 for the player and ghost to move around.
 
 ### GUI
-// TODO Dan
-
+The opening window is created in the class `WelcomeWin`. The class uses `QLabel` for implementing the Pacman picture, the main title and to fill the background.
+For other interactive elements is used `QPushBUtton`. Each button is connected to a function to take action. Buttons `map_button` and `file_button` are using `QFileDialog` to choose the file.
+To set value from the user in other buttons is used a function `QInputDialog`. The style of the elements is set in the beginning of the class definition by a function `setStyleSheet` called on the parent QWidget.
+The same procedure is used to create a window at the end of the game in class `EndWin`.
 ### Player
 The player represents a moving entity that can be controlled by the user. It can move at will around the map. 
 His task is to collect all the keys from the map and arrive at the location of the door, thus ending the game with a win. <br>
@@ -64,14 +70,11 @@ the clicked location the x-axis and y-axis are equal to the click location.
 
 ### Ghosts
 
-// TODO Dan
-
-### Other entities 
-On the map there are interactive elements in the form of a key. These keys are located around the map according 
-to the input file chosen by the player. <br>
-If the player goes near a key, the key is deleted from the map and grass is added instead. <br>
-If all the keys are collected from the map, a door is opened indicating that the player's task is now to get to the door.
-
+The movement of the ghosts is initialized in the `game scene`, where the function `update_ghosts` calls for each ghost its functions to update their position.
+To get a new direction ghost takes the position of the player and tries to get on his x or y coordinates. In case of hitting a wall, the ghost changes strategy and tries to get on the other coordinate.
+After setting the direction the ghost set its next position. 
+Based on this position the game_scene checks the intersection of their position with the walls. In case of hitting the wall, the scene sets a flag change to `change` the strategy for setting the direction.
+At the end, the pixmap of the ghost is adjusted to its direction and the position is written to the log.
 ## Logging 
 Logging is done in such a way that when the game is started in the normal way, it is automatically generated to the 
 file that was characterized in the settings. 
