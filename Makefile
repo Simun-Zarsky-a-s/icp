@@ -11,5 +11,6 @@ run: all
 	./build/pacman
 
 clean:
-	rm build/pacman
-	cd src && make clean
+	-rm build/pacman
+	-cd src && make clean
+	-rm obj/*

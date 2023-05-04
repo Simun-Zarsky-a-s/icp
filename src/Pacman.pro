@@ -7,10 +7,10 @@ QT += core gui widgets
 TARGET = pacman
 
 # Source files
-SOURCES += game.cpp game_scene.cpp game_view.cpp ghost.cpp logger.cpp main.cpp matrix.cpp player.cpp welcomeWin.cpp Sources.cpp
+SOURCES += game.cpp game_scene.cpp game_view.cpp ghost.cpp logger.cpp main.cpp resources.cpp player.cpp welcomeWin.cpp Sources.cpp
 
 # Header files
-HEADERS += game_scene.h game_view.h ghost.h logger.h matrix.hpp player.h welcomeWin.h Sources.h
+HEADERS += game_scene.h game_view.h ghost.h logger.h resources.hpp player.h welcomeWin.h Sources.h
 
 # Resource files
 RESOURCES += resources.qrc
