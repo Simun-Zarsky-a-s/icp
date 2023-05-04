@@ -25,28 +25,54 @@ public:
      * Constructor of ghost
      */
     explicit Ghost(Player*);
-    QPoint current_position; //! current position in the map
-    void move_ghost(QPoint);
-    QTimer ghost_timer;
-    int ghost_order;
-    void get_next_direction(QPoint target, bool change);
-    QPoint get_next_position();
-    void change_pixmap();
-    bool change = false;
 
-    Sources::Directions direction;
-    Sources::Directions previous_direction;
-    Sources::Directions s_direction;
-    Sources::Directions curr_pixmap;
+    /**
+     * Manages movement of all ghosts
+     * @param player_position current position of the player
+     */
+    void move_ghost(QPoint player_position);
+
+    /**
+     * Based on current position of the player the ghost towards the player
+     * @param target current position of the player
+     * @param change flag to change movement strategy
+     */
+    void get_next_direction(QPoint target, bool change);
+
+    /**
+     * Based on direction returns next position of ghost
+     * @return next postion of the ghost
+     */
+    QPoint get_next_position();
+
+    /**
+   * Changes orientation of ghost picture based on his direction
+   */
+    void change_pixmap();
+
+    /**
+     * Moves directly the ghost to the position specified by the parameter
+     * @param position where to move the ghost
+     */
     void teleport(QPoint position);
 
-private:
+    QPoint current_position; //! current position in the map
+    QTimer ghost_timer; //! timer for ghost
+    int ghost_order; //! ghost identifier
+    bool change = false; //! flag for changing movement strategy
+    Sources::Directions direction; //! direction of movement
+    Sources::Directions curr_pixmap; //! picture in the scene
 
+
+private:
+    /**
+     * Loads a picture to be placed in the map
+     */
     void loadpixmap();
 
-    QPixmap ghost_right_pixmap;
-    QPixmap ghost_left_pixmap;
-    std::vector<std::vector <QPoint>> Walls;
+    QPixmap ghost_right_pixmap; //! pixmap for for ghost when heading right
+    QPixmap ghost_left_pixmap; //! pixmap for for ghost when heading left
+    std::vector<std::vector <QPoint>> Walls; //! vector containing wall for intersection check
 
 };
 

@@ -7,12 +7,10 @@
 #include <QGraphicsPixmapItem>
 #include <QDebug>
 
-
 Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem() {
     loadpixmap();
 
     setPixmap(ghost_right_pixmap);
-    previous_direction = Sources::NONE;
     setTransformOriginPoint(Sources::size, Sources::size);
     setFlag(ItemIsFocusable);
 }

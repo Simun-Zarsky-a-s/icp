@@ -9,13 +9,11 @@
 #ifndef ICP_PLAYER_H
 #define ICP_PLAYER_H
 
-
 #include <QGraphicsItem>
 #include <QTimer>
 #include "Sources.h"
 #include <QMouseEvent>
 #include <QGraphicsSceneMouseEvent>
-
 
 /**
  * @brief The Player class represents a player object that is displayed as a pixmap item in a QGraphicsScene.
