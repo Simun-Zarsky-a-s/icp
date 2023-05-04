@@ -80,7 +80,12 @@ file that was characterized in the settings.
 The log starts with the START label followed by the logs per tics.
 
 * Player: 
-  * [tick_order] P [direction] [] 
+  * [tick_order] P [direction] [x-position] [y-position]
+* Ghost:
+  * [tick_order] G [order_of_ghost] [direction] [x-position] [y-position]
+* Key:
+  * [tick_order] K
+
 
 ### Writing log
 When logging is started, a map is automatically added to the log file. Then the START label is inserted which 
