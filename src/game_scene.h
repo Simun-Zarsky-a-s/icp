@@ -31,8 +31,8 @@ public:
 
     /**
      * @brief Method which check if there is intersection between two points
-     * @param QPoint First point
-     * @param QPoint Second point
+     * @param first First point
+     * @param second Second point
      * @author Samuel Šimún
      * @return bool Returns true if there is intersection, otherwise false
      */
@@ -153,7 +153,7 @@ private:
     /**
      * @brief Method which handle Key Press
      * @author Samuel Šimún
-     * @param event
+     * @param *event
      */
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -166,37 +166,61 @@ private:
 
     //! Timer for pause when there is intersection between ghost and player
     QTimer p_timer;
+
+    //! Flag that indicate if ghosts are paused
     bool paused = false;
 
     //! Command for log mode
     Sources::Directions command = Sources::NONE;
-    Sources::Directions previous_command = Sources::NONE;
 
-    //! Pixmaps of items on map
+    //! Pixmaps of wall
     QPixmap wall_pixmap;
+
+    //! Pixmap of grass
     QPixmap grass_pixmap;
+
+    //! Pixmap of closed doors
     QPixmap door_closed_pixmap;
+
+    //! Pixmap of opened doors
     QPixmap door_open_pixmap;
+
+    //! Pixmap of key
     QPixmap key_pixmap;
 
+    //! Label of stats
     QLabel stats;
 
-    //! Graphical representation of map
+    //! 2d array of QPixmapItems which represent game map
     QGraphicsPixmapItem* map[100][100]{};
+
+    //! Vector of walls positions
     std::vector<QPoint> walls;
+
+    //! Vector of Key positions
     std::vector<QPoint> keys;
+
+    //! Vector of all ghost objects
     std::vector<Ghost*> ghosts;
 
 
-    //! Important points for handling events
+    //! Position where player should be spawned
     QPoint player_start;
+
+    //! End position, position of doors
     QPoint target;
+
+    //! Vector of position where ghosts should be spawned
     std::vector<QPoint> ghost_to_be_loaded;
 
+    //! Flag that indicate if doors are opened
     bool door_open = false;
+
+    //! Flag for log player to play continuously
     bool fast_forward = false;
+
+    //! Current index of log player
     int current_index = 0;
 };
-
 
 #endif //ICP_GAME_SCENE_H

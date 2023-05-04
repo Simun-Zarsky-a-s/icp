@@ -5,7 +5,7 @@
         <file>../content/pacman.png</file>
         <file>../content/dvierka_closed.jpg</file>
         <file>../content/dvierka_open.jpg</file>
-        <file>../content/key.webp</file>
+        <file>../content/key.png</file>
         <file>../content/ghost.png</file>
         <file>../examples/map.txt</file>
     </qresource>

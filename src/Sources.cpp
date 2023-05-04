@@ -18,11 +18,11 @@ QString Sources::Wall_file_destination = ":/content/wall.jpg";
 QString Sources::Grass_file_destination = ":/content/grass.png";
 QString Sources::Door_closed_file_destination = ":/content/dvierka_closed.jpg";
 QString Sources::Door_open_file_destination = ":/content/dvierka_open.jpg";
-QString Sources::Key_file_destination = ":/content/key.webp";
+QString Sources::Key_file_destination = ":/content/key.png";
 QString Sources::Ghost_file_destination = ":/content/ghost.png";
 QString Sources::Player_file_destination = ":/content/pacman.png";
 
-QString Sources::Map_file_destination = "../examples/map.txt";//default value
+QString Sources::Map_file_destination = ":/examples/map.txt";//default value
 
 Resources res(Sources::Map_file_destination);;
 int Sources::MAP_WIDTH = res.get_width();

@@ -69,15 +69,14 @@ void Resources::dimensions(){
 int Resources::get_width() const{
     fstream new_file;
     new_file.open(src_file.toStdString(), ios::in); //opening of the source file with map
-    QFile commonFile(Sources::Map_file_destination);
 
-    if (!commonFile.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "Unable to open file: " << commonFile.fileName() << " besause of error " << commonFile.errorString() << endl;
-
-        return 1;
+    Q_INIT_RESOURCE(resources);
+    QFile file(Sources::Map_file_destination);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << file.fileName();
+        qDebug() << "Failed to open file";
+        exit(0);
     }
-
 
     string first_line;
     getline(new_file, first_line); // get first line with size
