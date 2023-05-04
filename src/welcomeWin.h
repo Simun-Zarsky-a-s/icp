@@ -17,49 +17,49 @@
 #include <QLineEdit>
 
 /**
- *  Class representing user interfaces at the beginning of a game
+ *  @brief Class representing user interfaces at the beginning of a game
  */
 class WelcomeWin : public QMainWindow
 {
 Q_OBJECT
 public:
     /**
-     * Constructor of the welcome window at the beginning
+     * @brief Constructor of the welcome window at the beginning
      * @param parent Parent QWidget
      */
     explicit WelcomeWin(QWidget *parent = nullptr);
 
 private slots:
     /**
-     * Ends welcome window and starts game
+     * @brief Ends welcome window and starts game
      */
     static void start_game();
     /**
-     * Opens file manager and assigns selected file to sources src_file
+     *  @brief Opens file manager and assigns selected file to sources src_file
      */
     static void open_map();
     /**
-     * Opens file manager and assigns selected file to sources Map_file_destination
+     *  @brief Opens file manager and assigns selected file to sources Map_file_destination
      */
     static void open_file();
     /**
-     * Selects mode game
+     *  @brief Selects mode game
      */
     void mode_game();
     /**
-     * Selects mode log
+     *  @brief Selects mode log
      */
     void mode_log();
     /**
-     * Set speed of the ghost, the bigger the value  the slower the ghost
+     *  @brief Set speed of the ghost, the bigger the value  the slower the ghost
      */
     void set_speed();
     /**
-     * Set frames per second in the game
+     *  @brief Set frames per second in the game
      */
     void set_fps();
     /**
-     * Set number of lives (how many times can player touch the ghost)
+     *  @brief Set number of lives (how many times can player touch the ghost)
      */
     void set_lives();
 
@@ -76,21 +76,25 @@ private:
 };
 
 /**
- *  Class representing user interfaces at the end of a game
+ *  @brief Class representing user interfaces at the end of a game
  */
 class EndWin : public QMainWindow
 {
-Q_OBJECT
+    Q_OBJECT
 public:
+    /**
+     * @brief Constructor of closing window
+     * @param parent
+     */
     explicit EndWin(QWidget *parent = nullptr);
-    int result =0;
+    int result =0; //!
 private slots:
     /**
-     * Ends application
+     * @brief Ends application
      */
     void end_game();
     /**
-     * Returns back to the welcome window
+     * @brief  Returns back to the welcome window
      */
     void new_game();
 
