@@ -27,7 +27,7 @@
 WelcomeWin::WelcomeWin(QWidget *parent)
         : QMainWindow(parent)
 {
-
+    //style of welcome window
     this->setStyleSheet("QWidget {\n"
                         "    background-color: #1E90FF;\n"
                         "}"
@@ -49,76 +49,73 @@ WelcomeWin::WelcomeWin(QWidget *parent)
 
     );
 
+    //background
     auto *background = new QLabel(this);
     background->setGeometry(QRect(QPoint(0, 0), QSize(1200, 1200)));
 
+    //pacman picture
     auto *pic_label = new QLabel(this);
     QPixmap pic(Sources::Player_file_destination);
-
     pic_label->setPixmap( pic.scaled(100, 100, Qt::KeepAspectRatio));
     pic_label->show();
     pic_label->setGeometry(QRect(QPoint(75, 0), QSize(200, 200)));
 
+    //title
     auto *main_label = new QLabel(this);
     main_label->setText("PACMAN");
     main_label->setGeometry(QRect(175,50,500,80));
     main_label->setStyleSheet("QLabel { font-weight: bold; }");
-
     QFont f("Helvetica",50);        //Setting the default font size to 50
     main_label->setFont(f);
 
+    //start game
     start_button = new QPushButton("Start Game", this);
-
-    start_button->setGeometry(QRect(QPoint(200, 140), QSize(200, 50)));
-
+    start_button->setGeometry(QRect(QPoint(200, 140), QSize(225, 50)));
     connect(start_button, &QPushButton::released, this, &WelcomeWin::start_game);
 
+    //choose map
     map_button = new QPushButton("Choose map", this);
-
-    map_button->setGeometry(QRect(QPoint(200, 195), QSize(200, 50)));
-
+    map_button->setGeometry(QRect(QPoint(200, 195), QSize(225, 50)));
     connect(map_button, &QPushButton::released, this, &WelcomeWin::open_map);
 
+    //choose lof file
     file_button = new QPushButton("Choose log file", this);
-
-    file_button->setGeometry(QRect(QPoint(200, 250), QSize(200, 50)));
-
+    file_button->setGeometry(QRect(QPoint(200, 250), QSize(225, 50)));
     connect(file_button, &QPushButton::released, this, &WelcomeWin::open_file);
 
-    game_button = new QPushButton("Mode game", this);
-
-    game_button->setGeometry(QRect(QPoint(198, 305), QSize(100, 48)));
+    //mode game
+    game_button = new QPushButton("Game", this);
+    game_button->setGeometry(QRect(QPoint(198, 315), QSize(110, 48)));
     game_button->setStyleSheet("background-color: red");
     connect(game_button, &QPushButton::released, this, &WelcomeWin::mode_game);
 
-    log_button = new QPushButton("Mode log", this);
-
-    log_button->setGeometry(QRect(QPoint(303, 305), QSize(100, 48)));
-
+    //mode log
+    log_button = new QPushButton("Log player", this);
+    log_button->setGeometry(QRect(QPoint(313, 315), QSize(110, 48)));
     connect(log_button, &QPushButton::released, this, &WelcomeWin::mode_log);
 
+    //set fps
     fps_button = new QPushButton("Set FPS", this);
-
-    fps_button->setGeometry(QRect(QPoint(203, 355), QSize(100, 48)));
-
+    fps_button->setGeometry(QRect(QPoint(198, 375), QSize(110, 48)));
     connect(fps_button, &QPushButton::released, this, &WelcomeWin::set_fps);
 
+    //set speed
     speed_button = new QPushButton("Ghost speed", this);
-
-    speed_button->setGeometry(QRect(QPoint(303, 355), QSize(100, 48)));
-
+    speed_button->setGeometry(QRect(QPoint(313, 375), QSize(110, 48)));
     connect(speed_button, &QPushButton::released, this, &WelcomeWin::set_speed);
 
+    //set number of lives
     lives_button = new QPushButton("Number of lives", this);
-
-    lives_button->setGeometry(QRect(QPoint(203, 405), QSize(200, 48)));
-
+    lives_button->setGeometry(QRect(QPoint(200, 430), QSize(225, 48)));
     connect(lives_button, &QPushButton::released, this, &WelcomeWin::set_lives);
 
+    //default settings info
     auto *label1 = new QLabel(this);
     label1->setText("Default settings: \n Map:  ../examples/map.txt \n Logs:  log.txt \n Mode:  game \n FPS:  100 ");
-    label1->setGeometry(QRect(200,450,200,80));
+    label1->setGeometry(QRect(203,490,200,80));
+    label1->setStyleSheet("QLabel { font-size: 15px; }");
 
+    //authors
     auto *info = new QLabel(this);
     info->setText("ICP Project 2023. Authors: xsimun04, xzarsk04");
     info->setGeometry(QRect(150,560,400,40));
@@ -131,7 +128,7 @@ void WelcomeWin::start_game()
 {
     Sources::game = true;
     QApplication::quit();
-    //create_window_g(Sources::argc, Sources::argv);
+
 
 }
 void WelcomeWin::open_map()
@@ -218,6 +215,7 @@ void WelcomeWin::set_lives() {
 
 EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
 {
+    //end window style
     this->setStyleSheet("QWidget {\n"
                         "    background-color: #1E90FF;\n"
                         "}"
@@ -230,40 +228,43 @@ EndWin::EndWin(QWidget *parent)  : QMainWindow(parent)
                         "}"
 
     );
+    //background
     auto *background = new QLabel(this);
     background->setGeometry(QRect(QPoint(0, 0), QSize(1200, 1200)));
 
+    //pacman
     auto *pic_label = new QLabel(this);
     QPixmap pic(Sources::Player_file_destination);
-
     pic_label->setPixmap( pic.scaled(100, 100, Qt::KeepAspectRatio));
     pic_label->show();
     pic_label->setGeometry(QRect(QPoint(75, 0), QSize(200, 200)));
 
+    //tittle
     auto *main_label = new QLabel(this);
     main_label->setText("PACMAN");
     main_label->setGeometry(QRect(175,50,500,80));
     main_label->setStyleSheet("QLabel { font-weight: bold; }");
-
     QFont f("Helvetica",50);        //Setting the default font size to 50
     main_label->setFont(f);
+
+    //game result
     auto *win_label = new QLabel(this);
     if(Sources::win){
         win_label->setText("Congratulations, you won!");
     }else{
         win_label->setText("Maybe next time. Try again!");
     }
-
     win_label->setGeometry(QRect(125,150,500,40));
     win_label->setStyleSheet("QLabel { font-weight: bold; color = red}");
     QFont ff("Helvetica",20);        //Setting the default font size to 50
     win_label->setFont(ff);
 
-
+    //new game
     new_button = new QPushButton("New game!", this);
     new_button->setGeometry(QRect(QPoint(200, 200), QSize(200, 50)));
     connect(new_button, &QPushButton::released, this, &EndWin::new_game);
 
+    //end game
     end_button = new QPushButton("Quit Pacman", this);
     end_button->setGeometry(QRect(QPoint(200, 300), QSize(200, 50)));
     connect(end_button, &QPushButton::released, this, &EndWin::end_game);
