@@ -3,7 +3,7 @@
     *
     * @brief Implementation of resource handling
     * @file ghost.h
-    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     */
 
@@ -22,36 +22,36 @@ class Ghost: public QObject, public QGraphicsPixmapItem {
 
 public:
     /**
-     * Constructor of ghost
+     * @brief Constructor of ghost
      */
     explicit Ghost(Player*);
 
     /**
-     * Manages movement of all ghosts
+     * @brief Manages movement of all ghosts
      * @param player_position current position of the player
      */
     void move_ghost(QPoint player_position);
 
     /**
-     * Based on current position of the player the ghost towards the player
+     * @brief Based on current position of the player the ghost towards the player
      * @param target current position of the player
      * @param change flag to change movement strategy
      */
     void get_next_direction(QPoint target, bool change);
 
     /**
-     * Based on direction returns next position of ghost
+     * @brief Based on direction returns next position of ghost
      * @return next postion of the ghost
      */
     QPoint get_next_position();
 
     /**
-   * Changes orientation of ghost picture based on his direction
+   * @brief Changes orientation of ghost picture based on his direction
    */
     void change_pixmap();
 
     /**
-     * Moves directly the ghost to the position specified by the parameter
+     * @brief Moves directly the ghost to the position specified by the parameter
      * @param position where to move the ghost
      */
     void teleport(QPoint position);
@@ -66,7 +66,7 @@ public:
 
 private:
     /**
-     * Loads a picture to be placed in the map
+     * @brief Loads a picture to be placed in the map
      */
     void loadpixmap();
 
