@@ -79,6 +79,9 @@ file that was characterized in the settings.
 ### Log format
 The log starts with the START label followed by the logs per tics.
 
+* Player: 
+  * [tick_order] P [direction] [] 
+
 ### Writing log
 When logging is started, a map is automatically added to the log file. Then the START label is inserted which 
 characterizes from when the logs start to be logged.
