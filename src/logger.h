@@ -29,9 +29,16 @@ public:
 
     //! @brief Structure which represent information about one entity in one tik
     struct Log {
+        //! Integer which represent in which tik was log created
         int order{};
+
+        //! Definition of entity which log represent
         char entity{};
+
+        //! Position of entity in current tik
         QPoint position{};
+
+        //! Direction of entity
         Sources::Directions direction{};
     };
 
@@ -61,9 +68,9 @@ public:
 
     /**
      * @brief Method to be called for add position of ghost into logger file
-     * @param int Number which identify which ghost is logged
-     * @param QPoint Position of ghost
-     * @param Sources::Directions In which direction is ghost moving
+     * @param number Number which identify which ghost is logged
+     * @param position Position of ghost
+     * @param direction In which direction is ghost moving
      * @author Samuel Šimún
      * @date 2.5.2023
      */
@@ -72,8 +79,8 @@ public:
 
     /**
      * @brief Method to be called for add position of player into logger file
-     * @param QPoint Position of player
-     * @param Sources::Directions In which direction is player moving
+     * @param position Position of player
+     * @param direction In which direction is player moving
      * @author Samuel Šimún
      * @date 2.5.2023
      */
@@ -82,7 +89,7 @@ public:
 
     /**
      * @brief Method to be called when key is taken from map by player
-     * @param QPoint Position of key on map
+     * @param position Position of key on map
      * @author Samuel Šimún
      * @date 28.4.2023
      */
@@ -99,7 +106,7 @@ public:
 
     /**
      * @brief Method for convert direction from integer
-     * @param int Number to be extracted
+     * @param dir Number to be extracted
      * @author Samuel Šimún
      * @date 2.5.2023
      * @return Sources::Directions Converted direction
@@ -109,7 +116,7 @@ public:
 
     /**
      * @brief Method for requesting log set on specific tik
-     * @param int tik which will be returned
+     * @param index tik which will be returned
      * @author Samuel Šimún
      * @date 27.4.2023
      * @return vector<Logger::Log> Set of logs

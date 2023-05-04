@@ -28,7 +28,7 @@ LIBS += -lQt5Core -lQt5Gui -lQt5Widgets
 DESTDIR = ../build/
 
 # Object directory
-OBJECTS_DIR = ../obj/
+OBJECTS_DIR = ../build/obj/
 
 # MOC header files
 HEADERS_MOC += game_scene.h game_view.h ghost.h logger.h player.h welcomeWin.h
