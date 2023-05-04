@@ -1,4 +1,5 @@
 all:
+	-mkdir -r build/obj
 	cd src && make
 	cd src && make clean
 

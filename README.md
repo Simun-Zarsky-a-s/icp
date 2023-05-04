@@ -102,4 +102,4 @@ The playback options are characterised by pressing the key:
 * **Left arrow / A** - stepping forward one record at a time
 * **Right arrow / D** - stepping backwards one record at a time
 * **Up arrow / W** - fast forwards playback
-  * **Down arrow / S** - fast backwards playback 
+* **Down arrow / S** - fast backwards playback 
