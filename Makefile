@@ -14,3 +14,7 @@ clean:
 	-rm build/pacman
 	-cd src && make clean
 	-rm obj/*
+
+cmake:
+	-mkdir build
+	-cd build && cmake .. && make
