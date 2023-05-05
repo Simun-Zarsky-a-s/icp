@@ -28,14 +28,22 @@ class Resources {
          * @param src_file file with map for the game
          */
         explicit Resources(QString map);
-
-        QString src_file; ///file with map
-        ///loaded dimensions
+    //!file with map
+        QString src_file;
+        //!loaded dimensions height
         int height;
+
+    //!loaded dimensions width
         int width;
-        vector<vector<int>> ghosts; //!vector of positions [height, width] of ghosts
-        vector<vector<int>> keys;  //!vector of positions [height, width] of keys
-        vector<vector<char>> matrix; //!2D vector representing loaded map
+
+    //!vector of positions [height, width] of ghosts
+        vector<vector<int>> ghosts;
+
+    //!vector of positions [height, width] of keys
+        vector<vector<int>> keys;
+
+    //!2D vector representing loaded map
+        vector<vector<char>> matrix;
 
         /**
       * Initializes resesources and returns matrix

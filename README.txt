@@ -1,4 +1,5 @@
 Project documentation to the subject ICP
+
 	Name: Daniel Žársky, Samuel Šimún
 	Login: xzarsk04, xsimun04
 	E-mail: xzarsk04@stud.fit.vutbr.cz, xsimun04@stud.fit.vutbr.cz
@@ -11,6 +12,7 @@ Project documentation to the subject ICP
 	fully functional application.
 
 Map parsing
+
 	Map parsing ensures class Resources which temporarily stores loaded values and the game map.
 	The map is read from the given file. At first, the program reads the first line of the file and based on given values allocates
 	the matrix for the map. The values are loaded and checked by a function std::stoi(). After that, the matrix is loaded char by
@@ -19,6 +21,7 @@ Map parsing
 	A special case is loading the map from a log file which contains also other information. For this purpose is the loading function
 	adjusted to read only the map.
 	To avoid internal errors the map is checked as usual.
+	
 Gameplay
 
 	After launching the app, the player selects their settings and starts the game. 
@@ -42,6 +45,7 @@ Settings
 	Working with these parameters also determines the difficulty the player will face.
 
 Gamemap
+
 	When the game starts, map objects are loaded and placed in the scene. These objects are divided into 3 parts:
 	
 	Grass - Players and ghosts can move freely on these fields.

@@ -56,12 +56,24 @@ public:
      */
     void teleport(QPoint position);
 
-    QPoint current_position; //! current position in the map
-    QTimer ghost_timer; //! timer for ghost
-    int ghost_order; //! ghost identifier
-    bool change = false; //! flag for changing movement strategy
-    Sources::Directions direction; //! direction of movement
-    Sources::Directions curr_pixmap; //! picture in the scene
+
+    //! current position in the map
+    QPoint current_position;
+
+    //! timer for ghost
+    QTimer ghost_timer;
+
+    //! ghost identifier
+    int ghost_order;
+
+    //! flag for changing movement strategy
+    bool change = false;
+
+    //! direction of movement
+    Sources::Directions direction;
+
+    //! picture in the scene
+    Sources::Directions curr_pixmap;
 
 
 private:
@@ -70,9 +82,14 @@ private:
      */
     void loadpixmap();
 
-    QPixmap ghost_right_pixmap; //! pixmap for for ghost when heading right
-    QPixmap ghost_left_pixmap; //! pixmap for for ghost when heading left
-    std::vector<std::vector <QPoint>> Walls; //! vector containing wall for intersection check
+    //! pixmap for for ghost when heading right
+    QPixmap ghost_right_pixmap;
+
+    //! pixmap for for ghost when heading left
+    QPixmap ghost_left_pixmap;
+
+    //! vector containing wall for intersection check
+    std::vector<std::vector <QPoint>> Walls;
 
 };
 

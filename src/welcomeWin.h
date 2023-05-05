@@ -64,14 +64,29 @@ private slots:
     void set_lives();
 
 private:
-    QPushButton *start_button; //! start game
-    QPushButton *map_button; //! select map
-    QPushButton *file_button; //! choose file for logging
-    QPushButton *game_button; //!mode game
-    QPushButton *log_button; //!mode log
-    QPushButton *fps_button; //! set fps
-    QPushButton *speed_button; //!set speed of ghosts
-    QPushButton *lives_button; //! set number of lives
+    //! start game
+    QPushButton *start_button;
+
+    //! select map
+    QPushButton *map_button;
+
+    //! choose file for logging
+    QPushButton *file_button;
+
+    //!mode game
+    QPushButton *game_button;
+
+    //!mode log
+    QPushButton *log_button;
+
+    //! set fps
+    QPushButton *fps_button;
+
+     //!set speed of ghosts
+    QPushButton *speed_button;
+
+    //! set number of lives
+    QPushButton *lives_button;
 
 };
 
@@ -99,8 +114,11 @@ private slots:
     void new_game();
 
 private:
-    QPushButton *end_button; //!end app
-    QPushButton *new_button; //!continue playing
+    //!end app
+    QPushButton *end_button;
+
+    //!continue playing
+    QPushButton *new_button;
 
 };
 #endif //ICP_WELCOMEWIN_H
