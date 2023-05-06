@@ -24,7 +24,7 @@ public:
     /**
      * @brief Constructor of ghost
      */
-    explicit Ghost(Player*);
+    explicit Ghost();
 
     /**
      * @brief Manages movement of all ghosts

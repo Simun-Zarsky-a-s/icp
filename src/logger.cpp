@@ -34,8 +34,8 @@ void Logger::add_map_to_file() {
     file_output << Sources::MAP_HEIGHT - 2 << " " << Sources::MAP_WIDTH - 2 << std::endl;
     std::vector<std::vector <char>> Map_i = Sources::Matrix;
 
-    for (int i=0; i < Map_i.size() - 2; i++) {
-        for (int j=0; j < Map_i[i].size() - 2;j++) {
+    for (int i=0; i < (int)Map_i.size() - 2; i++) {
+        for (int j=0; j < (int)Map_i[i].size() - 2;j++) {
             file_output << Map_i[i][j];
         }
         file_output << std::endl;

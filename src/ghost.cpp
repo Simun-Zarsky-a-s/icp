@@ -7,7 +7,7 @@
 #include <QGraphicsPixmapItem>
 #include <QDebug>
 
-Ghost::Ghost(Player* game_player) : QGraphicsPixmapItem() {
+Ghost::Ghost() : QGraphicsPixmapItem() {
     loadpixmap();
 
     setPixmap(ghost_right_pixmap);

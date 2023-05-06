@@ -311,7 +311,7 @@ void Game_scene::check_for_ghosts() {
 void Game_scene::load_ghosts() {
     int order = 0;
     for (auto position : ghost_to_be_loaded) {
-        auto *new_ghost = new Ghost(player);
+        auto *new_ghost = new Ghost();
         ghosts.push_back(new_ghost);
         new_ghost->move_ghost(position);
         new_ghost->ghost_order = order;

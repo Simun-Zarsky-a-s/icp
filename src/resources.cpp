@@ -163,7 +163,7 @@ void Resources::fill_matrix() {
         while (!in.atEnd()) {
             QString qline = in.readLine();
             string line = qline.toStdString();
-            if(line.length() > width-2){
+            if((int)line.length() > width-2){
                 std::cerr <<"Loaded map exceeds, given width." ;
                 exit(1);
 
@@ -171,7 +171,7 @@ void Resources::fill_matrix() {
 
             //convert line to vector and add it by each char to the matrix
             vector<char> line_of_chars(line.begin(), line.end());
-            for(int i =0; i < line_of_chars.size(); i++){
+            for(int i =0; i < (int)line_of_chars.size(); i++){
                 loaded_matrix[row_num][i] = line_of_chars[i];
 
             }
@@ -194,8 +194,8 @@ void Resources::fill_matrix() {
 void Resources::check_matrix(){
     bool target = false;
     bool start = false;
-    for(int i=0; i<matrix.size()-2; i++) { //for each row
-        for (int j = 0; j <matrix[i].size()-2; j++) {// for each column
+    for(int i=0; i < (int)matrix.size()-2; i++) { //for each row
+        for (int j = 0; j < (int)matrix[i].size()-2; j++) {// for each column
             switch(matrix[i][j]) {
                 case 'T':
 
@@ -294,7 +294,7 @@ void Resources::fill_log_matrix() {
             QString qline = in.readLine();
             string line = qline.toStdString();
 
-            if(line.length() > width-2){ //check dimension
+            if((int)line.length() > width-2){ //check dimension
                 std::cerr <<"Loaded map exceeds, given width." ;
                 exit(1);
 
@@ -302,7 +302,7 @@ void Resources::fill_log_matrix() {
 
             //convert line to vector and add it by each char to the matrix
             vector<char> line_of_chars(line.begin(), line.end());
-            for(int i =0; i < line_of_chars.size(); i++){
+            for(int i =0; i < (int)line_of_chars.size(); i++){
                 loaded_matrix[row_num][i] = line_of_chars[i];
 
             }
