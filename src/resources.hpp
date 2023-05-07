@@ -67,7 +67,7 @@ class Resources {
          * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
          * @date 21/4/2023
          */
-        [[nodiscard]] int get_width() const;
+        [[nodiscard]] static int get_width() ;
 
             /**
           * Extracts height s from the first line of source file
@@ -75,7 +75,7 @@ class Resources {
           * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
           * @date 21/4/2023
           */
-        [[nodiscard]] int get_height() const;
+        [[nodiscard]] static int get_height() ;
 
         /**
         * Transform the data from source file to 2D matrix and stores it in matrix

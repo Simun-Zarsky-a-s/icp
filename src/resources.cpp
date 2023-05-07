@@ -46,12 +46,19 @@ void Resources::dimensions(){
     first_line = qline.toStdString();// get first line with size
     istringstream iss(first_line); //split the line
     vector<int> size; string word;
+
+    for (char i : first_line){
+        if(i!= ' ' && !isdigit(i)){
+            cerr<< "invalid char in first line .";
+            exit(1);
+        }
+    }
     int num;
     while(iss >> word){
         try{
              num = stoi(word);
         }
-        catch(invalid_argument){
+        catch(const std::invalid_argument & e){
             std::cerr <<
                       "Strtoi error invalid number.";
 
@@ -65,7 +72,7 @@ void Resources::dimensions(){
     width = size[1]+2;  //set width
 }
 
-int Resources::get_width() const{
+ int Resources::get_width() {
 
     Q_INIT_RESOURCE(resources);
     QFile file(Sources::Map_file_destination);
@@ -82,14 +89,19 @@ int Resources::get_width() const{
     first_line = qline.toStdString();// get first line with size
     istringstream iss(first_line); //split the line
     vector<int> size; string word;
-
+     for (char i : first_line){
+         if(i!= ' ' && !isdigit(i)){
+             cerr<< "invalid char in first line .";
+             exit(1);
+         }
+     }
     //load the words from first line to size array
     int num;
     while(iss >> word){
         try{
             num = stoi(word);
         }
-        catch(invalid_argument){
+        catch(const std::invalid_argument & e){
             std::cerr <<
                     "Strtoi error invalid number.";
 
@@ -104,7 +116,7 @@ int Resources::get_width() const{
 }
 
 
-int Resources::get_height() const{
+int Resources::get_height() {
 
     Q_INIT_RESOURCE(resources);
     QFile file(Sources::Map_file_destination);
@@ -122,13 +134,19 @@ int Resources::get_height() const{
     istringstream iss(first_line); //split the line
     vector<int> size; string word;
     //load the words from first line to size array
+    for (char i : first_line){
+        if(i!= ' ' && !isdigit(i)){
+            cerr<< "invalid char in first line .";
+            exit(1);
+        }
+    }
 
     int num;
     while(iss >> word){
         try{
             num = stoi(word); ///todo possible error here
         }
-        catch(invalid_argument){
+        catch(const std::invalid_argument & e){
             cerr<< "Strtoi error invalid number.";
             exit(1);
         }
