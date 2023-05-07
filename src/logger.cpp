@@ -1,6 +1,12 @@
-//
-// Created by samuel on 26.4.2023.
-//
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of logging
+    * @file logger.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    *
+    */
+
 
 #include "logger.h"
 #include <sstream>

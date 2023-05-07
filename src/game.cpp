@@ -1,5 +1,14 @@
-#include <QApplication>
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of game windows
+    * @file game.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+    */
 
+
+#include <QApplication>
 #include "welcomeWin.h"
 #include "game_view.h"
 

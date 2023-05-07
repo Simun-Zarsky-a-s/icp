@@ -2,7 +2,7 @@
     * Project: ICP 2022/23
     *
     * @brief Implementation of user interface before and after game
-    * @file matrix.cpp
+    * @file welcomeWin.cpp
     * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
     */
 

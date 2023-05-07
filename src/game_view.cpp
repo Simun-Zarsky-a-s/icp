@@ -1,7 +1,11 @@
-//
-// Created by samuel on 19.4.2023.
-//
-
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of game view
+    * @file game_view.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    *
+    */
 
 #include "game_view.h"
 #include <QApplication>

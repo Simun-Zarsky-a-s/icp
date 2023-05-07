@@ -1,6 +1,12 @@
-//
-// Created by samuel on 25.4.2023.
-//
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of ghost
+    * @file ghost.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    * @author Daniel Zarsky <xzarsk04@stud.fit.vutbr.cz>
+    */
+
 
 #include "ghost.h"
 #include "Sources.h"

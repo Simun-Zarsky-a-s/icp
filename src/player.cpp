@@ -1,6 +1,12 @@
-//
-// Created by samuel on 19.4.2023.
-//
+/**
+    * Project: ICP 2022/23
+    *
+    * @brief Implementation of player
+    * @file player.cpp
+    *  @author Samuel Simun <xsimun04@stud.fit.vutbr.cz>
+    *
+    */
+
 
 #include "player.h"
 #include <QDebug>
