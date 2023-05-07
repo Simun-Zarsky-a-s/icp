@@ -12,7 +12,11 @@
 #include "welcomeWin.h"
 #include "game_view.h"
 
-
+/**
+    * @brief Creates a window at the beginning of the program
+    * @author Daniel Zarsky
+    * @date 24.4.2023
+    */
 int create_window_p(int argc,char  *argv[]){ ///welcome window
     QApplication a(argc, argv);
 
@@ -23,6 +27,11 @@ int create_window_p(int argc,char  *argv[]){ ///welcome window
     return QApplication::exec();
 }
 
+/**
+    * @brief Creates a window with game scene
+    * @author Daniel Zarsky
+    * @date 24.4.2023
+    */
 int create_window_g(int argc,char  *argv[]){ ///game_window
     QApplication a(argc, argv);
 
@@ -32,6 +41,11 @@ int create_window_g(int argc,char  *argv[]){ ///game_window
     return QApplication::exec();
 }
 
+/**
+    * @brief Creates a window at the end of the game
+    * @author Daniel Zarsky
+    * @date 24.4.2023
+    */
 int create_window_end(int argc,char  *argv[]){ ///welcome window
     QApplication a(argc, argv);
 
